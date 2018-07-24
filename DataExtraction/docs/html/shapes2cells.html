@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Matthew Leonawicz" />
+
+
+<title>Shapefiles to Raster Cell Indices</title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Data Extraction</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="extraction-evaluation" class="dropdown-toggle" data-toggle="dropdown">Extraction evaluation <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Project</li>
+              <li><a href="eval_intro.html">Introduction</a></li>
+              <li><a href="eval_case.html">Case study: sample mean</a></li>
+              <li><a href="eval_res.html">Results</a></li>
+              <li><a href="eval_next.html">Next steps</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">R Code</li>
+              <li><a href="extract_eval_code.html">Complete code</a></li>
+            </ul>
+
+          <li><a href="extractDensityExample.html">Density estimation</a></li>
+
+          <li><a href="shapes2cells.html">Pre-indexing</a></li>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/DataExtraction">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+<div id="header">
+<h1 class="title">Shapefiles to Raster Cell Indices</h1>
+<h4 class="author"><em>Matthew Leonawicz</em></h4>
+</div>
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p><strong>R</strong> code is provided showing how I convert polygon shapefiles to lists of raster cell indices.</p>
+<div id="motivation" class="section level3">
+<h3>Motivation</h3>
+<p>At SNAP I often find myself performing large numbers of data extractions on raster layers using shapefiles. This can be time consuming with respect to our high-resolution downscaled geotiffs. Large raster layers in combination with large (or large numbers of) shapefiles can slow processing time considerably by repeatedly computing the raster cell indices from the shapefile for raster data extraction. Repeating extraction by shapefile on millions of raster layers multiplies this computational overhead.</p>
+<p>Such processing is commonplace at SNAP and almost any data extraction done once is bound to recur at a later date in some overlapping and redundant sense. I have moved toward an a priori establishment of the more preliminary and repetitive aspects of common spatial data extraction tasks at SNAP. One of the most convenient and beneficial steps taken is computing cells indices linking a shapefile to a raster layer once and storing the indices. Subsequently, the indices can be used directly for extraction from a sequence of many rasters matching the geographical meta data of the initial template raster. Having easy, immediate access to these cell indices pertaining to multiple shapefiles in the context of multiple rasterized source data sets is convenient and speeds processing over having to use source shapefiles millions of times per project let alone across multiple projects..</p>
+</div>
+<div id="details" class="section level3">
+<h3>Details</h3>
+<p>I compile the following:</p>
+<ul>
+<li>Lists of commonly used groups of polygon shapefiles</li>
+<li>Key raster/geotiff format data sets from which we commonly extract data</li>
+<li>Settings pertaining to the methods and circumstances under which cell indexing can occur in anticipated, subsequent data extraction exercises</li>
+</ul>
+<div id="capabilities" class="section level4">
+<h4>Capabilities</h4>
+<p>The most straightforward purpose here is to obtain a data table with factor columns (ID columns) and cell number columns describing the following:</p>
+<ul>
+<li>Source rasters, e.g., Alaska-Canada 1-km vs. Alaska-Canada 2-km raster data.</li>
+<li>Group names for similarly grouped shapefile inputs, e.g., political boundaries vs. ecologically defined regions.</li>
+<li>Individual shapefile region location names</li>
+<li>Cell indices are extracted from each shapefile and placed in a column with respect to each combination of factor levels.</li>
+<li>A second column of cell indices represents a transformation of the first for use when raster extractions require indexing based on a priori removal of NA-valued cells. This can be highly efficient in certain contexts where maps are largely NA-valued. Many of our rasters already have millions of NA-valued cells outside of an oddly shaped geographic domain. Raster layers can then become almost fully NA-valued when working with data such as annual fire perimiters across a large geographical area.</li>
+<li>The long format data table structure allows for easy ad hoc sampling by factor level grouping to extract data from rasters using a fixed sample size or sampling proportional to region size rather than using all cells.</li>
+</ul>
+</div>
+<div id="limitations-and-current-scope" class="section level4">
+<h4>Limitations and current scope</h4>
+<p>Obviously, the vector of cell indices for a shapefile differs for different rasterized data sets. Currently, cell indices for 59 shapefiles are stored in a table and saved to an <strong>R</strong> workspace file for two common rasterized data products at SNAP:</p>
+<ul>
+<li>Alaska-Canada 2-km downscaled climate data</li>
+<li>Alaska-Canada 1-km Alfresco simulation data</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="related-items" class="section level2">
+<h2>Related items</h2>
+<div id="files-and-data" class="section level3">
+<h3>Files and Data</h3>
+<p>Input files include polygon shapefiles commonly used at SNAP and two of SNAP’s current geotiff data products, Alaska-Canada 2-km downscaled climate data and 1-km Alfresco simulation outputs. Output files are <strong>R</strong> workspaces, .RData files. There is one workspace storing each version of a nested list for each type of rasterized data set.</p>
+</div>
+</div>
+<div id="r-code" class="section level2">
+<h2>R code</h2>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<p>Load required packages, define output directory, and load shapefiles. Shapefiles are organized into related groups. I ensure certain idiosyncrasies are addressed, such as reprojection of shapefiles with differing coordinate reference systems. Some shapefiles also contain single polygon regions whereas others contain multiple. Care must be taken to ensure all object manipulation is as intended.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
+<span class="kw">library</span>(maptools)
+<span class="kw">library</span>(data.table)
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(parallel)
+
+outDir &lt;-<span class="st"> &quot;/workspace/UA/mfleonawicz/projects/DataExtraction/workspaces&quot;</span>
+shpDir &lt;-<span class="st"> &quot;/workspace/UA/mfleonawicz/projects/DataExtraction/data/shapefiles&quot;</span>
+
+<span class="co"># Political boundaries Alaska</span>
+Alaska_shp &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="kw">file.path</span>(shpDir, <span class="st">&quot;Political/Alaska&quot;</span>))
+<span class="co"># Western Canada regions Alberta_shp &lt;- shapefile(file.path(shpDir,</span>
+<span class="co"># &#39;Political/alberta_albers&#39;)) # OLD BC_shp &lt;- shapefile(file.path(shpDir,</span>
+<span class="co"># &#39;Political/BC_albers&#39;)) # OLD</span>
+Canada_shp &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="kw">file.path</span>(shpDir, <span class="st">&quot;Political/CanadianProvinces_NAD83AlaskaAlbers&quot;</span>))
+Canada_IDs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Alberta&quot;</span>, <span class="st">&quot;Saskatchewan&quot;</span>, <span class="st">&quot;Manitoba&quot;</span>, <span class="st">&quot;Yukon Territory&quot;</span>, <span class="st">&quot;British Columbia&quot;</span>)
+Canada_shp &lt;-<span class="st"> </span><span class="kw">subset</span>(Canada_shp, NAME %in%<span class="st"> </span>Canada_IDs)
+
+<span class="co"># Alaska ecoregions</span>
+eco32_shp &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="kw">file.path</span>(shpDir, <span class="st">&quot;AK_ecoregions/akecoregions&quot;</span>))
+eco32_shp &lt;-<span class="st"> </span><span class="kw">spTransform</span>(eco32_shp, <span class="kw">CRS</span>(<span class="kw">projection</span>(Alaska_shp)))
+eco9_shp &lt;-<span class="st"> </span><span class="kw">unionSpatialPolygons</span>(eco32_shp, eco32_shp@data$LEVEL_2)
+eco3_shp &lt;-<span class="st"> </span><span class="kw">unionSpatialPolygons</span>(eco32_shp, eco32_shp@data$LEVEL_1)
+
+eco32_IDs &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">.&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">as.data.frame</span>(eco32_shp)[, <span class="dv">1</span>])
+eco9_IDs &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">slot</span>(eco9_shp, <span class="st">&quot;polygons&quot;</span>), function(x) <span class="kw">slot</span>(x, <span class="st">&quot;ID&quot;</span>))
+eco3_IDs &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">slot</span>(eco3_shp, <span class="st">&quot;polygons&quot;</span>), function(x) <span class="kw">slot</span>(x, <span class="st">&quot;ID&quot;</span>))
+
+<span class="co"># LCC regions</span>
+LCC_shp &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="kw">file.path</span>(shpDir, <span class="st">&quot;LCC/LCC_summarization_units_singlepartPolys&quot;</span>))
+LCC_IDs &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; LCC&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;South&quot;</span>, <span class="st">&quot;S&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;western&quot;</span>, <span class="st">&quot;W&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;Western&quot;</span>, 
+    <span class="st">&quot;W&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;North&quot;</span>, <span class="st">&quot;N&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;  &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">.&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">as.data.frame</span>(LCC_shp)[, 
+        <span class="dv">1</span>])))))))
+
+<span class="co"># CAVM regions</span>
+CAVM_shp &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="kw">file.path</span>(shpDir, <span class="st">&quot;CAVM/CAVM_complete&quot;</span>))
+CAVM_IDs &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(CAVM_shp)[, <span class="dv">4</span>]
+
+<span class="co"># shapefile lists, names, and associated metadata</span>
+grp.names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Political Boundaries&quot;</span>, <span class="dv">2</span>), <span class="kw">paste0</span>(<span class="st">&quot;Alaska L&quot;</span>, <span class="dv">3</span>:<span class="dv">1</span>, <span class="st">&quot; Ecoregions&quot;</span>), 
+    <span class="st">&quot;LCC Regions&quot;</span>, <span class="st">&quot;CAVM Regions&quot;</span>)
+shp.list &lt;-<span class="st"> </span><span class="kw">list</span>(Alaska_shp, Canada_shp, eco32_shp, eco9_shp, eco3_shp, LCC_shp, 
+    CAVM_shp)
+shp.names.list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;Alaska&quot;</span>, Canada_IDs, eco32_IDs, eco9_IDs, eco3_IDs, 
+    LCC_IDs, CAVM_IDs)
+
+<span class="co"># function to extract cell indices from raster by shapefile and return data</span>
+<span class="co"># table</span>
+get_cells &lt;-<span class="st"> </span>function(i, r, shp, grp, loc, <span class="dt">idx =</span> <span class="kw">Which</span>(!<span class="kw">is.na</span>(r), <span class="dt">cells =</span> T)) {
+    <span class="kw">stopifnot</span>(<span class="kw">length</span>(shp) ==<span class="st"> </span><span class="kw">length</span>(grp) &amp;<span class="st"> </span><span class="kw">length</span>(shp) ==<span class="st"> </span><span class="kw">length</span>(loc))
+    x &lt;-<span class="st"> </span><span class="kw">extract</span>(r, shp[[i]], <span class="dt">cellnumbers =</span> T)
+    <span class="kw">stopifnot</span>(<span class="kw">length</span>(x) ==<span class="st"> </span><span class="kw">length</span>(loc[[i]]))
+    for (j in <span class="dv">1</span>:<span class="kw">length</span>(x)) if (!<span class="kw">is.null</span>(x[[j]])) 
+        x[[j]] &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">LocGroup =</span> grp[i], <span class="dt">Location =</span> loc[[i]][j], <span class="dt">Cell =</span> <span class="kw">sort</span>(<span class="kw">intersect</span>(x[[j]][, 
+            <span class="dv">1</span>], idx)))
+    <span class="kw">rbindlist</span>(x)
+}</code></pre>
+</div>
+<div id="example" class="section level3">
+<h3>Example</h3>
+<p>Representative map layers are loaded with the <code>raster</code> package. Cell indices with respect to each template raster layer are obtained efficiently for several shapefiles using <code>mclapply</code> from the <code>parallel</code> package. A full domain (Alaska-Canada) set of indices using all data-valued cells is prepended to the table for each source layer since no full-domain shapefile was used. Tables for each source are combined. Results are saved.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># For AK-CAN 1-km Alfresco and 2-km climate extractions</span>
+dirs &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="st">&quot;/big_scratch/apbennett/Calibration/FinalCalib&quot;</span>, <span class="dt">pattern =</span> <span class="st">&quot;.*.sres.*.&quot;</span>, 
+    <span class="dt">full =</span> T)  <span class="co"># alternate</span>
+r1km &lt;-<span class="st"> </span><span class="kw">readAll</span>(<span class="kw">raster</span>(<span class="kw">list.files</span>(<span class="kw">file.path</span>(dirs[<span class="dv">1</span>], <span class="st">&quot;Maps&quot;</span>), <span class="dt">pattern =</span> <span class="st">&quot;^Age_0_.*.tif$&quot;</span>, 
+    <span class="dt">full =</span> T)[<span class="dv">1</span>]))  <span class="co"># template</span>
+r2km &lt;-<span class="st"> </span><span class="kw">readAll</span>(<span class="kw">raster</span>(<span class="st">&quot;/Data/Base_Data/Climate/AK_CAN_2km/projected/AR5_CMIP5_models/rcp60/5modelAvg/pr/pr_total_mm_AR5_5modelAvg_rcp60_01_2006.tif&quot;</span>))  <span class="co"># template</span>
+idx1 &lt;-<span class="st"> </span><span class="kw">Which</span>(!<span class="kw">is.na</span>(r1km), <span class="dt">cells =</span> T)
+idx2 &lt;-<span class="st"> </span><span class="kw">Which</span>(!<span class="kw">is.na</span>(r2km), <span class="dt">cells =</span> T)
+
+cells1 &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">Source =</span> <span class="st">&quot;akcan1km&quot;</span>, <span class="kw">rbindlist</span>(<span class="kw">mclapply</span>(<span class="dv">1</span>:<span class="kw">length</span>(shp.list), 
+    get_cells, <span class="dt">r =</span> r1km, <span class="dt">shp =</span> shp.list, <span class="dt">grp =</span> grp.names, <span class="dt">loc =</span> shp.names.list, 
+    <span class="dt">idx =</span> idx1, <span class="dt">mc.cores =</span> <span class="dv">32</span>)))
+cells1 &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="kw">data.table</span>(<span class="dt">Source =</span> <span class="st">&quot;akcan1km&quot;</span>, <span class="dt">LocGroup =</span> <span class="st">&quot;Political Boundaries&quot;</span>, 
+    <span class="dt">Location =</span> <span class="st">&quot;AK-CAN&quot;</span>, <span class="dt">Cell =</span> idx1), cells1)
+cells1 &lt;-<span class="st"> </span><span class="kw">data.table</span>(cells1) %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Location) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Cell_rmNA =</span> <span class="kw">which</span>(<span class="kw">c</span>(<span class="dv">1</span>:<span class="kw">ncell</span>(r1km) %in%<span class="st"> </span>
+<span class="st">    </span>Cell)[idx1]))
+cells2 &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">Source =</span> <span class="st">&quot;akcan2km&quot;</span>, <span class="kw">rbindlist</span>(<span class="kw">mclapply</span>(<span class="dv">1</span>:<span class="kw">length</span>(shp.list), 
+    get_cells, <span class="dt">r =</span> r2km, <span class="dt">shp =</span> shp.list, <span class="dt">grp =</span> grp.names, <span class="dt">loc =</span> shp.names.list, 
+    <span class="dt">idx =</span> idx2, <span class="dt">mc.cores =</span> <span class="dv">32</span>)))
+cells2 &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="kw">data.table</span>(<span class="dt">Source =</span> <span class="st">&quot;akcan2km&quot;</span>, <span class="dt">LocGroup =</span> <span class="st">&quot;Political Boundaries&quot;</span>, 
+    <span class="dt">Location =</span> <span class="st">&quot;AK-CAN&quot;</span>, <span class="dt">Cell =</span> idx2), cells2)
+cells2 &lt;-<span class="st"> </span><span class="kw">data.table</span>(cells2) %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Location) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Cell_rmNA =</span> <span class="kw">which</span>(<span class="kw">c</span>(<span class="dv">1</span>:<span class="kw">ncell</span>(r2km) %in%<span class="st"> </span>
+<span class="st">    </span>Cell)[idx2]))
+
+cells &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(cells1, cells2) %&gt;%<span class="st"> </span>data.table %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Source, LocGroup, 
+    Location) %&gt;%<span class="st"> </span>setkey
+<span class="kw">save</span>(cells, <span class="dt">file =</span> <span class="kw">file.path</span>(outDir, <span class="st">&quot;shapes2cells_akcan1km2km.RData&quot;</span>))</code></pre>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
