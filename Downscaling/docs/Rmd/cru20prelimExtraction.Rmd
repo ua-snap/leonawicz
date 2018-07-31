@@ -1,0 +1,29 @@
+---
+output:
+  html_document:
+    toc: false
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/cru20prelimExtraction.R")
+```
+
+##
+##
+## cru20prelimExtraction.R
+
+`cru20prelimExtraction.R` loads CRU 2.0 10-minute resolution climatology data, rasterizes it, applies minor adjustments which fascilitate robust downscaling, and saves output files as geotiffs.
+
+### R code
+
+#### Setup
+
+```{r setup}
+```
+
+#### Run
+
+```{r run}
+```
