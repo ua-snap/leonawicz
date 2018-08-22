@@ -1,0 +1,53 @@
+Package: alfresco
+Version: 0.2.6
+Title: R Functions For ALFRESCO Wildfire Model
+Description: R is used to manipulate and analyze data that both feed into and come out of the ALFRESCO wildfire model. 
+    This package contains functions for working with ALFRESCO input and output data. 
+    It is a core functional package in the SNAPverse collection of R packages.
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+Url: https://github.com/leonawicz/alfresco
+BugReports: https://github.com/leonawicz/alfresco/issues
+Depends: R (>= 3.4.1),
+    raster
+Suggests:
+    testthat,
+    covr,
+    snapmeta,
+    knitr,
+    rmarkdown
+Imports: 
+    RColorBrewer,
+    Cairo,
+    rgdal,
+    rasterVis,
+    dplyr,
+    purrr,
+    tibble,
+    magrittr,
+    rlang,
+    sp,
+    ggplot2,
+    tidyr,
+    grDevices,
+    snapprep,
+    snappoly,
+    snapgrid,
+    rvtable,
+    snaplocs
+Remotes:
+    leonawicz/snapmeta,
+    leonawicz/snaplocs,
+    leonawicz/snapprep,
+    leonawicz/snappoly,
+    leonawicz/snapgrid,
+    leonawicz/rvtable
+Enhances:
+    Rmpi
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr

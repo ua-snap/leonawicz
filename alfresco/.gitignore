@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+inst/doc
+revdep/checks
+revdep/library
+docs/articles/jfsp_hist_fmo_tx_cache
