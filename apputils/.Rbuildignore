@@ -1,0 +1,17 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^README\.md$
+^\.lintr$
+^\.travis\.yml$
+^codecov\.yml$
+^docs$
+^inst/\.lintr$
+^LICENSE\.md$
+^cran-comments\.md$
+^data-raw$
+^revdep$
+^pkgdown$
+^clone_notes\.md$
+^appveyor\.yml$
+^vignettes/*\.png$
