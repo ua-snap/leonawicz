@@ -1,0 +1,79 @@
+---
+title: "ALFRESCO outputs fact sheet"
+author: "Matthew Leonawicz"
+date: "April 7, 2017"
+output: pdf_document
+params:
+  n: NA
+  years: NA
+  variable: NA
+  x: NA
+  units: NA
+  regions: NA
+  plot_ts: NA
+  plot_den: NA
+  plot_dec: NA
+  rcps: NA
+  gcms: NA
+  veg: NA
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+n <- params$n
+yrs <- params$years
+var <- params$variable
+x <- params$x
+uni <- params$units
+reg <- params$regions
+plot_ts <- params$plot_ts
+plot_den <- params$plot_den
+plot_dec <- params$plot_dec
+rcps <- params$rcps
+gcms <- params$gcms
+veg <- params$veg
+
+text_rcps <- switch(length(rcps), 
+                    '1'=rcps, 
+                    '2'=paste(rcps, collapse=" and "), 
+                    '3'=paste0(rcps[1], ", ", paste(rcps[2:3], collapse=" and ")))
+text_num_gcms <- switch(length(gcms), '1'="one", '2'="two", '3'="three", '4'="four", '5'="five")
+text_models <- if(length(gcms) > 1) "models" else "model"
+first_10 <- round(mean(x[1:10]))
+last_10 <- round(mean(x[(n-9):n]))
+
+dir <- "decrease"
+if(last_10 > first_10) dir <- "increase" else if(last_10 == first_10) dir <- "remain stable"
+proj <- if(tail(yrs, 1) > as.numeric(substr(Sys.Date(), 1, 4))) "is projected to " else ""
+if(proj==""){
+  if(dir=="remain stable") proj <- "remained stable" else proj <- paste0(dir, "d")
+} else proj <- paste0(proj, dir)
+dir2 <- if(dir=="decrease") "reduction" else "gain"
+```
+
+## Testing...
+
+Simulations of `r tolower(var)` are shown for the period `r yrs[1]` through `r yrs[n]`.
+In this time the `r tolower(var)` per year `r proj` from an average of $`r first_10`$ `r uni` during the first ten years
+to an average of $`r last_10`$ `r uni` per year during the final ten years of the period.
+This change of $`r abs(last_10 - first_10)`$ `r uni` in the `r reg` represents 
+a `r round(100*abs(1-last_10/first_10))` percent `r dir2` in `r tolower(var)`.
+
+This applies to `r tolower(veg)`.
+These results are based on emissions scenarios `r text_rcps` and `r text_num_gcms` climate `r text_models`.
+
+## Plots
+
+Embedding plots...
+
+```{r plot_ts}
+plot_ts
+```
+
+```{r plot_den}
+plot_den
+```
+
+```{r plot_dec}
+plot_dec
+```

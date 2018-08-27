@@ -1,0 +1,109 @@
+---
+title: "JFSP Fire Management Options"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    social: [ "menu"]
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+```{r pkgs}
+library(alfresco)
+library(jfsp)
+#library(shiny)
+#library(DT)
+#library(rasterVis)
+library(dplyr)
+#library(ggplot2)
+```
+
+Landing page {data-icon="fa-info-circle"}
+=========================================
+
+Landing page row {data-height=80}
+-----------------------------------------
+
+### Landing page title text... 
+
+Landing page
+
+Statewide Alaska graphs
+
+Management Cost {data-icon="fa-dollar"}
+=========================================
+
+Management Cost row {data-height=80}
+-----------------------------------------
+
+### Management cost title text... 
+
+```{r cost, fig.width=12, fig.height=6}
+jfsp_plot("cost_dec", 2020:2099, by_rcp = TRUE, by_tx = FALSE)
+```
+
+Burn area {data-icon="glyphicon-fire"}
+=========================================
+
+Burn area row {data-height=80}
+-----------------------------------------
+
+### Alaska burn area period box plots title text... 
+
+```{r ba1a, fig.width=8, fig.height=4}
+jfsp_plot("ba_box", 1950:2099, by_rcp = TRUE, by_tx = FALSE, alaska = TRUE)
+```
+
+### Alaska log burn area period box plots title text... 
+
+```{r ba1b, fig.width=8, fig.height=4}
+jfsp_plot("ba_box", 1950:2099, by_rcp = TRUE, by_tx = FALSE, alaska = TRUE, log = TRUE)
+```
+
+Burn area row {data-height=100}
+-----------------------------------------
+
+### Alaska burn area inter-annual variability title text... 
+
+```{r ba2, fig.width=18, fig.height=6}
+jfsp_plot("ba_sd", 1950:2099, by_rcp = TRUE, by_tx = FALSE, breaks = c(seq(1950, 2090, by = 10), 2099), alaska = TRUE, n = 30, continuous = TRUE)
+```
+
+Vegetation {data-icon="glyphicon-tree-conifer"}
+=========================================
+
+Vegetation row {data-height=80}
+-----------------------------------------
+
+### Alaska vegetation change title text... 
+
+```{r veg, fig.width=12, fig.height=6}
+in_dir <- "C:/github/jfsp-archive/data-raw/alf_maps"
+x <- readAll(stack(file.path(in_dir, c("Veg_0_2000_tx0.tif", "Veg_0_2040_tx0.tif")))) %>%
+  mask(snapgrid::swflam, updatevalue = -1)
+x[x > 4] <- 1
+x[x == 3] <- 2
+clrs <- c("#eeeeee", "#bbbbbb", "yellowgreen", "burlywood4")
+classes <- c("Outside domain", "Other vegetation", "Coniferous", "Deciduous")
+
+ratby <- function(x, classes){
+  purrr::map(as.list(x), ~({
+    x <- raster::ratify(subset(.x, 1))
+    rat <- raster::levels(x)[[1]]
+    rat$class <- factor(classes, levels = classes)
+    levels(x) <- rat
+    x
+  })) %>% stack
+}
+
+x <- ratby(x, classes)
+
+pstrip <- list(cex=1.5, lines=1)
+rasterVis::levelplot(x, att = "class", col.regions = clrs,
+  maxpixels = 1e5, main = "Forest succession 2000 - 2040",
+  xlab = NULL, ylab = NULL, scales = list(draw = FALSE), names.attr = c("2000", "2040"), par.strip.text = pstrip,
+  colorkey = list(space = "bottom", height = 1, labels = list(cex = 1.5)))
+```

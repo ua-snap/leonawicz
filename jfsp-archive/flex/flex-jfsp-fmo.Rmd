@@ -1,0 +1,591 @@
+---
+title: "JFSP Fire Management Options"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    social: [ "menu"]
+    source_code: "https://github.com/leonawicz/jfsp"
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+```{r pkgs}
+library(shiny)
+library(DT)
+library(rasterVis)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r plot_fun}
+plot_fmo_panel <- function(){
+  r <- raster::ratify(snapgrid::swfmoBuffer)
+  classes <- c("Domain", "Limited", "Modified", "Critical", "Full")
+  suppressWarnings(levels(r) <- data.frame(ID = 0:4, class = factor(classes, levels = classes)))
+  slice_ratified <- function(x, id){
+    r <- raster::mask(x == id, x != id, maskvalue = 0, updatevalue = id)
+    if(is.factor(x)) levels(r) <- levels(x)[[1]]
+    r
+  }
+  s <- raster::stack(c(purrr::map(1:4, ~slice_ratified(r, .x)), r))
+  names(s) <- c(classes[-1], "Stacked")
+  rasterVis::levelplot(
+    s, att = "class", col.regions = c("#eeeeee", RColorBrewer::brewer.pal(6, "Set2")[c(6, 2, 4, 1)]),
+    maxpixels = 1e6, main = NULL, xlab = NULL, ylab = NULL, scales = list(draw = FALSE), 
+    colorkey = list(space = "bottom", height = 1, labels = list(cex = 0.7)))
+}
+
+plot_fmo_ratio <- function(unmanaged = 1, limited = 1,
+                            modified = 1.25, full = 1.5, critical = 1.75){
+  r0 <- snapgrid::swfmoBuffer
+  r <- r0 < 5
+  r[r0 == 0] <- unmanaged
+  r[r0 == 1] <- limited
+  r[r0 == 2] <- modified
+  r[r0 == 3] <- critical
+  r[r0 == 4] <- full
+  r <- raster::ratify(r)
+  lev <- levels(r)[[1]]
+  clrs <- c("#eeeeee", rev(RColorBrewer::brewer.pal(9, "Spectral")[1:(length(lev$ID) - 1)]))
+  rasterVis::levelplot(
+    r, att = "ID", col.regions = clrs, maxpixels = 1e6, main = NULL,
+    xlab = NULL, ylab = NULL, scales = list(draw = FALSE), 
+    colorkey = list(space = "bottom", height = 1, labels = list(cex = 0.7)))
+}
+
+cba_plot <- function(x, x2){
+  ggplot(x, aes(FS, CBA, colour = FMO)) + geom_point(alpha = 0.75) + 
+    geom_hline(data = x2, aes(yintercept = CBA, colour = FMO)) +
+    labs(title = "Selected treatment vs. control", 
+        subtitle = "50% sensitivity and 50% ignition suppression", 
+        x = expression("Fire size"~(thousand~km^2)~""), 
+        y = expression("Burn area"~(thousand~km^2)~"")) + theme_gray(base_size = 12)
+}
+
+proj_cba_plot <- function(x, x2){
+  ggplot(x, aes(FS, CBA, colour = Model, group = interaction(Scenario, Model))) + geom_point(alpha = 0.5) + 
+    geom_hline(data = x2, aes(yintercept = CBA, colour = Model)) +
+    facet_wrap(~FMO, ncol = 2) +
+    labs(title = "Selected treatment vs. control", 
+        subtitle = "50% sensitivity and 50% ignition suppression", 
+        x = expression("Fire size"~(thousand~km^2)~""), 
+        y = expression("Burn area"~(thousand~km^2)~"")) + theme_gray(base_size = 12)
+}
+```
+
+```{r load_data}
+load("../data/hcbr.rda")
+load("../data/hcba_comp.rda")
+hcba_comp2 <- group_by(hcba_comp, Vegetation, FMO, Replicate) %>% summarise(CBA = max(CBA)) %>%
+  summarise(CBA = mean(CBA)) %>% ungroup()
+```
+
+Introduction {.storyboard data-icon="fa-info-circle"}
+=========================================
+
+### JFSP ALFRESCO simulations use vegetation-specific generalized boosted regression models to mediate climate-driven landscape flammability. 
+
+```{r veg, fig.width=5, fig.height=6}
+r <- raster::ratify(snapgrid::swveg)
+lev <- levels(r)[[1]]
+clrs <- c("#eeeeee", rev(RColorBrewer::brewer.pal(8, "Set2")[1:(length(lev$ID) - 1)]))
+classes <- c("No veg", "Alpine", "B. spruce", "W. spruce", "Deciduous",
+             "Shrub", "Graminoid", "Wetland")
+  suppressWarnings(levels(r) <- data.frame(ID = 0:7, class = factor(classes, levels = classes)))
+rasterVis::levelplot(
+  r, att = "class", col.regions = clrs, maxpixels = 1e6, main = NULL,
+  xlab = NULL, ylab = NULL, scales = list(draw = FALSE), 
+  colorkey = list(space = "bottom", height = 1, labels = list(cex = 0.7)))
+```
+
+***
+
+ALFRESCO wildfire and vegetation succession model simulations for the JFSP project use an Alaska vegetation input map layer with vegetation-specific generalized boosted regression models to mediate climate-driven landscape flammability. 
+
+### Fire management applied to calibrated historical ALFRESCO runs helps estimate the potential impact of future management scenarios.
+
+```{r fmo_panels, fig.width=9, fig.height=6}
+plot_fmo_panel()
+```
+
+***
+
+Fire management options are examined as part of historical ALFRESCO simulations to assess comparative capacity for cumulative burn reduction over a known period with respect to a status quo historical fire management scenario. The focus of the analysis is on limited, full and critical zones.
+
+
+### ALFRESCO simulations are repeated with different fire management treatments that affect vegetation ignition potential and spread sensitivity.
+
+```{r fmo_ratios, fig.width=5, fig.height=6}
+plot_fmo_ratio()
+```
+
+***
+
+The ALFRESCO model is calibrated to the empirical historical record, yielding a status quo control group model run. Then model simulations are repeated with different fire management treatments. Suppression ratios are used to differentially dampen the vegetation ignition potential and/or fire spread sensitivity of the three zones with respect to the status quo.
+
+Varying levels of fire management are applied to ALFRESCO simulations in a two-factor experiment and burn area reduction is compared.
+
+### Each row in the burn area table corresponds to an ALFRESCO model run involving 32 simulations. The average results across the 32 simulations are shown.
+
+```{r results_table1}
+lev <- levels(hcba_comp$Vegetation)
+y <- filter(hcbr, Vegetation == lev[1]) %>% select(c(2, 3, 5, 8))
+nam <- c("Sensitivity", "Ignition", "Reduction", "Area")
+names(y) <- nam
+y <- mutate(y, Sensitivity = Sensitivity / 100, Ignition = Ignition / 100, Reduction = -Reduction / 100)
+DT::datatable(y, style = 'bootstrap', class = "table table-hover table-condensed table-bordered",
+              options = list(bPaginate = FALSE, sDom = ""), rownames = FALSE, 
+              caption = "Table 1. 1950 - 2013 burn reduction by FMO treatment.") %>% 
+  formatPercentage(nam[1:2], 0) %>% formatPercentage(nam[3], 1) %>% 
+  formatCurrency(nam[4], currency = "", digits = 0)
+```
+
+***
+
+The Sensitivity and Ignition columns show fire management treatments. These refer to the maximum percentage suppression
+applied to the ALFRESCO fire sensitivity and ignition input maps. For example, 25% sensitivity means that regions of the 
+fire sensitivity map experienced no greater than 25% reduction in sensitivity for the model run. The mean cumulative burn area and associated percent reduction from the status quo across all simulations is shown for each fire management treatment level.
+
+```{r reduction_setup}
+x <- filter(hcba_comp, Vegetation == lev[1])
+x2 <- filter(hcba_comp2, Vegetation == lev[1])
+x <- bind_rows(select(slice(y, 1), c(1, 3, 4)), group_by(slice(y, -c(1:4)), Sensitivity) %>% 
+                 summarise(Reduction = round(mean(100 * Reduction), 1), Area = round(mean(Area))))
+x0 <- purrr::map(c(0, 0.25, 0.5, 0.75), ~unlist(filter(x, Sensitivity == .x)[2:3]))
+cap <- "Area (sq km)"
+```
+
+Historical Burn Reduction {data-icon="glyphicon-stats"}
+=========================================
+
+Text row {data-height=50}
+-----------------------------------------
+
+### {.no-title}
+
+#### Fire management in ALFRESCO has greater impact on model output via spread sensitivity. 
+
+Mean reduction and cumulative burn area is shown for the sensitivity treatment levels.
+
+Gauge row {data-height=80}
+-----------------------------------------
+
+### Status quo (no suppression)
+
+```{r reduction_gauge1}
+gauge(filter(x, Sensitivity == 0)$Reduction, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(50, 100), warning = c(20, 49.99), danger = c(0, 19.99)
+))
+```
+
+### Mean reduction (25% sensitivty)
+
+```{r reduction_gauge2}
+gauge(filter(x, Sensitivity == 0.25)$Reduction, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(50, 100), warning = c(20, 49.99), danger = c(0, 19.99)
+))
+```
+
+### Mean reduction (50% sensitivty)
+
+```{r reduction_gauge3}
+gauge(filter(x, Sensitivity == 0.50)$Reduction, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(50, 100), warning = c(20, 49.99), danger = c(0, 19.99)
+))
+```
+
+### Mean reduction (75% sensitivty)
+
+```{r reduction_gauge4}
+gauge(filter(x, Sensitivity == 0.75)$Reduction, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(50, 100), warning = c(20, 49.99), danger = c(0, 19.99)
+))
+```
+
+ValueBox row {data-height=100}
+-----------------------------------------
+
+### Mean burn (no suppression)
+
+```{r burn_vbox1}
+cap <- "Mean cumulative burn area (sq km)"
+valueBox(paste0(round(x0[[1]][2]/1000), "K"), caption = cap, icon = "glyphicon-fire", 
+         color = ifelse(x0[[1]][1] >= 50, "success", ifelse(x0[[1]][1] >= 20, "warning", "danger")))
+```
+
+### Mean burn (25% sensitivty)
+
+```{r burn_vbox2}
+valueBox(paste0(round(x0[[2]][2]/1000), "K"), caption = cap, icon = "glyphicon-fire", 
+         color = ifelse(x0[[2]][1] >= 50, "success", ifelse(x0[[2]][1] >= 20, "warning", "danger")))
+```
+
+### Mean burn (50% sensitivty) 
+
+```{r burn_vbox3}
+valueBox(paste0(round(x0[[3]][2]/1000), "K"), caption = cap, icon = "glyphicon-fire", 
+         color = ifelse(x0[[3]][1] >= 50, "success", ifelse(x0[[3]][1] >= 20, "warning", "danger")))
+```
+
+### Mean burn (75% sensitivty)
+
+```{r burn_vbox4}
+valueBox(paste0(round(x0[[4]][2]/1000), "K"), caption = cap, icon = "glyphicon-fire", 
+         color = ifelse(x0[[4]][1] >= 50, "success", ifelse(x0[[4]][1] >= 20, "warning", "danger")))
+```
+
+Text row {data-height=120}
+-----------------------------------------
+
+### {.no-title}
+
+#### Mean results for fire spread sensitivity
+
+Fire management has comparatively little impact on limiting fire in ALFRESCO when channeled through the suppression of vegetation ignition potential. This applies to calibrated historical model runs. For this reason, it is helpful to ignore the ignition-related fire management treatments in the experiment and focus on spread sensitivity influence. The statistics above simplify the results from the previous table.
+
+#### Applying fire management in ALFRESCO in the context of future projections
+
+Applying fire management scenarios in ALFRESCO via fire spread sensitivity acts as a relatively blunt instrument but one that allows for quickly dialing in to meaningful historical suppression levels. However, using ignition is still important. Application of fire management scenarios via ignition then allows for fine-grain control in order to complete the fire management calibration process, fox example, identifying the suppression parameters for the model that correspond to a 50% reduction in cumulative burn area compared to the status quo. This can be used in projected simulations to estimate the potential impact of various levels of future fire management scenarios. It is also important to consider the different impacts on fire size distributions in ALFRESCO as a result of varying fire management mediated by fire spread vs. ignition sensitivities.
+
+Historical CBA vs FS {data-icon="glyphicon-stats"}
+=========================================
+
+Plots tabset {.tabset .tabset-fade data-height=600}
+-----------------------------------------
+
+### All vegetation
+
+```{r results_plot1, fig.width=10, fig.height=6}
+lev <- levels(hcba_comp$Vegetation)
+x <- filter(hcba_comp, Vegetation == lev[1])
+x2 <- filter(hcba_comp2, Vegetation == lev[1])
+cba_plot(x, x2)
+y <- filter(hcbr, Vegetation == lev[1]) %>% select(c(2, 3, 5, 8))
+```
+
+### Black spruce
+
+```{r results_plot2, fig.width=10, fig.height=6}
+x <- filter(hcba_comp, Vegetation == lev[3])
+x2 <- filter(hcba_comp2, Vegetation == lev[3])
+cba_plot(x, x2)
+```
+
+### White spruce
+
+```{r results_plot3, fig.width=10, fig.height=6}
+x <- filter(hcba_comp, Vegetation == lev[4])
+x2 <- filter(hcba_comp2, Vegetation == lev[4])
+cba_plot(x, x2)
+```
+
+### Deciduous
+
+```{r results_plot4, fig.width=10, fig.height=6}
+x <- filter(hcba_comp, Vegetation == lev[5])
+x2 <- filter(hcba_comp2, Vegetation == lev[5])
+cba_plot(x, x2)
+```
+
+### Alpine
+
+```{r results_plot5, fig.width=10, fig.height=6}
+x <- filter(hcba_comp, Vegetation == lev[2])
+x2 <- filter(hcba_comp2, Vegetation == lev[2])
+cba_plot(x, x2)
+```
+
+### Shrub
+
+```{r results_plot6, fig.width=10, fig.height=6}
+x <- filter(hcba_comp, Vegetation == lev[6])
+x2 <- filter(hcba_comp2, Vegetation == lev[6])
+cba_plot(x, x2)
+```
+
+### Graminoid
+
+```{r results_plot7, fig.width=10, fig.height=6}
+x <- filter(hcba_comp, Vegetation == lev[7])
+x2 <- filter(hcba_comp2, Vegetation == lev[7])
+cba_plot(x, x2)
+```
+
+### Wetland
+
+```{r results_plot8, fig.width=10, fig.height=6}
+x <- filter(hcba_comp, Vegetation == lev[8])
+x2 <- filter(hcba_comp2, Vegetation == lev[8])
+cba_plot(x, x2)
+```
+
+Text row {data-height=100}
+-----------------------------------------
+
+### {.no-title}
+
+#### Cumulative burn area vs. fire size
+
+The figures above show 1950 - 2013 cumulative burn area vs. fire size, a key metric for calibration assessment, for a selected fire management treatment compared to the status quo. Each tab shows the plot broken out by unique vegetation classes as well as the full regional plot based on the spatial union of the vegetation classes.
+
+```{r load_proj_data}
+load("../data/pcbr.rda")
+load("../data/pcba_comp.rda")
+pcba_comp2 <- group_by(pcba_comp, Scenario, Model, Vegetation, FMO, Replicate) %>% summarise(CBA = max(CBA)) %>%
+  summarise(CBA = mean(CBA)) %>% ungroup()
+```
+
+```{r proj_reduction_setup}
+lev <- levels(pcba_comp$Vegetation)
+cap <- "Area (sq km)"
+```
+
+Projected Burn Reduction {data-icon="glyphicon-stats"}
+=========================================
+
+Text row {data-height=50}
+-----------------------------------------
+
+### {.no-title}
+
+#### Projected burn reduction for the 50/50 treatment. 
+
+Mean reduction and cumulative burn area are shown for each GCM under the RCP 6.0 scenario for the 50/50 treatment level over 2014 - 2099.
+
+Gauge row {data-height=80}
+-----------------------------------------
+
+### GFDL-CM3
+
+```{r proj_reduction_gauge1}
+rcp <- "RCP 6.0"
+mod <- "GFDL-CM3"
+y <- filter(pcbr, Vegetation == lev[1] & Scenario == rcp & Model == mod) %>% select(c(2:5, 7, 10))
+nam <- c("Scenario", "Model", "Sensitivity", "Ignition", "Reduction", "Area")
+names(y) <- nam
+y <- mutate(y, Sensitivity = Sensitivity / 100, Ignition = Ignition / 100, Reduction = -Reduction / 100)
+x <- filter(pcba_comp, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x2 <- filter(pcba_comp2, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x <- bind_rows(select(slice(y, 1), c(1:3, 5:6)), group_by(slice(y, -1), Scenario, Model, Sensitivity) %>% 
+                 summarise(Reduction = round(mean(100 * Reduction), 1), Area = round(mean(Area))))
+x0 <- list(filter(x, Sensitivity == 0.50)[4:5])
+
+gauge(filter(x, Sensitivity == 0.50)$Reduction, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(40, 100), warning = c(20, 39.99), danger = c(0, 19.99)
+))
+```
+
+### NCAR-CCSM4
+
+```{r proj_reduction_gauge2}
+rcp <- "RCP 6.0"
+mod <- "CCSM4"
+y <- filter(pcbr, Vegetation == lev[1] & Scenario == rcp & Model == mod) %>% select(c(2:5, 7, 10))
+nam <- c("Scenario", "Model", "Sensitivity", "Ignition", "Reduction", "Area")
+names(y) <- nam
+y <- mutate(y, Sensitivity = Sensitivity / 100, Ignition = Ignition / 100, Reduction = -Reduction / 100)
+x <- filter(pcba_comp, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x2 <- filter(pcba_comp2, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x <- bind_rows(select(slice(y, 1), c(1:3, 5:6)), group_by(slice(y, -1), Scenario, Model, Sensitivity) %>% 
+                 summarise(Reduction = round(mean(100 * Reduction), 1), Area = round(mean(Area))))
+x0 <- c(x0, list(filter(x, Sensitivity == 0.50)[4:5]))
+
+gauge(filter(x, Sensitivity == 0.50)$Reduction, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(40, 100), warning = c(20, 39.99), danger = c(0, 19.99)
+))
+```
+
+### IPSL-CM5A-LR
+
+```{r proj_reduction_gauge3}
+rcp <- "RCP 6.0"
+mod <- "IPSL-CM5A-LR"
+y <- filter(pcbr, Vegetation == lev[1] & Scenario == rcp & Model == mod) %>% select(c(2:5, 7, 10))
+nam <- c("Scenario", "Model", "Sensitivity", "Ignition", "Reduction", "Area")
+names(y) <- nam
+y <- mutate(y, Sensitivity = Sensitivity / 100, Ignition = Ignition / 100, Reduction = -Reduction / 100)
+x <- filter(pcba_comp, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x2 <- filter(pcba_comp2, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x <- bind_rows(select(slice(y, 1), c(1:3, 5:6)), group_by(slice(y, -1), Scenario, Model, Sensitivity) %>% 
+                 summarise(Reduction = round(mean(100 * Reduction), 1), Area = round(mean(Area))))
+x0 <- c(x0, list(filter(x, Sensitivity == 0.50)[4:5]))
+
+gauge(filter(x, Sensitivity == 0.50)$Reduction, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(40, 100), warning = c(20, 39.99), danger = c(0, 19.99)
+))
+```
+
+### GISS-E2-R
+
+```{r proj_reduction_gauge4}
+rcp <- "RCP 6.0"
+mod <- "GISS-E2-R"
+y <- filter(pcbr, Vegetation == lev[1] & Scenario == rcp & Model == mod) %>% select(c(2:5, 7, 10))
+nam <- c("Scenario", "Model", "Sensitivity", "Ignition", "Reduction", "Area")
+names(y) <- nam
+y <- mutate(y, Sensitivity = Sensitivity / 100, Ignition = Ignition / 100, Reduction = -Reduction / 100)
+x <- filter(pcba_comp, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x2 <- filter(pcba_comp2, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x <- bind_rows(select(slice(y, 1), c(1:3, 5:6)), group_by(slice(y, -1), Scenario, Model, Sensitivity) %>% 
+                 summarise(Reduction = round(mean(100 * Reduction), 1), Area = round(mean(Area))))
+x0 <- c(x0, list(filter(x, Sensitivity == 0.50)[4:5]))
+
+gauge(filter(x, Sensitivity == 0.50)$Reduction, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(40, 100), warning = c(20, 39.99), danger = c(0, 19.99)
+))
+```
+
+### MRI-CGCM3
+
+```{r proj_reduction_gauge5}
+rcp <- "RCP 6.0"
+mod <- "MRI-CGCM3"
+y <- filter(pcbr, Vegetation == lev[1] & Scenario == rcp & Model == mod) %>% select(c(2:5, 7, 10))
+nam <- c("Scenario", "Model", "Sensitivity", "Ignition", "Reduction", "Area")
+names(y) <- nam
+y <- mutate(y, Sensitivity = Sensitivity / 100, Ignition = Ignition / 100, Reduction = -Reduction / 100)
+x <- filter(pcba_comp, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x2 <- filter(pcba_comp2, Vegetation == lev[1] & Scenario == rcp & Model == mod)
+x <- bind_rows(select(slice(y, 1), c(1:3, 5:6)), group_by(slice(y, -1), Scenario, Model, Sensitivity) %>% 
+                 summarise(Reduction = round(mean(100 * Reduction), 1), Area = round(mean(Area))))
+x0 <- c(x0, list(filter(x, Sensitivity == 0.50)[4:5]))
+
+gauge(filter(x, Sensitivity == 0.50)$Reduction, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(40, 100), warning = c(20, 39.99), danger = c(0, 19.99)
+))
+```
+
+ValueBox row {data-height=100}
+-----------------------------------------
+
+### GFDL-CM3 mean burn
+
+```{r proj_burn_vbox1}
+valueBox(paste0(round(x0[[1]][2]/1000), "K"), caption = cap, icon = "glyphicon-fire", 
+         color = ifelse(x0[[1]][1] >= 40, "success", ifelse(x0[[1]][1] >= 20, "warning", "danger")))
+```
+
+### NCAR-CCSM4 mean burn
+
+```{r proj_burn_vbox2}
+valueBox(paste0(round(x0[[2]][2]/1000), "K"), caption = cap, icon = "glyphicon-fire", 
+         color = ifelse(x0[[2]][1] >= 40, "success", ifelse(x0[[2]][1] >= 20, "warning", "danger")))
+```
+
+### IPSL-CM5A-LR mean burn
+
+```{r proj_burn_vbox3}
+valueBox(paste0(round(x0[[3]][2]/1000), "K"), caption = cap, icon = "glyphicon-fire", 
+         color = ifelse(x0[[3]][1] >= 40, "success", ifelse(x0[[3]][1] >= 20, "warning", "danger")))
+```
+
+### GISS-E2-R mean burn 
+
+```{r proj_burn_vbox4}
+valueBox(paste0(round(x0[[4]][2]/1000), "K"), caption = cap, icon = "glyphicon-fire", 
+         color = ifelse(x0[[4]][1] >= 40, "success", ifelse(x0[[4]][1] >= 20, "warning", "danger")))
+```
+
+### MRI-CGCM3 mean burn
+
+```{r proj_burn_vbox5}
+valueBox(paste0(round(x0[[5]][2]/1000), "K"), caption = cap, icon = "glyphicon-fire", 
+         color = ifelse(x0[[5]][1] >= 40, "success", ifelse(x0[[5]][1] >= 20, "warning", "danger")))
+```
+
+Text row {data-height=120}
+-----------------------------------------
+
+### {.no-title}
+
+#### Results of projected reductions in burn area
+
+Results are shown above for the projected reductions in burn area under the RCP 6.0 emissions scenario for each of five climate models using the 50/50 fire management treatment.
+
+Projected CBA vs FS {data-icon="glyphicon-stats"}
+=========================================
+
+Plots tabset {.tabset .tabset-fade data-height=600}
+-----------------------------------------
+
+```{r proj_plot_setup}
+rcp <- "RCP 6.0"
+```
+
+### All vegetation
+
+```{r proj_results_plot1, fig.width=10, fig.height=6}
+lev <- levels(pcba_comp$Vegetation)
+x <- filter(pcba_comp, Vegetation == lev[1] & Scenario == rcp)
+x2 <- filter(pcba_comp2, Vegetation == lev[1] & Scenario == rcp)
+proj_cba_plot(x, x2)
+y <- filter(pcbr, Vegetation == lev[1]) %>% select(c(2, 3, 5, 8))
+```
+
+### Black spruce
+
+```{r proj_results_plot2, fig.width=10, fig.height=6}
+x <- filter(pcba_comp, Vegetation == lev[3] & Scenario == rcp)
+x2 <- filter(pcba_comp2, Vegetation == lev[3] & Scenario == rcp)
+proj_cba_plot(x, x2)
+```
+
+### White spruce
+
+```{r proj_results_plot3, fig.width=10, fig.height=6}
+x <- filter(pcba_comp, Vegetation == lev[4] & Scenario == rcp)
+x2 <- filter(pcba_comp2, Vegetation == lev[4] & Scenario == rcp)
+proj_cba_plot(x, x2)
+```
+
+### Deciduous
+
+```{r proj_results_plot4, fig.width=10, fig.height=6}
+x <- filter(pcba_comp, Vegetation == lev[5] & Scenario == rcp)
+x2 <- filter(pcba_comp2, Vegetation == lev[5] & Scenario == rcp)
+proj_cba_plot(x, x2)
+```
+
+### Alpine
+
+```{r proj_results_plot5, fig.width=10, fig.height=6}
+x <- filter(pcba_comp, Vegetation == lev[2] & Scenario == rcp)
+x2 <- filter(pcba_comp2, Vegetation == lev[2] & Scenario == rcp)
+proj_cba_plot(x, x2)
+```
+
+### Shrub
+
+```{r proj_results_plot6, fig.width=10, fig.height=6}
+x <- filter(pcba_comp, Vegetation == lev[6] & Scenario == rcp)
+x2 <- filter(pcba_comp2, Vegetation == lev[6] & Scenario == rcp)
+proj_cba_plot(x, x2)
+```
+
+### Graminoid
+
+```{r proj_results_plot7, fig.width=10, fig.height=6}
+x <- filter(pcba_comp, Vegetation == lev[7] & Scenario == rcp)
+x2 <- filter(pcba_comp2, Vegetation == lev[7] & Scenario == rcp)
+proj_cba_plot(x, x2)
+```
+
+### Wetland
+
+```{r proj_results_plot8, fig.width=10, fig.height=6}
+x <- filter(pcba_comp, Vegetation == lev[8] & Scenario == rcp)
+x2 <- filter(pcba_comp2, Vegetation == lev[8] & Scenario == rcp)
+proj_cba_plot(x, x2)
+```
+
+Text row {data-height=100}
+-----------------------------------------
+
+### {.no-title}
+
+#### Cumulative burn area vs. fire size
+
+The figures above show 2014 - 2099 projected cumulative burn area vs. fire size for the 50/50 fire management treatment compared to status quo projections. Each tab shows the plot broken out by unique vegetation classes as well as the full regional plot based on the spatial union of the vegetation classes.

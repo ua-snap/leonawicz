@@ -1,0 +1,3 @@
+Project data is backed up and can be found here if needed:
+/workspace/UA/mfleonawicz/projects/SNAPQAQC/data/final/alfresco/CMIP5_Statewide
+/atlas_scratch/mfleonawicz/alfresco/JFSP
