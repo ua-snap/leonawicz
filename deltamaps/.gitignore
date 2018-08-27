@@ -1,0 +1,7 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*aws_key.R
+*rsconnect*
+*tiles/
