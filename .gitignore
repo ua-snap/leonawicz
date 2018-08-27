@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+*aws_key.R
+*rsconnect*
