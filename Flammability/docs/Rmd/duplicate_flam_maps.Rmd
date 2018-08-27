@@ -1,0 +1,24 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/flammability_maps/duplicate_flam_maps.R")
+```
+
+##
+##
+## duplicate_flam_maps.R
+
+The `duplicate_flam_maps.R` script performs a cyclical backcast of 1901-2009 CRU 3.1 flammability maps so that ALFRESCO modeling with historical flammability maps can run over a longer simulation period.
+
+## R code
+
+```{r duplicate}
+```

@@ -1,0 +1,36 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, echo=TRUE, tidy=TRUE, message=FALSE, warning=FALSE, dpi=300, fig.height=10.5, fig.width=10.5)
+read_chunk("../../code/flammability_maps/flam_trunc.R")
+```
+
+##
+##
+## Truncation of flammability distributions
+
+Flammability distributions in each map layer are trimmed at a lower and upper bound.
+Truncations are unique to each vegetation class' flammability distribution.
+Bounds are the critical values pertaining to the 10th and 90th percentiles of the global flammability distribution.
+The global distribution refers to the distribution of flammability values through time (1950 - 2013) and across space for an individual vegetation class.
+
+Lower and upper bounds for each vegetation class can be seen in the code below and are based on explorations of the distributions carried out in the `flam_dist.R` script.
+The distribution of the aggregate CAVM tundra class, which combines shrub, graminoid, and wetland tundra, is also trimmed with respect to its global 10th and 90th percentiles.
+
+### R code
+
+```{r setup}
+```
+
+```{r func}
+```
+
+```{r run}
+```

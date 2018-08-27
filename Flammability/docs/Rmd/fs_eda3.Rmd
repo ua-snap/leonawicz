@@ -1,0 +1,41 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=TRUE, tidy=TRUE, message=FALSE, warning=FALSE, dpi=300, fig.height=7, fig.width=10.5)
+read_chunk("../../code/alfresco/fsMLE.R")
+```
+
+##
+##
+## fsMLE.R EDA part 3
+### Statewide forest fire size log-normality
+
+Evaluate the degree of log-normality of forest fire size distributions using observed data and modeled outputs for the statewide region.
+The forest class is an aggregation of black spruce, white spruce, and deciduous tree species.
+
+```{r setup, echo=FALSE, results="hide"}
+```
+
+```{r func_check_lnorm, echo=FALSE, results="hide"}
+```
+
+#### Observed and sample replicate simulation fire sizes by decade
+
+The first replicate was selected.
+
+```{r lnorm_sw_forest_all}
+```
+
+#### Observed and sample replicate simulation fire sizes by decade
+
+The first replicate was selected.
+
+```{r lnorm_sw_forest_decades}
+```

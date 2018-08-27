@@ -1,0 +1,41 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=TRUE, tidy=TRUE, message=FALSE, warning=FALSE, dpi=300, fig.height=6, fig.width=12)
+read_chunk("../../code/tpByVeg/tpByVeg_plots.R")
+```
+
+##
+##
+## tpByVeg_plots.R
+
+The `tpByVeg_plots.R` script provides exploratory graphs of the sampled temperature and precipitation data from CRU 3.2 and GCMs.
+The data are sampled from spatially explicit monthly climate maps over the period 1950-2013 for CRU 3.2 and 2010-2099 for various GCMs.
+Sampling is stratified by vegetation class. Samples and sample means by vegetation class are used in various analyses.
+
+## R code
+
+### Setup
+
+```{r setup, results="hide"}
+```
+
+### Plot group 1
+
+```{r plot_group1a}
+```
+
+```{r plot_group1b, fig.height=12, fig.width=12}
+```
+
+### Plot group 2
+
+```{r plot_group2, fig.height=4}
+```

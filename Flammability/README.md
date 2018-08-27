@@ -1,0 +1,25 @@
+# Flammability
+Matthew Leonawicz  
+
+
+##
+##
+## Introduction
+
+Here you will find documentation on the `Flammability` project suite,
+a collection of related projects centered around the use of enhanced flammability input maps in ALFRESCO in lieu of basic monthly climate maps.
+There are a number of **R** scripts devoted to several key purposes, including:
+
+*    Data preparation for statistical modeling and ALFRESCO simulation modeling
+*    Development of gradient-boosted regression models (GBMs) of vegetation flammability
+*    Application of spatially explicit climate inputs to fitted GBMs for historical and projected flammability maps
+*    Historical period ALFRESCO model calibration
+*    Noatak region-specific analyses
+*    Classic statewide domain-specific analyses
+*    Web applications used to launch ALFRESCO and to gather and display results
+*    Lightning probability map integration
+*    Fire Return Period (FRP) and Fire Return Interval (FRI) tables and graphs
+*    Vegetation-specific fire size (FS) tables
+*    Comparison of simulations with historically observed data
+
+This documentation is currently under development.

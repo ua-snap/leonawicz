@@ -1,0 +1,51 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/flammability_maps/FlammabilityMapMultipliers.R")
+```
+
+##
+##
+## FlammabilityMapMultipliers.R
+
+The `FlammabilityMapMultipliers.R` script multiplies each flammability map in a series by either a scalar lightning intensity coefficient
+or a spatially explicit lightning intensity map to stretch or compress inter-annual variability in flammability.
+Lightning coefficients are stored in a data table loaded by workspace, originally assembled by `gbm_lightning_coefficients.R`.
+
+The annual coefficients for a given climate data set (historical or projected, and CRU 3.2 or a specific GCM) in the table are based on each data set's empirical CDF.
+For each data set there is also a column of lightning intensity classes - low, medium, and high.
+Both coefficients and classes are based on the inter-annual signal of the gbm lightning point model predictions.
+Point model refers to a spatially aggregated model, specifically one using mean climate variables as covariates and having a spatially aggregated total or average lightning response.
+
+For CRU 3.2 historical flammability maps, observation-based coefficients are applied for the years 2003 - 2011.
+Years 1950 - 2002 use backcast predictions of annual lightning intensity and a small forecast for years 2012 - 2013.
+For GCM-based flammability maps, forecast lightning coefficients are used for years 2014 - 2099.
+
+In the case of spatially explicit lightning maps, maps are similarly available for 2003 - 2011.
+Maps are classified into one of three levels (low, medium, high) of annual intensity rather than using CDF-based scalar coefficients.
+Classes are used to make a random map draw from the subset of three of the nine maps similarly classified as low, medium, or high intensity.
+In this manner, a lightning map is associated with each year in the backcast and forecast periods and years 2003 - 2011 use their own respective maps,
+analogous to the direct application of scalar coefficients.
+
+Backcasts and forecasts can go as far as there is CRU 3.2 (back to 1901) or GCM (forward through 2099) data available.
+Beyond this, simple random sampling of the coefficient set or the map set must be used, though relative sampling probabilites can differ by coefficient or map group in accordance with their proportions during known periods.
+
+## R code
+
+### Setup
+
+```{r setup}
+```
+
+### Run
+
+```{r func}
+```

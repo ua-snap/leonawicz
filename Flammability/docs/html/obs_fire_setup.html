@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="obs_fire_setup.r" class="section level2">
+<h2>obs_fire_setup.R</h2>
+<p>The <code>obs_fire_setup.R</code> script prepares various data objects related to the empirical or historically observed fire data, including fire area shapefiles, single- and multi-band rasters, subsetting to years of interest, and creating temporary files used by various ALFRESCO post-processing <strong>R</strong> scripts.</p>
+<p>Two examples of scripts which call this script are <code>fsByVeg.R</code> and <code>AlfrescoFRP.R</code>.</p>
+</div>
+<div id="r-code" class="section level2">
+<h2>R code</h2>
+<pre class="sourceCode r"><code class="sourceCode r">if (emp.fire.cause ==<span class="st"> &quot;All&quot;</span>) fah &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="st">&quot;/big_scratch/mfleonawicz/FAH/FireAreaHistory_11182013.shp&quot;</span>)
+if (emp.fire.cause ==<span class="st"> &quot;Lightning&quot;</span>) fah &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="st">&quot;/big_scratch/mfleonawicz/FAH/Lightning_Fires_11182013.shp&quot;</span>)
+fah &lt;-<span class="st"> </span><span class="kw">subset</span>(fah, FireYear &gt;=<span class="st"> </span><span class="dv">1950</span>)  <span class="co"># do nto use observed data prior to 1950</span>
+yrs.fah &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">as.numeric</span>(<span class="kw">unique</span>(fah@data$FireYear)))
+if (period ==<span class="st"> &quot;historical&quot;</span>) yrs.hist.all &lt;-<span class="st"> </span>yrs else yrs.hist.all &lt;-<span class="st"> </span><span class="dv">1950</span>:<span class="dv">2013</span>  <span class="co"># default historical years when processing future Alfresco runs</span>
+
+if (<span class="kw">substr</span>(<span class="kw">tolower</span>(alf.domain), <span class="dv">1</span>, <span class="dv">6</span>) ==<span class="st"> &quot;noatak&quot;</span>) {
+    r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;/big_scratch/mfleonawicz/Alf_Files_20121129/alf2005.cavm.merged.030212_Noatak.tif&quot;</span>)
+    shp &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="st">&quot;/big_scratch/mfleonawicz/Alf_Files_20121129/noa_basin2/Noa_basin2.shp&quot;</span>)
+} else if (<span class="kw">substr</span>(<span class="kw">tolower</span>(alf.domain), <span class="dv">1</span>, <span class="dv">6</span>) ==<span class="st"> &quot;statew&quot;</span>) {
+    r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;/big_scratch/mfleonawicz/Alf_Files_20121129/alf2005.cavm.merged.030212.tif&quot;</span>)
+    shp &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="st">&quot;/big_scratch/mfleonawicz/Alf_Files_20121129/statewide_shape/Alaska_Albers_ESRI.shp&quot;</span>)
+}
+
+suffix &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;_observed_&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot;&quot;</span>, alf.domain), <span class="st">&quot;_&quot;</span>, <span class="kw">tolower</span>(emp.fire.cause), 
+    <span class="st">&quot;_&quot;</span>, <span class="kw">min</span>(yrs.hist.all), <span class="st">&quot;_&quot;</span>, <span class="kw">max</span>(yrs.hist.all), <span class="st">&quot;.tif&quot;</span>)
+b.fid.name &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;/big_scratch/shiny/fireIDbrick_annual&quot;</span>, suffix)
+result.name &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;/big_scratch/shiny/firescarbrick_annual&quot;</span>, suffix)
+result2.name &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;/big_scratch/shiny/firescarlayer_total&quot;</span>, suffix)
+if (<span class="kw">file.exists</span>(b.fid.name)) {
+    b.fid &lt;-<span class="st"> </span><span class="kw">brick</span>(b.fid.name)
+    <span class="kw">print</span>(<span class="st">&quot;b.fid read into memory&quot;</span>)
+}
+if (<span class="kw">file.exists</span>(result.name)) {
+    result &lt;-<span class="st"> </span><span class="kw">brick</span>(result.name)
+    <span class="kw">print</span>(<span class="st">&quot;result read into memory&quot;</span>)
+}
+if (<span class="kw">file.exists</span>(result2.name)) {
+    result2 &lt;-<span class="st"> </span><span class="kw">raster</span>(result2.name)
+    <span class="kw">print</span>(<span class="st">&quot;result2 read into memory&quot;</span>)
+}
+
+fireScarsFun &lt;-<span class="st"> </span>function(year, x, y, years.avail, <span class="dt">field =</span> <span class="dv">1</span>) {
+    if (year %in%<span class="st"> </span>years.avail) {
+        x &lt;-<span class="st"> </span>x[x$FireYear ==<span class="st"> </span>year, ]
+        x &lt;-<span class="st"> </span><span class="kw">rasterize</span>(x, y, <span class="dt">field =</span> field)
+    } else {
+        x &lt;-<span class="st"> </span>x[x$FireYear ==<span class="st"> </span>years.avail[<span class="dv">1</span>], ]
+        x &lt;-<span class="st"> </span><span class="kw">rasterize</span>(x, y, <span class="dt">field =</span> <span class="dv">1</span>)
+        x[!<span class="kw">is.na</span>(x)] &lt;-<span class="st"> </span><span class="ot">NA</span>
+    }
+    x
+}
+
+<span class="kw">library</span>(parallel)
+n.cores &lt;-<span class="st"> </span><span class="dv">32</span>  <span class="co"># hardcoded</span>
+<span class="co"># fireScarsFunVec &lt;- Vectorize(fireScarsFun,&#39;year&#39;)</span>
+if (!<span class="kw">exists</span>(<span class="st">&quot;b.fid&quot;</span>)) {
+    b.fid &lt;-<span class="st"> </span><span class="kw">mclapply</span>(yrs.hist.all, fireScarsFun, <span class="dt">x =</span> fah, <span class="dt">y =</span> r, <span class="dt">years.avail =</span> yrs.fah, 
+        <span class="dt">field =</span> <span class="st">&quot;FIREID&quot;</span>, <span class="dt">mc.cores =</span> n.cores)
+    <span class="kw">print</span>(<span class="kw">summary</span>(b.fid[[<span class="dv">1</span>]][]))
+    b.fid &lt;-<span class="st"> </span><span class="kw">brick</span>(b.fid)
+    <span class="kw">print</span>(<span class="st">&quot;b.fid brick created&quot;</span>)
+    <span class="kw">print</span>(<span class="kw">summary</span>(<span class="kw">subset</span>(b.fid, <span class="dv">1</span>)[]))
+    if (<span class="kw">substr</span>(<span class="kw">tolower</span>(alf.domain), <span class="dv">1</span>, <span class="dv">6</span>) ==<span class="st"> &quot;noatak&quot;</span>) {
+        b.fid &lt;-<span class="st"> </span><span class="kw">mask</span>(b.fid, shp)
+        <span class="kw">print</span>(<span class="st">&quot;b.fid brick masked&quot;</span>)
+    }
+    if (!<span class="kw">file.exists</span>(b.fid.name)) {
+        <span class="co"># writeRaster(b.fid, b.fid.name, datatype=&#39;FLT4S&#39;, overwrite=T)</span>
+        b &lt;-<span class="st"> </span><span class="kw">brick</span>(b.fid, <span class="dt">values =</span> <span class="ot">FALSE</span>)
+        b &lt;-<span class="st"> </span><span class="kw">writeStart</span>(b, <span class="dt">filename =</span> b.fid.name, <span class="dt">format =</span> <span class="st">&quot;GTiff&quot;</span>, <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, 
+            <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)
+        tr &lt;-<span class="st"> </span><span class="kw">blockSize</span>(b)
+        for (i in <span class="dv">1</span>:tr$n) {
+            v &lt;-<span class="st"> </span><span class="kw">getValuesBlock</span>(b.fid, <span class="dt">row =</span> tr$row[i], <span class="dt">nrows =</span> tr$nrows[i])
+            b &lt;-<span class="st"> </span><span class="kw">writeValues</span>(b, v, tr$row[i])
+        }
+        b &lt;-<span class="st"> </span><span class="kw">writeStop</span>(b)
+    }
+    <span class="kw">print</span>(<span class="st">&quot;b.fid file written&quot;</span>)
+    <span class="kw">print</span>(<span class="kw">summary</span>(<span class="kw">subset</span>(b.fid, <span class="dv">1</span>)[]))
+}
+if (!<span class="kw">exists</span>(<span class="st">&quot;result&quot;</span>)) {
+    result &lt;-<span class="st"> </span><span class="kw">mclapply</span>(yrs.hist.all, fireScarsFun, <span class="dt">x =</span> fah, <span class="dt">y =</span> r, <span class="dt">years.avail =</span> yrs.fah, 
+        <span class="dt">mc.cores =</span> n.cores)
+    <span class="kw">print</span>(<span class="st">&quot;result list created&quot;</span>)
+    <span class="kw">print</span>(<span class="kw">class</span>(result))
+    <span class="kw">print</span>(<span class="kw">length</span>(result))
+    <span class="kw">print</span>(<span class="kw">class</span>(result[[<span class="dv">1</span>]]))
+    result &lt;-<span class="st"> </span><span class="kw">lapply</span>(result, function(x, r.veg) {
+        x[<span class="kw">is.na</span>(x) &amp;<span class="st"> </span>!<span class="kw">is.na</span>(r.veg) &amp;<span class="st"> </span>r.veg &gt;<span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">0</span>
+        x
+    }, <span class="dt">r.veg =</span> r)
+    <span class="kw">print</span>(<span class="st">&quot;result list processed&quot;</span>)
+    if (!<span class="kw">exists</span>(<span class="st">&quot;result2&quot;</span>)) 
+        result2 &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&quot;sum&quot;</span>, <span class="kw">c</span>(result, <span class="dt">na.rm =</span> T))
+    <span class="kw">print</span>(<span class="st">&quot;result2 raster layer created&quot;</span>)
+    result &lt;-<span class="st"> </span><span class="kw">brick</span>(result)
+    <span class="kw">print</span>(<span class="st">&quot;result brick created&quot;</span>)
+    if (<span class="kw">substr</span>(<span class="kw">tolower</span>(alf.domain), <span class="dv">1</span>, <span class="dv">6</span>) ==<span class="st"> &quot;noatak&quot;</span>) {
+        b.fid &lt;-<span class="st"> </span><span class="kw">mask</span>(b.fid, shp)
+        result &lt;-<span class="st"> </span><span class="kw">mask</span>(result, shp)
+        result2 &lt;-<span class="st"> </span><span class="kw">mask</span>(result2, shp)
+    }
+    <span class="kw">names</span>(result) &lt;-<span class="st"> </span><span class="kw">names</span>(b.fid) &lt;-<span class="st"> </span>yrs.hist.all
+    <span class="kw">names</span>(result2) &lt;-<span class="st"> </span><span class="kw">paste</span>(yrs.hist.all[<span class="dv">1</span>], <span class="kw">tail</span>(yrs.hist.all, <span class="dv">1</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
+    if (!<span class="kw">file.exists</span>(result.name)) {
+        <span class="co"># writeRaster(result, result.name, datatype=&#39;FLT4S&#39;, overwrite=T)</span>
+        b &lt;-<span class="st"> </span><span class="kw">brick</span>(result, <span class="dt">values =</span> <span class="ot">FALSE</span>)
+        b &lt;-<span class="st"> </span><span class="kw">writeStart</span>(b, <span class="dt">filename =</span> result.name, <span class="dt">format =</span> <span class="st">&quot;GTiff&quot;</span>, <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, 
+            <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)
+        tr &lt;-<span class="st"> </span><span class="kw">blockSize</span>(b)
+        for (i in <span class="dv">1</span>:tr$n) {
+            v &lt;-<span class="st"> </span><span class="kw">getValuesBlock</span>(result, <span class="dt">row =</span> tr$row[i], <span class="dt">nrows =</span> tr$nrows[i])
+            b &lt;-<span class="st"> </span><span class="kw">writeValues</span>(b, v, tr$row[i])
+        }
+        b &lt;-<span class="st"> </span><span class="kw">writeStop</span>(b)
+        <span class="kw">print</span>(<span class="st">&quot;result file written&quot;</span>)
+    }
+    if (!<span class="kw">file.exists</span>(result2.name)) {
+        <span class="kw">writeRaster</span>(result2, result2.name, <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">overwrite =</span> T)
+        <span class="kw">print</span>(<span class="st">&quot;result2 file written&quot;</span>)
+    }
+}</code></pre>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

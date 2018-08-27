@@ -1,0 +1,28 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco_prelim_plots/CABvsTimePlot.R")
+```
+
+##
+##
+## CABvsTimePlot.R
+
+`CABvsTimePlot.R` stores the function `CABvsTimePlot`, which plots curves of cumulative burn area over the burnable ALFRESCO domain by time.
+A curve is plotted for each simulation replicate.
+The plot includes an overlay curve representing the historically observed cumulative burn area by time.
+
+This plot is called in `AlfrescoCalibration.R` and currently is hardcoded to plot curves based on 1950 - 2011.
+
+## R code
+
+```{r CABvsTimePlot}
+```

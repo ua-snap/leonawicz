@@ -1,0 +1,71 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco/AlfrescoFRP.R")
+```
+
+##
+##
+## AlfrescoFRP.R
+
+The `AlfrescoFRP.R` script carries out post-processing of ALFRESCO simulation outputs.
+It is assumed that `AlfrescoCalibration.R` has already executed. This and any other post-processing **R** script are always run secondary to the primary script.
+The key features of the script include:
+
+*    Simulation replicate-specific spatially explicit maps of Fire Return Period (FRP) compared with a historically observed FRP map.
+*    .RData workspace files containing Fire Return Interval (FRI) and FRP data frames for use in other applications.
+*    Export of **R** data objects via **R** workspace to a template Shiny app for dynamic, interactive exploratory analysis by the user.
+
+Files of interest are attached to an email which is sent from the Atlas cluster to intended recipients as part of the broader SLURM process.
+This script is called by the SLURM script, `CompileData.slurm` after the initial post-processing script, `AlfrescoCalibration.R` has run.
+This script also sources `obs_fire_setup.R` during runtime.
+
+## R code
+
+### Setup
+
+```{r setup}
+```
+
+### Processing function: modeled outputs
+
+```{r func_modeled}
+```
+
+### Processing function: observed data
+
+```{r func_empirical}
+```
+
+### Observational data-specific setup
+
+```{r empirical_data_setup}
+```
+
+### Processing
+
+```{r run}
+```
+
+### Spatially explicit FRP maps
+
+```{r FRP_maps}
+```
+
+### Shiny app setup
+
+```{r FRP_app_setup}
+```
+
+### Save outputs
+
+```{r save}
+```

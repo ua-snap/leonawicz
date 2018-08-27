@@ -1,0 +1,49 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=TRUE, echo=FALSE, tidy=TRUE, message=FALSE, warning=FALSE, dpi=300, fig.height=10.5, fig.width=10.5)
+library(printr)
+read_chunk("../../code/flammability_maps/flam_dist.R")
+```
+
+```{r setup2}
+```
+
+```{r plot_setup}
+```
+
+##
+##
+## Exploratory plots of marginal and conditional flammability distributions.
+
+Each plot is broken out by vegetation class, alpine tundra, boreal forest, combined CAVM tundra, and each of three CAVM component classes, shrub, graminoid, and wetland tundra.
+
+### Marginal distribution
+
+The first plot shows a density function proportional to joint probability distribution for flammability in time and space,
+marginalized with repsect to time. The time period is 1950 - 2013. The second plot is the same, but with flammability truncated to [0.12, 0.27].
+
+```{r plot01a}
+```
+
+```{r plot01b}
+```
+
+### Conditional distribution
+
+This plot shows multiple overlapping spatial flammability distributions conditioned on each year, also truncated to [0.12, 0.27].
+
+```{r plot02}
+```
+
+The table below provides distribution quantiles by vegetation class.
+
+```{r table01}
+```

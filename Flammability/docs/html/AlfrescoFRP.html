@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="alfrescofrp.r" class="section level2">
+<h2>AlfrescoFRP.R</h2>
+<p>The <code>AlfrescoFRP.R</code> script carries out post-processing of ALFRESCO simulation outputs. It is assumed that <code>AlfrescoCalibration.R</code> has already executed. This and any other post-processing <strong>R</strong> script are always run secondary to the primary script. The key features of the script include:</p>
+<ul>
+<li>Simulation replicate-specific spatially explicit maps of Fire Return Period (FRP) compared with a historically observed FRP map.</li>
+<li>.RData workspace files containing Fire Return Interval (FRI) and FRP data frames for use in other applications.</li>
+<li>Export of <strong>R</strong> data objects via <strong>R</strong> workspace to a template Shiny app for dynamic, interactive exploratory analysis by the user.</li>
+</ul>
+<p>Files of interest are attached to an email which is sent from the Atlas cluster to intended recipients as part of the broader SLURM process. This script is called by the SLURM script, <code>CompileData.slurm</code> after the initial post-processing script, <code>AlfrescoCalibration.R</code> has run. This script also sources <code>obs_fire_setup.R</code> during runtime.</p>
+</div>
+<div id="r-code" class="section level2">
+<h2>R code</h2>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<pre class="sourceCode r"><code class="sourceCode r">comArgs &lt;-<span class="st"> </span><span class="kw">commandArgs</span>(<span class="ot">TRUE</span>)
+if (<span class="kw">length</span>(comArgs &gt;<span class="st"> </span><span class="dv">0</span>)) {
+    arg.mat &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&quot;rbind&quot;</span>, <span class="kw">strsplit</span>(comArgs, <span class="st">&quot;=&quot;</span>))
+    <span class="kw">options</span>(<span class="dt">warn =</span> -<span class="dv">1</span>)
+    arg.char &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">is.na</span>(<span class="kw">as.numeric</span>(arg.mat[, <span class="dv">2</span>])))
+    <span class="kw">options</span>(<span class="dt">warn =</span> <span class="dv">0</span>)
+    if (<span class="kw">length</span>(arg.char &gt;<span class="st"> </span><span class="dv">0</span>)) 
+        arg.mat[arg.char, <span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;&#39;&quot;</span>, arg.mat[arg.char, <span class="dv">2</span>], <span class="st">&quot;&#39;&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+    <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> <span class="kw">apply</span>(arg.mat, <span class="dv">1</span>, paste, <span class="dt">collapse =</span> <span class="st">&quot;=&quot;</span>)))
+}
+<span class="kw">cat</span>(comArgs)
+<span class="kw">dir.create</span>(outDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(out, <span class="st">&quot;FRP&quot;</span>), <span class="dt">showWarnings =</span> F)
+<span class="kw">sink</span>(<span class="dt">file =</span> <span class="kw">file.path</span>(out, <span class="st">&quot;message.txt&quot;</span>), <span class="dt">append =</span> <span class="ot">TRUE</span>)
+<span class="kw">cat</span>(<span class="st">&quot;Below you will find a link to a preliminary R Shiny Alfresco FRP/FRI results web application.</span><span class="ch">\n</span><span class="st">&quot;</span>)
+
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(parallel)
+<span class="kw">library</span>(data.table)
+<span class="kw">library</span>(dplyr)
+
+<span class="kw">rasterOptions</span>(<span class="dt">tmpdir =</span> <span class="st">&quot;/big_scratch/shiny&quot;</span>, <span class="dt">chunksize =</span> <span class="fl">1e+11</span>, <span class="dt">maxmemory =</span> <span class="fl">1e+12</span>)
+mainDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(input, <span class="st">&quot;Maps&quot;</span>)
+<span class="kw">dir.create</span>(outDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(out, <span class="st">&quot;FRP&quot;</span>), <span class="dt">showWarnings =</span> F)
+if (!<span class="kw">exists</span>(<span class="st">&quot;pts&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;No coordinates file provided for relative area burned time series extraction.&quot;</span>)
+if (!<span class="kw">exists</span>(<span class="st">&quot;buffers&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;No buffer(s) provided for relative area burned time series extraction.&quot;</span>)
+if (!<span class="kw">exists</span>(<span class="st">&quot;baseline.year&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;baseline.year not found&quot;</span>) else baseline.year &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(baseline.year)
+if (period ==<span class="st"> &quot;historical&quot;</span>) yr.start &lt;-<span class="st"> </span><span class="dv">1950</span> else yr.start &lt;-<span class="st"> </span>baseline.year
+if (<span class="kw">exists</span>(<span class="st">&quot;yr.end&quot;</span>)) yrs &lt;-<span class="st"> </span>yr.start:yr.end else <span class="kw">stop</span>(<span class="st">&quot;must provide &#39;baseline.year&#39; and &#39;yr.end&#39;&quot;</span>)
+if (!<span class="kw">exists</span>(<span class="st">&quot;n.sims&quot;</span>)) n.sims &lt;-<span class="st"> </span><span class="dv">32</span>
+n.cores &lt;-<span class="st"> </span><span class="kw">min</span>(n.sims, <span class="dv">32</span>)
+
+pts &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">file.path</span>(input, pts))
+pts &lt;-<span class="st"> </span>pts[<span class="kw">order</span>(pts$ID), ]
+locs &lt;-<span class="st"> </span><span class="kw">as.character</span>(pts$ID)
+pts &lt;-<span class="st"> </span><span class="kw">cbind</span>(pts$Lon, pts$Lat)
+if (!<span class="kw">is.matrix</span>(pts)) <span class="kw">stop</span>(<span class="st">&quot;No coordinates matrix provided for relative area burned time series extraction&quot;</span>)
+
+buffers &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> buffers))
+buffers.labels &lt;-<span class="st"> </span>buffers/<span class="dv">1000</span>
+
+buffers &lt;-<span class="st"> </span><span class="kw">as.list</span>(<span class="kw">sort</span>(<span class="kw">unique</span>(buffers)))
+null.ind &lt;-<span class="st"> </span><span class="kw">which</span>(buffers ==<span class="st"> </span><span class="dv">0</span>)
+if (<span class="kw">length</span>(null.ind)) buffers[null.ind] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="ot">NULL</span>)
+
+propFun &lt;-<span class="st"> </span>function(x, ...) <span class="kw">sum</span>(x, <span class="dt">na.rm =</span> T)/<span class="kw">length</span>(<span class="kw">which</span>(!<span class="kw">is.na</span>(x)))
+buffer.functions &lt;-<span class="st"> </span>buffers
+for (i in <span class="dv">1</span>:<span class="kw">length</span>(buffers)) if (!<span class="kw">is.null</span>(buffers[[i]])) buffer.functions[[i]] &lt;-<span class="st"> </span>propFun
+if (<span class="kw">length</span>(null.ind)) buffer.functions[null.ind] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="ot">NULL</span>)
+
+wgs2ak &lt;-<span class="st"> </span>function(xy) {
+    <span class="kw">require</span>(rgdal)
+    if (<span class="kw">class</span>(xy) ==<span class="st"> &quot;matrix&quot;</span>) 
+        xy &lt;-<span class="st"> </span><span class="kw">data.frame</span>(xy)
+    <span class="kw">names</span>(xy) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)
+    <span class="kw">coordinates</span>(xy) &lt;-<span class="st"> </span><span class="kw">names</span>(xy)
+    <span class="kw">proj4string</span>(xy) &lt;-<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>)
+    xy &lt;-<span class="st"> </span><span class="kw">coordinates</span>(<span class="kw">spTransform</span>(xy, <span class="dt">CRS =</span> <span class="kw">CRS</span>(<span class="st">&quot;+proj=aea +lat_1=55 +lat_2=65 +lat_0=50 +lon_0=-154 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0&quot;</span>)))
+}
+
+pts &lt;-<span class="st"> </span><span class="kw">wgs2ak</span>(pts)</code></pre>
+</div>
+<div id="processing-function-modeled-outputs" class="section level3">
+<h3>Processing function: modeled outputs</h3>
+<pre class="sourceCode r"><code class="sourceCode r">fireEventsFun &lt;-<span class="st"> </span>function(d, pts, <span class="dt">buffer.list =</span> <span class="kw">list</span>(<span class="ot">NULL</span>), <span class="dt">fun.list =</span> <span class="kw">list</span>(<span class="ot">NULL</span>), 
+    <span class="dt">burnable.cells.raster =</span> <span class="ot">NULL</span>, mainDir) {
+    <span class="kw">require</span>(raster)
+    if (!<span class="kw">is.null</span>(burnable.cells.raster)) 
+        burnable.cells &lt;-<span class="st"> </span><span class="kw">Which</span>(burnable.cells.raster ==<span class="st"> </span><span class="dv">1</span>)
+    reps &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;_&quot;</span>, d -<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;_&quot;</span>)
+    files &lt;-<span class="st"> </span><span class="kw">list.files</span>(mainDir, <span class="dt">pattern =</span> <span class="kw">gsub</span>(<span class="st">&quot;expression&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">paste</span>(<span class="kw">bquote</span>(<span class="kw">expression</span>(<span class="st">&quot;^FireSc.*.&quot;</span>, 
+        .(reps), <span class="st">&quot;.*.tif$&quot;</span>)), <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>)), <span class="dt">full =</span> T)
+    yrs &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">&quot;FireScar_</span><span class="ch">\\</span><span class="st">d+_&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;.tif&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">basename</span>(files))))
+    n &lt;-<span class="st"> </span><span class="kw">length</span>(yrs)
+    ord &lt;-<span class="st"> </span><span class="kw">order</span>(yrs)
+    files &lt;-<span class="st"> </span>files[ord]
+    yrs &lt;-<span class="st"> </span>yrs[ord]
+    e.hold &lt;-<span class="st"> </span>cells.list &lt;-<span class="st"> </span><span class="kw">list</span>()
+    for (i in <span class="dv">1</span>:n) {
+        if (i ==<span class="st"> </span><span class="dv">1</span>) {
+            r.hold &lt;-<span class="st"> </span><span class="kw">raster</span>(files[i])
+            r.hold[<span class="kw">is.na</span>(r.hold)] &lt;-<span class="st"> </span><span class="dv">0</span>
+            r.hold &lt;-<span class="st"> </span><span class="kw">mask</span>(r.hold, burnable.cells)
+            r.hold[r.hold &gt;<span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
+            for (p in <span class="dv">1</span>:<span class="kw">length</span>(buffer.list)) {
+                if (!<span class="kw">is.null</span>(buffer.list[[p]])) {
+                  cells.list[[p]] &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">extract</span>(r.hold, pts, <span class="dt">buffer =</span> buffer.list[[p]], 
+                    <span class="dt">cellnumbers =</span> T), function(x) x[, <span class="dv">1</span>])
+                  tmp &lt;-<span class="st"> </span><span class="kw">c</span>()
+                  f &lt;-<span class="st"> </span>fun.list[[p]]
+                  for (q in <span class="dv">1</span>:<span class="kw">length</span>(cells.list[[p]])) tmp &lt;-<span class="st"> </span><span class="kw">c</span>(tmp, <span class="kw">f</span>(<span class="kw">extract</span>(r.hold, 
+                    cells.list[[p]][[q]])))
+                  e.hold[[p]] &lt;-<span class="st"> </span>tmp
+                } else if (<span class="kw">is.null</span>(buffer.list[[p]])) {
+                  cells.list[[p]] &lt;-<span class="st"> </span><span class="kw">extract</span>(r, pts, <span class="dt">cellnumbers =</span> T)[, <span class="dv">1</span>]
+                  e.hold[[p]] &lt;-<span class="st"> </span><span class="kw">extract</span>(r.hold, cells.list[[p]])
+                }
+            }
+        } else {
+            r &lt;-<span class="st"> </span><span class="kw">raster</span>(files[i])
+            r[<span class="kw">is.na</span>(r)] &lt;-<span class="st"> </span><span class="dv">0</span>
+            r &lt;-<span class="st"> </span><span class="kw">mask</span>(r, burnable.cells)
+            r[r &gt;<span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
+            r.hold &lt;-<span class="st"> </span>r +<span class="st"> </span>r.hold
+            for (p in <span class="dv">1</span>:<span class="kw">length</span>(buffer.list)) {
+                if (!<span class="kw">is.null</span>(buffer.list[[p]])) {
+                  tmp &lt;-<span class="st"> </span><span class="kw">c</span>()
+                  f &lt;-<span class="st"> </span>fun.list[[p]]
+                  for (q in <span class="dv">1</span>:<span class="kw">length</span>(cells.list[[p]])) tmp &lt;-<span class="st"> </span><span class="kw">c</span>(tmp, <span class="kw">f</span>(<span class="kw">extract</span>(r, 
+                    cells.list[[p]][[q]])))
+                  e.hold[[p]] &lt;-<span class="st"> </span><span class="kw">rbind</span>(e.hold[[p]], tmp)
+                } else if (<span class="kw">is.null</span>(buffer.list[[p]])) {
+                  e.hold[[p]] &lt;-<span class="st"> </span><span class="kw">rbind</span>(e.hold[[p]], <span class="kw">extract</span>(r, cells.list[[p]]))
+                }
+            }
+        }
+    }
+    <span class="kw">list</span>(<span class="dt">rasters =</span> r.hold, <span class="dt">points =</span> e.hold, <span class="dt">years =</span> n, <span class="dt">years.vec =</span> yrs)
+}</code></pre>
+</div>
+<div id="processing-function-observed-data" class="section level3">
+<h3>Processing function: observed data</h3>
+<pre class="sourceCode r"><code class="sourceCode r">fireEventsFunEmpirical &lt;-<span class="st"> </span>function(b, pts, <span class="dt">buffer.list =</span> <span class="kw">list</span>(<span class="ot">NULL</span>), <span class="dt">fun.list =</span> <span class="kw">list</span>(<span class="ot">NULL</span>), 
+    <span class="dt">burnable.cells.raster =</span> <span class="ot">NULL</span>) {
+    <span class="kw">require</span>(raster)
+    if (!<span class="kw">is.null</span>(burnable.cells.raster)) 
+        burnable.cells &lt;-<span class="st"> </span><span class="kw">Which</span>(burnable.cells.raster ==<span class="st"> </span><span class="dv">1</span>)
+    n &lt;-<span class="st"> </span><span class="kw">nlayers</span>(b)
+    e.hold &lt;-<span class="st"> </span>cells.list &lt;-<span class="st"> </span><span class="kw">list</span>()
+    for (i in <span class="dv">1</span>:n) {
+        if (i ==<span class="st"> </span><span class="dv">1</span>) {
+            r.hold &lt;-<span class="st"> </span><span class="kw">subset</span>(b, i)
+            r.hold[<span class="kw">is.na</span>(r.hold)] &lt;-<span class="st"> </span><span class="dv">0</span>
+            r.hold &lt;-<span class="st"> </span><span class="kw">mask</span>(r.hold, burnable.cells)
+            r.hold[r.hold &gt;<span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
+            for (p in <span class="dv">1</span>:<span class="kw">length</span>(buffer.list)) {
+                if (!<span class="kw">is.null</span>(buffer.list[[p]])) {
+                  cells.list[[p]] &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">extract</span>(r.hold, pts, <span class="dt">buffer =</span> buffer.list[[p]], 
+                    <span class="dt">cellnumbers =</span> T), function(x) x[, <span class="dv">1</span>])
+                  tmp &lt;-<span class="st"> </span><span class="kw">c</span>()
+                  f &lt;-<span class="st"> </span>fun.list[[p]]
+                  for (q in <span class="dv">1</span>:<span class="kw">length</span>(cells.list[[p]])) tmp &lt;-<span class="st"> </span><span class="kw">c</span>(tmp, <span class="kw">f</span>(<span class="kw">extract</span>(r.hold, 
+                    cells.list[[p]][[q]])))
+                  e.hold[[p]] &lt;-<span class="st"> </span>tmp
+                } else if (<span class="kw">is.null</span>(buffer.list[[p]])) {
+                  cells.list[[p]] &lt;-<span class="st"> </span><span class="kw">extract</span>(r, pts, <span class="dt">cellnumbers =</span> T)[, <span class="dv">1</span>]
+                  e.hold[[p]] &lt;-<span class="st"> </span><span class="kw">extract</span>(r.hold, cells.list[[p]])
+                }
+            }
+        } else {
+            r &lt;-<span class="st"> </span><span class="kw">subset</span>(b, i)
+            r[<span class="kw">is.na</span>(r)] &lt;-<span class="st"> </span><span class="dv">0</span>
+            r &lt;-<span class="st"> </span><span class="kw">mask</span>(r, burnable.cells)
+            r[r &gt;<span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
+            r.hold &lt;-<span class="st"> </span>r +<span class="st"> </span>r.hold
+            for (p in <span class="dv">1</span>:<span class="kw">length</span>(buffer.list)) {
+                if (!<span class="kw">is.null</span>(buffer.list[[p]])) {
+                  tmp &lt;-<span class="st"> </span><span class="kw">c</span>()
+                  f &lt;-<span class="st"> </span>fun.list[[p]]
+                  for (q in <span class="dv">1</span>:<span class="kw">length</span>(cells.list[[p]])) tmp &lt;-<span class="st"> </span><span class="kw">c</span>(tmp, <span class="kw">f</span>(<span class="kw">extract</span>(r, 
+                    cells.list[[p]][[q]])))
+                  e.hold[[p]] &lt;-<span class="st"> </span><span class="kw">rbind</span>(e.hold[[p]], tmp)
+                } else if (<span class="kw">is.null</span>(buffer.list[[p]])) {
+                  e.hold[[p]] &lt;-<span class="st"> </span><span class="kw">rbind</span>(e.hold[[p]], <span class="kw">extract</span>(r, cells.list[[p]]))
+                }
+            }
+        }
+    }
+    <span class="kw">list</span>(<span class="dt">rasters =</span> r.hold, <span class="dt">points =</span> e.hold, <span class="dt">years =</span> n)
+}</code></pre>
+</div>
+<div id="observational-data-specific-setup" class="section level3">
+<h3>Observational data-specific setup</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;/big_scratch/shiny/obs_fire_setup.R&quot;</span>)
+r.burnable &lt;-<span class="st"> </span><span class="kw">Which</span>(r &gt;<span class="st"> </span><span class="dv">0</span>)</code></pre>
+</div>
+<div id="processing" class="section level3">
+<h3>Processing</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Process empirical data</span>
+out.emp &lt;-<span class="st"> </span><span class="kw">fireEventsFunEmpirical</span>(<span class="dt">b =</span> result, <span class="dt">pts =</span> pts, <span class="dt">buffer.list =</span> buffers, 
+    <span class="dt">fun.list =</span> buffer.functions, <span class="dt">burnable.cells.raster =</span> r.burnable)
+<span class="co"># Process modeled data</span>
+n.cores &lt;-<span class="st"> </span><span class="kw">min</span>(n.sims, <span class="dv">32</span>)
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Process modeled fire scar data from entire Alfresco run. Time:&quot;</span>))
+<span class="kw">system.time</span>(out.alf &lt;-<span class="st"> </span><span class="kw">mclapply</span>(<span class="dv">1</span>:n.sims, fireEventsFun, <span class="dt">pts =</span> pts, <span class="dt">buffer.list =</span> buffers, 
+    <span class="dt">fun.list =</span> buffer.functions, <span class="dt">burnable.cells.raster =</span> r.burnable, <span class="dt">mainDir =</span> mainDir, 
+    <span class="dt">mc.cores =</span> n.cores))</code></pre>
+</div>
+<div id="spatially-explicit-frp-maps" class="section level3">
+<h3>Spatially explicit FRP maps</h3>
+<pre class="sourceCode r"><code class="sourceCode r">alf.yrs &lt;-<span class="st"> </span>out.alf[[<span class="dv">1</span>]][[<span class="dv">4</span>]]
+zlm &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, out.alf[[<span class="dv">1</span>]][[<span class="dv">3</span>]])
+<span class="kw">dir.create</span>(<span class="kw">file.path</span>(outDir, <span class="st">&quot;Maps_noBuffer/PNGs&quot;</span>), <span class="dt">recursive =</span> T, <span class="dt">showWarnings =</span> F)
+
+FRPmapsNoBuffer &lt;-<span class="st"> </span>function(i, alf.data, emp.data, odir, domain, alf.yrs, emp.yrs) {
+    if (<span class="kw">substr</span>(domain, <span class="dv">1</span>, <span class="dv">6</span>) ==<span class="st"> &quot;Noatak&quot;</span>) 
+        domain &lt;-<span class="st"> &quot;Noatak&quot;</span>
+    if (<span class="kw">substr</span>(domain, <span class="dv">1</span>, <span class="dv">6</span>) ==<span class="st"> &quot;Statew&quot;</span>) 
+        domain &lt;-<span class="st"> &quot;Statewide&quot;</span>
+    <span class="kw">writeRaster</span>(alf.data[[i]][[<span class="dv">1</span>]], <span class="kw">paste0</span>(odir, <span class="st">&quot;/Maps_noBuffer/FRP_&quot;</span>, domain, 
+        <span class="st">&quot;_Rep&quot;</span>, i -<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;.tif&quot;</span>), <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">overwrite =</span> T)
+    pngname &lt;-<span class="st"> </span><span class="kw">paste0</span>(odir, <span class="st">&quot;/Maps_noBuffer/PNGs/FRP_&quot;</span>, domain, <span class="st">&quot;_Rep&quot;</span>, i -<span class="st"> </span>
+<span class="st">        </span><span class="dv">1</span>, <span class="st">&quot;.png&quot;</span>)
+    if (domain ==<span class="st"> &quot;Noatak&quot;</span>) {
+        <span class="kw">png</span>(pngname, <span class="dt">width =</span> <span class="dv">1200</span>, <span class="dt">height =</span> <span class="dv">1370</span>)
+        <span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="dv">1</span>:<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>))
+    } else if (domain ==<span class="st"> &quot;Statewide&quot;</span>) {
+        <span class="kw">png</span>(pngname, <span class="dt">width =</span> <span class="dv">2400</span>, <span class="dt">height =</span> <span class="dv">1370</span>)
+        <span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="dv">1</span>:<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>))
+    }
+    <span class="kw">plot</span>(<span class="kw">round</span>(alf.data[[i]][[<span class="dv">3</span>]]/alf.data[[i]][[<span class="dv">1</span>]]), <span class="dt">col =</span> <span class="kw">heat.colors</span>(<span class="dv">20</span>), 
+        <span class="dt">zlim =</span> zlm, <span class="dt">main =</span> <span class="kw">paste0</span>(domain, <span class="st">&quot; &quot;</span>, alf.yrs[<span class="dv">1</span>], <span class="st">&quot;-&quot;</span>, <span class="kw">tail</span>(alf.yrs, 
+            <span class="dv">1</span>), <span class="st">&quot; replicate &quot;</span>, i -<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot; FRP&quot;</span>))
+    <span class="kw">plot</span>(shp, <span class="dt">bg =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+    <span class="kw">plot</span>(fah, <span class="dt">bg =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+    <span class="kw">plot</span>(<span class="kw">round</span>(<span class="kw">length</span>(emp.yrs)/emp.data), <span class="dt">col =</span> <span class="kw">heat.colors</span>(<span class="dv">20</span>), <span class="dt">zlim =</span> zlm, 
+        <span class="dt">main =</span> <span class="kw">paste0</span>(domain, <span class="st">&quot; &quot;</span>, emp.yrs[<span class="dv">1</span>], <span class="st">&quot;-&quot;</span>, <span class="kw">tail</span>(emp.yrs, <span class="dv">1</span>), <span class="st">&quot; observed FRP&quot;</span>))
+    <span class="kw">plot</span>(shp, <span class="dt">bg =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+    <span class="kw">plot</span>(fah, <span class="dt">bg =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+    <span class="kw">dev.off</span>()
+    if (i ==<span class="st"> </span><span class="dv">1</span>) 
+        <span class="kw">file.copy</span>(pngname, <span class="kw">file.path</span>(<span class="kw">dirname</span>(odir), <span class="kw">basename</span>(pngname)))
+}
+
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Create 2-panel (empirical and modeled) 1-km no-buffer FRP maps. Time:&quot;</span>))
+<span class="kw">print</span>(<span class="kw">system.time</span>(<span class="kw">mclapply</span>(<span class="dv">1</span>:<span class="kw">length</span>(out.alf), FRPmapsNoBuffer, <span class="dt">alf.data =</span> out.alf, 
+    <span class="dt">emp.data =</span> result2, <span class="dt">odir =</span> outDir, <span class="dt">domain =</span> alf.domain, <span class="dt">alf.yrs =</span> alf.yrs, 
+    <span class="dt">emp.yrs =</span> yrs.hist.all, <span class="dt">mc.cores =</span> n.cores)))</code></pre>
+</div>
+<div id="shiny-app-setup" class="section level3">
+<h3>Shiny app setup</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Concatenate all elements in nested list x. Inner to outer levels: year,</span>
+<span class="co"># location, buffer, replicate</span>
+dfPrepFun &lt;-<span class="st"> </span>function(x, <span class="dt">multiple.reps =</span> T) {
+    if (!multiple.reps) 
+        x &lt;-<span class="st"> </span><span class="kw">list</span>(x)
+    x &lt;-<span class="st"> </span><span class="kw">lapply</span>(x, <span class="st">&quot;[[&quot;</span>, <span class="dv">2</span>)
+    for (i in <span class="dv">1</span>:<span class="kw">length</span>(x)) x[[i]] &lt;-<span class="st"> </span><span class="kw">do.call</span>(c, <span class="kw">lapply</span>(x[[i]], as.numeric))
+    x &lt;-<span class="st"> </span><span class="kw">do.call</span>(c, x)
+    x
+}
+
+<span class="co"># Empirical observations and simulation replicates</span>
+reps.emp &lt;-<span class="st"> &quot;Observed&quot;</span>
+reps.alf &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;Rep_&quot;</span>, <span class="kw">c</span>(<span class="kw">paste0</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>:<span class="dv">9</span>), <span class="kw">paste0</span>(<span class="dv">0</span>, <span class="dv">10</span>:<span class="dv">99</span>), <span class="dv">100</span>:<span class="dv">999</span>))[<span class="dv">1</span>:<span class="kw">length</span>(out.alf)]
+
+<span class="co"># Organize observed data</span>
+x.emp &lt;-<span class="st"> </span><span class="kw">dfPrepFun</span>(out.emp, <span class="dt">multiple.reps =</span> F)
+d.emp &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="kw">rev</span>(<span class="kw">expand.grid</span>(<span class="dt">Value =</span> <span class="ot">NA</span>, <span class="dt">Year =</span> yrs.hist.all, <span class="dt">Location =</span> locs, 
+    <span class="dt">Buffer_km =</span> buffers.labels, <span class="dt">Replicate =</span> reps.emp, <span class="dt">stringsAsFactors =</span> F)))
+d.emp[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Value, x.emp)]
+d2.emp &lt;-<span class="st"> </span>d.emp %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Replicate, Buffer_km, Location) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(<span class="dt">FRP =</span> <span class="kw">length</span>(Year)/<span class="kw">sum</span>(Value))
+
+<span class="co"># Organize modeled data</span>
+x &lt;-<span class="st"> </span><span class="kw">dfPrepFun</span>(out.alf)
+d &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="kw">rev</span>(<span class="kw">expand.grid</span>(<span class="dt">Value =</span> <span class="ot">NA</span>, <span class="dt">Year =</span> alf.yrs, <span class="dt">Location =</span> locs, 
+    <span class="dt">Buffer_km =</span> buffers.labels, <span class="dt">Replicate =</span> reps.alf, <span class="dt">stringsAsFactors =</span> F)))
+d[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Value, x)]
+d2 &lt;-<span class="st"> </span>d %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Replicate, Buffer_km, Location) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(<span class="dt">FRP =</span> <span class="kw">length</span>(Year)/<span class="kw">sum</span>(Value))
+
+<span class="co"># Additional objects to transport to app</span>
+buffersize &lt;-<span class="st"> </span><span class="kw">unique</span>(d.emp$Buffer_km)
+obs.years.range &lt;-<span class="st"> </span><span class="kw">range</span>(d.emp$Year)
+mod.years.range &lt;-<span class="st"> </span><span class="kw">range</span>(alf.yrs)
+
+<span class="co"># Assemble final data frames</span>
+rab.dat &lt;-<span class="st"> </span><span class="kw">rbind</span>(d, d.emp)
+<span class="kw">rm</span>(d, d.emp)
+dummy &lt;-<span class="st"> </span><span class="kw">capture.output</span>(<span class="kw">gc</span>())
+frp.dat &lt;-<span class="st"> </span><span class="kw">rbind</span>(d2, d2.emp)
+<span class="kw">rm</span>(d2, d2.emp)
+dummy &lt;-<span class="st"> </span><span class="kw">capture.output</span>(<span class="kw">gc</span>())
+
+rab.dat[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Source, <span class="st">&quot;Observed&quot;</span>)]
+rab.dat[Replicate !=<span class="st"> &quot;Observed&quot;</span>, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Source, <span class="st">&quot;Modeled&quot;</span>)]
+frp.dat[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Source, <span class="st">&quot;Observed&quot;</span>)]
+frp.dat[Replicate !=<span class="st"> &quot;Observed&quot;</span>, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Source, <span class="st">&quot;Modeled&quot;</span>)]
+
+<span class="co"># Make Fire Return Interval data frame this function could be improved using</span>
+<span class="co"># data tables and dplyr</span>
+friFun &lt;-<span class="st"> </span>function(d) {
+    d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">filter</span>(d, Value !=<span class="st"> </span><span class="dv">0</span>))
+    d$fac &lt;-<span class="st"> </span><span class="kw">with</span>(d, <span class="kw">paste</span>(Replicate, Buffer_km, Location))
+    fri.list &lt;-<span class="st"> </span><span class="kw">with</span>(d, <span class="kw">tapply</span>(Year, <span class="kw">paste</span>(Replicate, Buffer_km, Location), 
+        function(x) <span class="kw">c</span>(<span class="ot">NA</span>, <span class="kw">diff</span>(x))))
+    d &lt;-<span class="st"> </span>d[<span class="kw">order</span>(d$fac), ]
+    d$FRI &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">unlist</span>(fri.list))
+    d &lt;-<span class="st"> </span><span class="kw">subset</span>(d, !<span class="kw">is.na</span>(d$FRI), -<span class="kw">which</span>(<span class="kw">names</span>(d) %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>, <span class="st">&quot;fac&quot;</span>)))
+    <span class="kw">data.table</span>(d)
+}
+
+fri.dat &lt;-<span class="st"> </span><span class="kw">friFun</span>(rab.dat)
+
+<span class="co"># Load/save objects in a workspace file to be transported to app</span>
+dom &lt;-<span class="st"> </span>if (<span class="kw">substr</span>(<span class="kw">tolower</span>(alf.domain), <span class="dv">1</span>, <span class="dv">6</span>) ==<span class="st"> &quot;noatak&quot;</span>) <span class="st">&quot;Noatak&quot;</span> else if (<span class="kw">substr</span>(<span class="kw">tolower</span>(alf.domain), 
+    <span class="dv">1</span>, <span class="dv">6</span>) ==<span class="st"> &quot;statew&quot;</span>) <span class="st">&quot;Statewide&quot;</span>
+<span class="kw">load</span>(<span class="kw">paste0</span>(out, <span class="st">&quot;/fsByVeg_df_&quot;</span>, dom, <span class="st">&quot;.RData&quot;</span>))  <span class="co"># assumed to have run fsByVeg.R</span>
+prefix &lt;-<span class="st"> </span><span class="kw">ifelse</span>(group.name ==<span class="st"> &quot;none&quot;</span>, <span class="st">&quot;RAB_FRP&quot;</span>, <span class="kw">paste0</span>(run.name, <span class="st">&quot;_RAB_FRP&quot;</span>))
+ws &lt;-<span class="st"> </span><span class="kw">ifelse</span>(group.name ==<span class="st"> &quot;none&quot;</span>, <span class="kw">paste0</span>(outDir, <span class="st">&quot;/&quot;</span>, prefix, <span class="st">&quot;_Emp_&quot;</span>, yrs.hist.all[<span class="dv">1</span>], 
+    <span class="st">&quot;_&quot;</span>, <span class="kw">tail</span>(yrs.hist.all, <span class="dv">1</span>), <span class="st">&quot;_Alf_&quot;</span>, alf.yrs[<span class="dv">1</span>], <span class="st">&quot;_&quot;</span>, <span class="kw">tail</span>(alf.yrs, <span class="dv">1</span>), 
+    <span class="st">&quot;.RData&quot;</span>), <span class="kw">paste0</span>(outDir, <span class="st">&quot;/&quot;</span>, prefix, <span class="st">&quot;.RData&quot;</span>))
+<span class="kw">save</span>(d.fs, buffersize, obs.years.range, mod.years.range, rab.dat, frp.dat, fri.dat, 
+    <span class="dt">file =</span> ws)
+<span class="kw">Sys.sleep</span>(<span class="fl">0.1</span>)</code></pre>
+</div>
+<div id="save-outputs" class="section level3">
+<h3>Save outputs</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create new app from template and copy data to app</span>
+app.name &lt;-<span class="st"> </span><span class="kw">ifelse</span>(group.name ==<span class="st"> &quot;none&quot;</span>, <span class="st">&quot;alf_results&quot;</span>, <span class="kw">paste0</span>(group.name, <span class="st">&quot;_alf_results&quot;</span>))
+alfDir &lt;-<span class="st"> &quot;/var/www/shiny-server/shiny-apps/alfresco&quot;</span>  <span class="co"># Alfresco apps directory</span>
+templateDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(alfDir, <span class="st">&quot;alfout_template&quot;</span>)  <span class="co"># Alfresco FRP results template app directory</span>
+appDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(alfDir, app.name)  <span class="co"># App directory to use this run&#39;s data</span>
+<span class="kw">system</span>(<span class="kw">paste</span>(<span class="st">&quot;ssh eris.snap.uaf.edu mkdir -p&quot;</span>, appDir))  <span class="co"># Make directory</span>
+<span class="kw">system</span>(<span class="kw">paste</span>(<span class="st">&quot;ssh eris.snap.uaf.edu chmod 2775&quot;</span>, appDir))  <span class="co"># Set permissions</span>
+<span class="kw">system</span>(<span class="kw">paste</span>(<span class="st">&quot;ssh eris.snap.uaf.edu cp -r&quot;</span>, <span class="kw">file.path</span>(templateDir, <span class="st">&quot;*&quot;</span>), <span class="kw">paste0</span>(appDir, 
+    <span class="st">&quot;/&quot;</span>)))  <span class="co"># Copy template app files to new directory</span>
+<span class="kw">system</span>(<span class="kw">paste0</span>(<span class="st">&quot;scp &quot;</span>, ws, <span class="st">&quot; eris.snap.uaf.edu:&quot;</span>, <span class="kw">file.path</span>(appDir, <span class="kw">basename</span>(ws))))  <span class="co"># Copy Alfresco run workspace file to new app directory</span>
+
+<span class="kw">cat</span>(<span class="st">&quot;Alfresco output results:</span><span class="ch">\n\n</span><span class="st">&quot;</span>)
+app.url &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;http://eris.snap.uaf.edu/shiny-apps/alfresco/&quot;</span>, app.name, 
+    <span class="st">&quot;/&quot;</span>)
+<span class="kw">cat</span>(app.url)
+
+<span class="kw">sink</span>()
+<span class="kw">Sys.sleep</span>(<span class="fl">0.1</span>)</code></pre>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

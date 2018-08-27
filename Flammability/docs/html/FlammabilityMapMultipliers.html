@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="flammabilitymapmultipliers.r" class="section level2">
+<h2>FlammabilityMapMultipliers.R</h2>
+<p>The <code>FlammabilityMapMultipliers.R</code> script multiplies each flammability map in a series by either a scalar lightning intensity coefficient or a spatially explicit lightning intensity map to stretch or compress inter-annual variability in flammability. Lightning coefficients are stored in a data table loaded by workspace, originally assembled by <code>gbm_lightning_coefficients.R</code>. The three coefficients, 0.05, 0.50, and 0.95, represent low, medium, and high lightning intensity with respect to the inter-annual signal of the gbm lightning point model predictions. Point model refers to a spatially aggregated model, specifically one using mean climate variables as covariates and having a spatially aggregated total or average lightning response.</p>
+<p>For CRU 3.2 historical flammability maps, observation-based coefficients are applied for the years 2003 - 2011. Years 1950 - 2002 use backcast predictions of annual lightning intensity and a small forecast for years 2012 - 2013. For GCM-based flammability maps, forecast lightning coefficients are used for years 2014 - 2099.</p>
+<p>In the case of spatially explicit lightning maps, maps are similarly available for 2003 - 2011 and are similarly classified into one of three levels of annual intensity corresponding to the scalar coefficients. Scalar coefficients are either used directly as multipliers or they are used to make a random map draw from the subset of three of the nine maps similarly classified as low, medium, or high intensity. In this manner, a lightning map is associated with each year in the backcast and forecast periods and years 2003 - 2011 use their own respective maps, analogous to the direct application of scalar coefficients.</p>
+<p>Backcasts and forecasts can go as far as there is CRU 3.2 (back to 1901) or GCM (forward through 2099) data available. Beyond this, simple random sampling of the coefficient set or the map set must be used, though relative sampling probabilites can differ by coefficient or map group in accordance with their proportions during known periods.</p>
+</div>
+<div id="r-code" class="section level2">
+<h2>R code</h2>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<pre class="sourceCode r"><code class="sourceCode r">comargs &lt;-<span class="st"> </span>(<span class="kw">commandArgs</span>(<span class="ot">TRUE</span>))
+if (!<span class="kw">length</span>(comargs)) <span class="kw">q</span>(<span class="st">&quot;no&quot;</span>) else for (z in <span class="dv">1</span>:<span class="kw">length</span>(comargs)) <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> comargs[[z]]))
+
+if (!<span class="kw">exists</span>(<span class="st">&quot;period&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;Argument &#39;period&#39; not passed at command line.&quot;</span>)
+if (!<span class="kw">exists</span>(<span class="st">&quot;model&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;Argument &#39;model&#39; not passed at command line.&quot;</span>)
+if (!(period %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;historical&quot;</span>, <span class="st">&quot;rcp45&quot;</span>, <span class="st">&quot;rcp60&quot;</span>, <span class="st">&quot;rcp85&quot;</span>))) <span class="kw">stop</span>(<span class="st">&quot;Invalid period specified.&quot;</span>)
+if (!(model %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CRU32&quot;</span>, <span class="st">&quot;CCSM4&quot;</span>, <span class="st">&quot;GFDL-CM3&quot;</span>, <span class="st">&quot;GISS-E2-R&quot;</span>, <span class="st">&quot;IPSL-CM5A-LR&quot;</span>, 
+    <span class="st">&quot;MRI-CGCM3&quot;</span>))) <span class="kw">stop</span>(<span class="st">&quot;Invalid data set specified.&quot;</span>)
+if (!<span class="kw">exists</span>(<span class="st">&quot;samples&quot;</span>)) samples &lt;-<span class="st"> </span><span class="ot">TRUE</span>
+if (!<span class="kw">exists</span>(<span class="st">&quot;mapset&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;Argument &#39;mapset&#39; not passed at command line.&quot;</span>)
+if (!<span class="kw">exists</span>(<span class="st">&quot;lightning&quot;</span>)) lightning &lt;-<span class="st"> </span><span class="ot">TRUE</span>
+if (!<span class="kw">exists</span>(<span class="st">&quot;cp2scratch&quot;</span>)) cp2scratch &lt;-<span class="st"> </span><span class="ot">TRUE</span>
+if (!<span class="kw">exists</span>(<span class="st">&quot;cp_originals&quot;</span>)) cp_originals &lt;-<span class="st"> </span><span class="ot">FALSE</span>
+
+verDir &lt;-<span class="st"> </span>if (samples) <span class="st">&quot;samples_based&quot;</span> else <span class="st">&quot;means_based&quot;</span>
+<span class="kw">setwd</span>(<span class="kw">file.path</span>(<span class="st">&quot;/workspace/UA/mfleonawicz/leonawicz/projects/Flammability/data/gbmFlammability&quot;</span>, 
+    verDir, period, model, mapset))
+suffix &lt;-<span class="st"> </span>if (lightning) <span class="st">&quot;_Lmap&quot;</span> else <span class="st">&quot;_L&quot;</span>
+<span class="kw">dir.create</span>(outDir &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;../&quot;</span>, mapset, suffix), <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)
+if (cp2scratch) {
+    <span class="kw">dir.create</span>(outDir2a &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;/big_scratch/mfleonawicz/Alf_Files_20121129/gbmFlamMaps&quot;</span>, 
+        period, model, mapset), <span class="dt">recursive =</span> <span class="ot">TRUE</span>, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)
+    <span class="kw">dir.create</span>(outDir2b &lt;-<span class="st"> </span><span class="kw">paste0</span>(outDir2a, suffix), <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)
+} else outDir2b &lt;-<span class="st"> </span><span class="ot">NULL</span>
+if (!cp_originals) outDir2a &lt;-<span class="st"> </span><span class="ot">NULL</span>
+
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(parallel)
+<span class="kw">library</span>(data.table)
+<span class="kw">library</span>(dplyr)
+<span class="kw">load</span>(<span class="st">&quot;../../../../../../workspaces/gbmFlammability/gbm_lightning_coefficients.RData&quot;</span>)  <span class="co"># scalars data table</span>
+
+files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.tif$&quot;</span>)
+yrs &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">&quot;gbm.flamm_&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">.tif&quot;</span>, <span class="st">&quot;&quot;</span>, files)))
+files &lt;-<span class="st"> </span>files[<span class="kw">order</span>(yrs)]
+yrs &lt;-<span class="st"> </span>yrs[<span class="kw">order</span>(yrs)]
+d.sub &lt;-<span class="st"> </span><span class="kw">filter</span>(d.all, Period ==<span class="st"> </span>period &amp;<span class="st"> </span>Model ==<span class="st"> </span>model &amp;<span class="st"> </span>Year %in%<span class="st"> </span>yrs)
+
+<span class="co"># Sample random coeffcients for unobserved years</span>
+<span class="kw">set.seed</span>(<span class="dv">51</span>)
+if (lightning) {
+    classes &lt;-<span class="st"> </span><span class="kw">sapply</span>(d.sub$Class, function(x) switch(<span class="kw">as.character</span>(x), <span class="dt">Low =</span> <span class="dv">1</span>, 
+        <span class="dt">Medium =</span> <span class="dv">2</span>, <span class="dt">High =</span> <span class="dv">3</span>))
+    <span class="kw">load</span>(<span class="st">&quot;/workspace/UA/mfleonawicz/leonawicz/projects/Lightning/data/summerLightningMaps_2003_2011/summerLightningMaps.RData&quot;</span>)
+    light.yrs &lt;-<span class="st"> </span><span class="kw">sapply</span>(classes, function(x, d) <span class="kw">sample</span>(d$Year[d$Class ==<span class="st"> </span>x], 
+        <span class="dv">1</span>), <span class="dt">d =</span> d.coef)
+    ind &lt;-<span class="st"> </span><span class="kw">which</span>(d.sub$Year %in%<span class="st"> </span>d.coef$Year)
+    if (<span class="kw">length</span>(ind)) 
+        light.yrs[ind] &lt;-<span class="st"> </span>d.sub$Year[ind]
+    d.coef$Prob &lt;-<span class="st"> </span><span class="kw">sapply</span>(d.coef$Class, function(x) switch(x, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> </span><span class="dv">14</span>/<span class="dv">64</span>, <span class="st">`</span><span class="dt">2</span><span class="st">`</span> =<span class="st"> </span><span class="dv">36</span>/<span class="dv">64</span>, 
+        <span class="st">`</span><span class="dt">3</span><span class="st">`</span> =<span class="st"> </span><span class="dv">14</span>/<span class="dv">64</span>))
+    a &lt;-<span class="st"> </span><span class="kw">sample</span>(d.coef$Year, <span class="kw">length</span>(yrs), <span class="dt">prob =</span> d.coef$Prob, <span class="dt">replace =</span> T)
+    if (period ==<span class="st"> &quot;historical&quot;</span> &amp;<span class="st"> </span><span class="kw">all</span>(<span class="dv">1950</span>:<span class="dv">2013</span> %in%<span class="st"> </span>yrs)) 
+        a[yrs &gt;=<span class="st"> </span><span class="dv">1950</span> &amp;<span class="st"> </span>yrs &lt;=<span class="st"> </span><span class="dv">2013</span>] &lt;-<span class="st"> </span>light.yrs
+    if (period !=<span class="st"> &quot;historical&quot;</span>) 
+        a &lt;-<span class="st"> </span>light.yrs
+} else {
+    <span class="co"># a &lt;- sample(c(0.05, 0.5, 0.95), length(yrs), prob=c(13/62, 36/62, 13/62),</span>
+    <span class="co"># replace=T)</span>
+    a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="kw">length</span>(yrs), <span class="fl">0.01</span>, <span class="dv">1</span>)
+    if (period ==<span class="st"> &quot;historical&quot;</span> &amp;<span class="st"> </span><span class="kw">all</span>(<span class="dv">1950</span>:<span class="dv">2013</span> %in%<span class="st"> </span>yrs)) 
+        a[yrs &gt;=<span class="st"> </span><span class="dv">1950</span> &amp;<span class="st"> </span>yrs &lt;=<span class="st"> </span><span class="dv">2013</span>] &lt;-<span class="st"> </span>d.sub$Coef
+    if (period !=<span class="st"> &quot;historical&quot;</span>) 
+        a &lt;-<span class="st"> </span>d.sub$Coef
+}</code></pre>
+</div>
+<div id="run" class="section level3">
+<h3>Run</h3>
+<pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span>function(i, a, <span class="dt">b =</span> <span class="ot">NULL</span>, <span class="dt">type =</span> <span class="st">&quot;coef&quot;</span>, outDir, files, <span class="dt">flam.min =</span> <span class="ot">NULL</span>, 
+    <span class="dt">f_of_xy =</span> <span class="ot">NULL</span>, <span class="dt">cp.origin =</span> <span class="ot">NULL</span>, <span class="dt">cp.new =</span> <span class="ot">NULL</span>) {
+    r &lt;-<span class="st"> </span><span class="kw">raster</span>(files[i])
+    if (!<span class="kw">is.null</span>(cp.origin)) 
+        <span class="kw">writeRaster</span>(r, <span class="kw">file.path</span>(cp.origin, files[i]), <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">overwrite =</span> T)
+    if (!<span class="kw">is.null</span>(flam.min)) 
+        r[r &lt;<span class="st"> </span>flam.min] &lt;-<span class="st"> </span>flam.min
+    if (type ==<span class="st"> &quot;coef&quot;</span>) {
+        r &lt;-<span class="st"> </span>a[i] *<span class="st"> </span>r
+    } else if (type ==<span class="st"> &quot;year&quot;</span>) {
+        if (<span class="kw">is.null</span>(b)) 
+            <span class="kw">stop</span>(<span class="st">&quot;b cannot be NULL if type=&#39;year&#39;. Change to type=&#39;coef&#39; or provide a raster brick b.&quot;</span>)
+        b.yrs &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(<span class="kw">names</span>(b), <span class="dv">2</span>, <span class="dv">5</span>))
+        ind &lt;-<span class="st"> </span><span class="kw">which</span>(b.yrs ==<span class="st"> </span>a[i])
+        if (<span class="kw">is.null</span>(f_of_xy)) {
+            r2 &lt;-<span class="st"> </span><span class="kw">subset</span>(b, ind)
+            r &lt;-<span class="st"> </span>r2 *<span class="st"> </span>r
+        } else <span class="kw">f_of_xy</span>(<span class="dt">x =</span> <span class="kw">subset</span>(b, ind), <span class="dt">y =</span> r)
+    }
+    r &lt;-<span class="st"> </span><span class="kw">round</span>(r, <span class="dv">8</span>)
+    <span class="kw">writeRaster</span>(r, <span class="kw">file.path</span>(outDir, files[i]), <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">overwrite =</span> T)
+    if (!<span class="kw">is.null</span>(cp.new)) 
+        <span class="kw">writeRaster</span>(r, <span class="kw">file.path</span>(cp.new, files[i]), <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">overwrite =</span> T)
+    <span class="kw">print</span>(i)
+}
+
+<span class="co"># @knit run</span>
+if (lightning) <span class="kw">mclapply</span>(<span class="dv">1</span>:<span class="kw">length</span>(files), f, <span class="dt">a =</span> a, <span class="dt">b =</span> kde.maps, <span class="dt">type =</span> <span class="st">&quot;year&quot;</span>, 
+    <span class="dt">outDir =</span> outDir, <span class="dt">files =</span> files, <span class="dt">cp.origin =</span> outDir2a, <span class="dt">cp.new =</span> outDir2b, 
+    <span class="dt">mc.cores =</span> <span class="dv">32</span>)
+if (!lightning) <span class="kw">mclapply</span>(<span class="dv">1</span>:<span class="kw">length</span>(files), f, <span class="dt">a =</span> a, <span class="dt">outDir =</span> outDir, <span class="dt">files =</span> files, 
+    <span class="dt">cp.origin =</span> outDir2a, <span class="dt">cp.new =</span> outDir2b, <span class="dt">mc.cores =</span> <span class="dv">32</span>)</code></pre>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

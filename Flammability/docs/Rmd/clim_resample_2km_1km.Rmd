@@ -1,0 +1,26 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/climate_prep/clim_resample_2km_1km.R")
+```
+
+##
+##
+## clim_resample_2km_1km.R
+
+The `clim_resample_2km_1km.R` script resamples 2-km resolution climate data sets to 1-km resolution for eventual inclusion into ALFRESCO modeling.
+Nearest neighbor is used since it is much more efficient given the amount of data to be resampled and,
+due to the use case, resampling using bilinear interpolation is not particularly useful, beneficial, or required.
+
+## R code
+
+```{r setup}
+```

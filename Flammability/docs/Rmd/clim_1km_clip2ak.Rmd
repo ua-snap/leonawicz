@@ -1,0 +1,37 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/climate_prep/clim_1km_clip2ak.R")
+```
+
+##
+##
+## clim_1km_clip2ak.R
+
+The `clim_1km_clip2ak.R` script clips resampled data created by `clim_resample_2km_1km.R` to the classic statewide ALFRESCO extent for eventual inclusion into ALFRESCO modeling.
+The clipping is basically a crop and mask.
+
+## R code
+
+### Setup
+
+```{r setup}
+```
+
+### Function
+
+```{r func}
+```
+
+### Run
+
+```{r run}
+```

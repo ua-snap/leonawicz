@@ -1,0 +1,26 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco_prelim_plots/histPrep.R")
+```
+
+##
+##
+## histPrep.R
+
+`histPrep.R` stores the function `histPrep`, which prepares certain histogram-related data objects in the global **R** environment for reuse by the function, `fireSizePlot`.
+
+This function is called in `AlfrescoCalibration.R`.
+
+## R code
+
+```{r histPrep}
+```

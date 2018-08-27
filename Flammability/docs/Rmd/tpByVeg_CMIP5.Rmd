@@ -1,0 +1,45 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/tpByVeg/tpByVeg_CMIP5.R")
+```
+
+##
+##
+## tpByVeg_CMIP5.R
+
+The `tpByVeg_CMIP5.R` script calculates mean temperature and precipitation over all grid cells in CRU 3.2 map layers conditional on vegetation class using a given vegetation classification map.
+Alternatively, instead of computing an overall mean, the script can be passed arguments to specify sampling of climate values and a sample size.
+These vegetation-specific climate means and/or samples are used as variables in gradient boosting machine (GBM), or generalized boosted regression modeling.
+The resulting GBM models are used to develop climate-driven, vegetation-mediated flammability maps with a distinct nonlinear fire responses to climate for each vegetation class.
+These flammability maps are used in ALFRESCO in lieu of the original temperature and precipitation maps.
+
+## R code
+
+### Setup
+
+```{r setup}
+```
+
+### Processing function
+
+```{r func}
+```
+
+### Run
+
+```{r run}
+```
+
+### Save outputs
+
+```{r save}
+```

@@ -1,0 +1,53 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=TRUE, tidy=TRUE, message=FALSE, warning=FALSE, dpi=300, fig.height=7, fig.width=10.5)
+read_chunk("../../code/alfresco/fsMLE.R")
+```
+
+##
+##
+## fsMLE.R EDA part 1
+### Fire samples
+
+The `fsMLE.R` script performs exploratory data analysis followed by maximum likelihood estimation of fire size distributions based on historical observations and ALFRESCO simulation outputs.
+Currently under development.
+Preliminary EDA plots available.
+
+## R code and results
+
+### Setup
+
+```{r setup}
+```
+
+##
+##
+### Exploratory data analysis
+
+#### Fire count by vegetation class: Noatak
+
+```{r fc_noa_veg}
+```
+
+#### Fire count by vegetation class: Statewide
+
+```{r fc_sw_veg}
+```
+
+#### Fire count by decade: Noatak shrub
+
+```{r fc_noa_shrub_dec}
+```
+
+#### Fire count by decade: Statewide forest
+
+```{r fc_sw_forest_dec}
+```

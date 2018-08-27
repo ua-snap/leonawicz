@@ -1,0 +1,28 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco/obs_fire_setup.R")
+```
+
+##
+##
+## obs_fire_setup.R
+
+The `obs_fire_setup.R` script prepares various data objects related to the empirical or historically observed fire data,
+including fire area shapefiles, single- and multi-band rasters, subsetting to years of interest,
+and creating temporary files used by various ALFRESCO post-processing **R** scripts.
+
+Two examples of scripts which call this script are `fsByVeg.R` and `AlfrescoFRP.R`.
+
+## R code
+
+```{r emp_fire_setup}
+```

@@ -1,0 +1,25 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco/baByVeg_historical.R")
+```
+
+##
+##
+## baByVeg_historical.R
+
+The `baByVeg_historical.R` script calculates annual burn area by vegetation class using empirical historical fire perimeter data.
+These values inform GBM modeling.
+
+## R code
+
+```{r script}
+```

@@ -1,0 +1,28 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco_prelim_plots/CABvsFSPlot.R")
+```
+
+##
+##
+## CABvsFSPlot.R
+
+`CABvsFSPlot.R` stores the function `CABvsFSPlot`, which plots curves of cumulative burn area over the burnable ALFRESCO domain by fire size event conditional on a fixed period of time.
+A curve is plotted for each simulation replicate.
+The plot includes an overlay curve representing the historically observed cumulative burn area by historically observed fire event size.
+
+This plot is called in `AlfrescoCalibration.R` and currently is hardcoded to plot curves based on 1950 - 2011.
+
+## R code
+
+```{r CABvsFSPlot}
+```

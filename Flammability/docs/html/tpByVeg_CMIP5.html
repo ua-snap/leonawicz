@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="tpbyveg_cmip5.r" class="section level2">
+<h2>tpByVeg_CMIP5.R</h2>
+<p>The <code>tpByVeg_CMIP5.R</code> script calculates mean temperature and precipitation over all grid cells in CRU 3.2 map layers conditional on vegetation class using a given vegetation classification map. Alternatively, instead of computing an overall mean, the script can be passed arguments to specify sampling of climate values and a sample size. These vegetation-specific climate means and/or samples are used as variables in gradient boosting machine (GBM), or generalized boosted regression modeling. The resulting GBM models are used to develop climate-driven, vegetation-mediated flammability maps with a distinct nonlinear fire responses to climate for each vegetation class. These flammability maps are used in ALFRESCO in lieu of the original temperature and precipitation maps.</p>
+</div>
+<div id="r-code" class="section level2">
+<h2>R code</h2>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<pre class="sourceCode r"><code class="sourceCode r">comargs &lt;-<span class="st"> </span>(<span class="kw">commandArgs</span>(<span class="ot">TRUE</span>))
+if (<span class="kw">length</span>(comargs)) for (z in <span class="dv">1</span>:<span class="kw">length</span>(comargs)) <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> comargs[[z]]))
+
+if (!<span class="kw">exists</span>(<span class="st">&quot;samples&quot;</span>)) samples &lt;-<span class="st"> </span><span class="ot">TRUE</span>
+if (!<span class="kw">exists</span>(<span class="st">&quot;vc&quot;</span>)) vc &lt;-<span class="st"> &quot;all&quot;</span>
+if (!<span class="kw">exists</span>(<span class="st">&quot;n&quot;</span>) &amp;<span class="st"> </span>samples) <span class="kw">stop</span>(<span class="st">&quot;Must provide n if samples=TRUE.&quot;</span>)
+if (!<span class="kw">is.logical</span>(samples)) <span class="kw">stop</span>(<span class="st">&quot;Argument &#39;samples&#39; must be logical.&quot;</span>)
+if (!(vc %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;all&quot;</span>, <span class="st">&quot;cavm&quot;</span>, <span class="st">&quot;none&quot;</span>))) <span class="kw">stop</span>(<span class="st">&quot;Argument &#39;vc&#39; must be one of &#39;all&#39;, &#39;cavm&#39;, or &#39;none&#39;.&quot;</span>)
+
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(data.table)
+<span class="kw">library</span>(reshape2)
+<span class="kw">library</span>(parallel)
+
+<span class="kw">setwd</span>(<span class="st">&quot;/workspace/UA/mfleonawicz/leonawicz/projects/Flammability/workspaces&quot;</span>)
+dataDir &lt;-<span class="st"> &quot;/big_scratch/mfleonawicz/Climate_1km_AKstatewide&quot;</span>
+
+r.veg &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;../data/alf2005.cavm.merged.030212.tif&quot;</span>)
+veg.vec &lt;-<span class="st"> </span><span class="kw">getValues</span>(r.veg)
+<span class="kw">sort</span>(<span class="kw">unique</span>(veg.vec))
+rm.eco &lt;-<span class="st"> </span>T
+ecoreg &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">as.matrix</span>(<span class="kw">read.table</span>(<span class="st">&quot;../data/ecoreg_mark_mask_zero.txt&quot;</span>, <span class="dt">skip =</span> <span class="dv">6</span>, 
+    <span class="dt">header =</span> F)))
+drop.ind &lt;-<span class="st"> </span><span class="kw">Which</span>(ecoreg ==<span class="st"> </span><span class="dv">4</span>, <span class="dt">cells =</span> T)
+if (rm.eco) eco.ind &lt;-<span class="st"> </span><span class="kw">values</span>(<span class="kw">Which</span>(ecoreg !=<span class="st"> </span><span class="dv">0</span> &amp;<span class="st"> </span>ecoreg !=<span class="st"> </span><span class="dv">4</span>)) else eco.ind &lt;-<span class="st"> </span><span class="dv">1</span>
+veg.vec &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(veg.vec !=<span class="st"> </span><span class="dv">0</span>) *<span class="st"> </span>eco.ind *<span class="st"> </span>veg.vec
+
+if (vc ==<span class="st"> &quot;none&quot;</span>) {
+    veg.vec[veg.vec &gt;<span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span>  <span class="co"># not conditional on veg, e.g., for lightning analyses</span>
+} else {
+    <span class="co"># veg-specific, e.g., for flammability analyses</span>
+    veg.vec[veg.vec ==<span class="st"> </span><span class="dv">3</span> |<span class="st"> </span>veg.vec ==<span class="st"> </span><span class="dv">4</span>] &lt;-<span class="st"> </span><span class="dv">2</span>  <span class="co"># for forest</span>
+    if (vc ==<span class="st"> &quot;cavm&quot;</span>) 
+        veg.vec[veg.vec ==<span class="st"> </span><span class="dv">6</span> |<span class="st"> </span>veg.vec ==<span class="st"> </span><span class="dv">7</span>] &lt;-<span class="st"> </span><span class="dv">5</span>  <span class="co"># &#39;cavm&#39; all three shrub, graminoid, wetland combined</span>
+}
+
+veg.vals &lt;-<span class="st"> </span>if (vc ==<span class="st"> &quot;cavm&quot;</span>) <span class="dv">5</span> else if (vc ==<span class="st"> &quot;all&quot;</span>) <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>) else if (vc ==<span class="st"> </span>
+<span class="st">    &quot;none&quot;</span>) <span class="dv">1</span>
+veg.names &lt;-<span class="st"> </span>if (vc ==<span class="st"> &quot;cavm&quot;</span>) <span class="st">&quot;cavm&quot;</span> else if (vc ==<span class="st"> &quot;all&quot;</span>) <span class="kw">c</span>(<span class="st">&quot;tundra&quot;</span>, <span class="st">&quot;forest&quot;</span>, 
+    <span class="st">&quot;shrub&quot;</span>, <span class="st">&quot;graminoid&quot;</span>, <span class="st">&quot;wetland&quot;</span>) else if (vc ==<span class="st"> &quot;none&quot;</span>) <span class="st">&quot;region&quot;</span>
+scenario &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;rcp45&quot;</span>, <span class="st">&quot;rcp60&quot;</span>, <span class="st">&quot;rcp85&quot;</span>)
+modnames &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">list.files</span>(<span class="kw">file.path</span>(dataDir, scenario[<span class="dv">1</span>])), <span class="kw">length</span>(scenario))
+scenario &lt;-<span class="st"> </span><span class="kw">rep</span>(scenario, <span class="dt">each =</span> <span class="kw">length</span>(modnames)/<span class="kw">length</span>(scenario))
+path &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">file.path</span>(dataDir, scenario, modnames, <span class="st">&quot;pr&quot;</span>), <span class="kw">file.path</span>(dataDir, 
+    scenario, modnames, <span class="st">&quot;tas&quot;</span>))
+<span class="kw">dir.create</span>(wsDir &lt;-<span class="st"> &quot;tpByVeg&quot;</span>, <span class="dt">showWarnings =</span> F)
+
+yrs &lt;-<span class="st"> </span><span class="dv">2010</span>:<span class="dv">2099</span>
+n.cores &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">length</span>(yrs), <span class="dv">32</span>)</code></pre>
+</div>
+<div id="processing-function" class="section level3">
+<h3>Processing function</h3>
+<pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span>function(k, path, veg.vec, veg.vals, veg.names, <span class="dt">samples =</span> <span class="ot">FALSE</span>, <span class="dt">n =</span> <span class="dv">100</span>, 
+    <span class="dt">seed =</span> <span class="ot">NULL</span>) {
+    if (!samples) 
+        n &lt;-<span class="st"> </span><span class="dv">1</span>
+    paths &lt;-<span class="st"> </span><span class="kw">list.files</span>(path, <span class="dt">full =</span> T)
+    ind &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">as.numeric</span>(<span class="kw">substr</span>(paths, <span class="kw">nchar</span>(paths) -<span class="st"> </span><span class="dv">7</span>, <span class="kw">nchar</span>(paths) -<span class="st"> </span><span class="dv">4</span>)) ==<span class="st"> </span>
+<span class="st">        </span>k)
+    paths &lt;-<span class="st"> </span>paths[ind]
+    precip.paths &lt;-<span class="st"> </span>paths[<span class="dv">1</span>:<span class="dv">12</span>]
+    temp.paths &lt;-<span class="st"> </span>paths[<span class="dv">13</span>:<span class="dv">24</span>]
+    precip.tmp &lt;-<span class="st"> </span><span class="kw">getValues</span>(<span class="kw">stack</span>(precip.paths, <span class="dt">quick =</span> T))
+    temp.tmp &lt;-<span class="st"> </span><span class="kw">getValues</span>(<span class="kw">stack</span>(temp.paths, <span class="dt">quick =</span> T))
+    if (samples) 
+        na.rows &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">which</span>(<span class="kw">is.na</span>(precip.tmp), <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>)[, <span class="dv">1</span>], <span class="kw">which</span>(<span class="kw">is.na</span>(temp.tmp), 
+            <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>)[, <span class="dv">1</span>]))
+    mp &lt;-<span class="st"> </span>mt &lt;-<span class="st"> </span><span class="kw">c</span>()
+    nv &lt;-<span class="st"> </span><span class="kw">length</span>(veg.vals)
+    if (!<span class="kw">is.null</span>(seed)) 
+        <span class="kw">set.seed</span>(seed)
+    if (!samples) {
+        for (j in <span class="dv">1</span>:nv) {
+            mp &lt;-<span class="st"> </span><span class="kw">cbind</span>(mp, <span class="kw">round</span>(<span class="kw">colMeans</span>(precip.tmp[veg.vec ==<span class="st"> </span>veg.vals[j], 
+                ], <span class="dt">na.rm =</span> T)))
+            mt &lt;-<span class="st"> </span><span class="kw">cbind</span>(mt, <span class="kw">round</span>(<span class="kw">colMeans</span>(temp.tmp[veg.vec ==<span class="st"> </span>veg.vals[j], 
+                ], <span class="dt">na.rm =</span> T), <span class="dv">1</span>))
+        }
+    } else if (samples) {
+        for (j in <span class="dv">1</span>:nv) {
+            ind2 &lt;-<span class="st"> </span>veg.vec ==<span class="st"> </span>veg.vals[j] &amp;<span class="st"> </span>!(<span class="dv">1</span>:<span class="kw">length</span>(veg.vec) %in%<span class="st"> </span>na.rows)
+            pre &lt;-<span class="st"> </span>precip.tmp[ind2, ]
+            tas &lt;-<span class="st"> </span>temp.tmp[ind2, ]
+            samp &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(pre), n)
+            mp &lt;-<span class="st"> </span><span class="kw">cbind</span>(mp, <span class="kw">as.numeric</span>(pre[samp, ]))
+            mt &lt;-<span class="st"> </span><span class="kw">cbind</span>(mt, <span class="kw">as.numeric</span>(tas[samp, ]))
+        }
+    }
+    mp &lt;-<span class="st"> </span><span class="kw">data.table</span>(mp)
+    mt &lt;-<span class="st"> </span><span class="kw">data.table</span>(mt)
+    <span class="kw">setnames</span>(mp, veg.names)
+    <span class="kw">setnames</span>(mt, veg.names)
+    mp$Month &lt;-<span class="st"> </span>mt$Month &lt;-<span class="st"> </span><span class="kw">rep</span>(month.abb, <span class="dt">each =</span> n)
+    mp$Var &lt;-<span class="st"> &quot;Precipitation&quot;</span>
+    mt$Var &lt;-<span class="st"> &quot;Temperature&quot;</span>
+    d &lt;-<span class="st"> </span><span class="kw">rbind</span>(mp, mt)
+    d &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">Year =</span> k, d)
+    d &lt;-<span class="st"> </span><span class="kw">melt</span>(d, <span class="dt">id.var =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>, <span class="st">&quot;Month&quot;</span>, <span class="st">&quot;Var&quot;</span>), <span class="dt">variable.name =</span> <span class="st">&quot;Vegetation&quot;</span>, 
+        <span class="dt">value.name =</span> <span class="st">&quot;Val&quot;</span>)
+    if (samples) 
+        d[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Obs, <span class="dv">1</span>:n)] else d[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Obs, <span class="dv">0</span>)]
+    <span class="kw">print</span>(k)
+    d
+}</code></pre>
+</div>
+<div id="run" class="section level3">
+<h3>Run</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">55</span>)
+d.list &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(path[[<span class="dv">1</span>]]))
+for (z in <span class="dv">1</span>:<span class="kw">length</span>(path[[<span class="dv">1</span>]])) {
+    if (!samples) 
+        f.out &lt;-<span class="st"> </span><span class="kw">mclapply</span>(yrs, f, <span class="dt">path =</span> <span class="kw">c</span>(path[[<span class="dv">1</span>]][z], path[[<span class="dv">2</span>]][z]), <span class="dt">veg.vec =</span> veg.vec, 
+            <span class="dt">veg.vals =</span> veg.vals, <span class="dt">veg.names =</span> veg.names, <span class="dt">mc.cores =</span> n.cores)
+    if (samples) 
+        f.out &lt;-<span class="st"> </span><span class="kw">mclapply</span>(yrs, f, <span class="dt">path =</span> <span class="kw">c</span>(path[[<span class="dv">1</span>]][z], path[[<span class="dv">2</span>]][z]), <span class="dt">veg.vec =</span> veg.vec, 
+            <span class="dt">veg.vals =</span> veg.vals, <span class="dt">veg.names =</span> veg.names, <span class="dt">samples =</span> <span class="ot">TRUE</span>, <span class="dt">n =</span> n, 
+            <span class="dt">seed =</span> <span class="dv">55</span>, <span class="dt">mc.cores =</span> n.cores)
+    d &lt;-<span class="st"> </span><span class="kw">rbindlist</span>(f.out)
+    d[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Scenario, scenario[z])]
+    d[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Model, modnames[z])]
+    <span class="kw">setcolorder</span>(d, <span class="kw">c</span>(<span class="st">&quot;Scenario&quot;</span>, <span class="st">&quot;Model&quot;</span>, <span class="kw">names</span>(d)[<span class="dv">1</span>:(<span class="kw">ncol</span>(d) -<span class="st"> </span><span class="dv">2</span>)]))
+    d.list[[z]] &lt;-<span class="st"> </span>d
+}
+d &lt;-<span class="st"> </span><span class="kw">rbindlist</span>(d.list)
+<span class="kw">rm</span>(f.out, d.list)
+if (vc ==<span class="st"> &quot;cavm&quot;</span>) d.cavm &lt;-<span class="st"> </span>d else if (vc ==<span class="st"> &quot;none&quot;</span>) d.region &lt;-<span class="st"> </span>d</code></pre>
+</div>
+<div id="save-outputs" class="section level3">
+<h3>Save outputs</h3>
+<pre class="sourceCode r"><code class="sourceCode r">lab &lt;-<span class="st"> </span>if (samples) <span class="kw">paste0</span>(<span class="st">&quot;samples&quot;</span>, n) else <span class="st">&quot;means&quot;</span>
+if (vc ==<span class="st"> &quot;cavm&quot;</span>) {
+    <span class="kw">save</span>(d.cavm, <span class="dt">file =</span> <span class="kw">paste0</span>(wsDir, <span class="st">&quot;/tpByVeg_&quot;</span>, lab, <span class="st">&quot;_CMIP5_cavm.RData&quot;</span>))
+} else if (vc ==<span class="st"> &quot;all&quot;</span>) {
+    <span class="kw">save</span>(d, <span class="dt">file =</span> <span class="kw">paste0</span>(wsDir, <span class="st">&quot;/tpByVeg_&quot;</span>, lab, <span class="st">&quot;_CMIP5_individual.RData&quot;</span>))
+} else if (vc ==<span class="st"> &quot;none&quot;</span>) {
+    <span class="kw">save</span>(d.region, <span class="dt">file =</span> <span class="kw">paste0</span>(wsDir, <span class="st">&quot;/tpByVeg_&quot;</span>, lab, <span class="st">&quot;_CMIP5_regional.RData&quot;</span>))
+}</code></pre>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

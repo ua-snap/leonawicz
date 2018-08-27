@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="gbm_lightning_coefficients.r" class="section level2">
+<h2>gbm_lightning_coefficients.R</h2>
+<p>The <code>gbm_lightning_coefficients.R</code> script assembles GBM lightning strike point model historical fitted values and backcast and forecast predictions. Historical and future values are loaded via workspace file.</p>
+<p>The script also provides exploratory graphs of the assembled data. It presents the discrete classification of annual lightning intensity with several visualizations including time series, ranked and ordered values, and empirical CDF.</p>
+<p>Plots are made of exclusively CRU 3.2-based fitted values and backcast predictions. Similar multi-panel plots are then made comparing each of five CMIP5 GCMs’ predicted values with CRU 3.2 as a comparative baseline.</p>
+<p>The finalized compiled data table including discrete classified annual lightning intensity coefficients is saved to a new workspace to be sourced by other scripts. For example, it is sourced by <code>FlammabilityMapMultipliers.R</code> for applying a scalar multiplier to GBM vegetation flammability maps used in ALFRESCO simulations.</p>
+</div>
+<div id="r-code" class="section level2">
+<h2>R code</h2>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;C:/github/Flammability/workspaces&quot;</span>)
+<span class="kw">dir.create</span>(plotDir &lt;-<span class="st"> &quot;../plots/lightning&quot;</span>, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">load</span>(<span class="st">&quot;gbm_lightning_preds_1950_2099.RData&quot;</span>)
+
+<span class="kw">library</span>(reshape2)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(data.table)
+<span class="kw">library</span>(dplyr)</code></pre>
+</div>
+</div>
+<div id="section-2" class="section level2">
+<h2></h2>
+</div>
+<div id="section-3" class="section level2">
+<h2></h2>
+<div id="support-functions" class="section level3">
+<h3>Support functions</h3>
+<pre class="sourceCode r"><code class="sourceCode r">get_classes1 &lt;-<span class="st"> </span>function(x, <span class="dt">y =</span> qtiles) <span class="kw">cut</span>(x, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, y, <span class="dv">99999</span>), <span class="dt">labels =</span> F)
+get_coefficients &lt;-<span class="st"> </span>function(x, <span class="dt">b =</span> bounds, <span class="dt">use.ecdf =</span> <span class="ot">TRUE</span>) {
+    if (use.ecdf) 
+        <span class="kw">return</span>(<span class="kw">ecdf</span>(x)(x))  <span class="co"># x represents lightning values</span>
+    b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.01</span>, b, <span class="dv">1</span>)  <span class="co"># x represents bin integers</span>
+    <span class="co"># sapply(x, function(y) switch(y, &#39;1&#39;=0.05, &#39;2&#39;=0.5, &#39;3&#39;=0.95))</span>
+    <span class="kw">sapply</span>(x, function(y, b) <span class="kw">runif</span>(<span class="dv">1</span>, b[y], b[y +<span class="st"> </span><span class="dv">1</span>]), <span class="dt">b =</span> b)
+}
+get_classes2 &lt;-<span class="st"> </span>function(x) <span class="kw">factor</span>(x, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Low&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;High&quot;</span>))</code></pre>
+</div>
+</div>
+<div id="section-4" class="section level2">
+<h2></h2>
+</div>
+<div id="section-5" class="section level2">
+<h2></h2>
+<div id="quantiles-and-classification" class="section level3">
+<h3>Quantiles and classification</h3>
+<pre class="sourceCode r"><code class="sourceCode r">bounds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>)
+preds.cru32 &lt;-<span class="st"> </span><span class="kw">filter</span>(lightning.preds, Model ==<span class="st"> &quot;CRU32&quot;</span>)$LightPred
+qtiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(preds.cru32, bounds)
+bins.cru &lt;-<span class="st"> </span><span class="kw">get_classes1</span>(preds.cru32)
+coef.cru &lt;-<span class="st"> </span><span class="kw">get_coefficients</span>(preds.cru32)
+bins.cru &lt;-<span class="st"> </span><span class="kw">get_classes2</span>(bins.cru)
+d &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">Scenario =</span> <span class="st">&quot;historical&quot;</span>, <span class="dt">Model =</span> <span class="st">&quot;CRU32&quot;</span>, <span class="dt">Year =</span> <span class="dv">1950</span>:<span class="dv">2013</span>, 
+    <span class="dt">LightPred =</span> preds.cru32, <span class="dt">Rank =</span> <span class="kw">rank</span>(preds.cru32), <span class="dt">Class =</span> bins.cru, <span class="dt">Coef =</span> coef.cru, 
+    <span class="dt">ECDF =</span> <span class="kw">ecdf</span>(preds.cru32)(preds.cru32))</code></pre>
+</div>
+</div>
+<div id="section-6" class="section level2">
+<h2></h2>
+</div>
+<div id="section-7" class="section level2">
+<h2></h2>
+<div id="cru-3.2-plots" class="section level3">
+<h3>CRU 3.2 plots</h3>
+<pre class="sourceCode r"><code class="sourceCode r">title.prefix &lt;-<span class="st"> &quot;1950-2013 CRU 3.2 GBM-predicted summer lightning strikes: &quot;</span>
+(g1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> d, <span class="kw">aes</span>(<span class="dt">x =</span> Rank, <span class="dt">y =</span> LightPred, <span class="dt">label =</span> Year)) +<span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> qtiles, 
+    <span class="dt">linetype =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Class), <span class="dt">hjust =</span> <span class="dv">0</span>, 
+    <span class="dt">vjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">show_guide =</span> F) +<span class="st"> </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> qtiles, 
+    <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;qunatile =&quot;</span>, bounds), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">vjust =</span> -<span class="fl">0.5</span>) +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Predicted rank&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Predicted number of strikes&quot;</span>, <span class="dt">title =</span> <span class="kw">paste0</span>(title.prefix, <span class="st">&quot;ranked and ordered&quot;</span>)))</code></pre>
+<p><img src="gbm_lightning_coefficients_files/figure-html/plots_cru32-1.png" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">(g2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> d, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> LightPred, <span class="dt">label =</span> Rank)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> qtiles, <span class="dt">linetype =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Class), 
+    <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">vjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">show_guide =</span> F) +<span class="st"> </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="dv">1950</span>, 
+    <span class="dt">y =</span> qtiles, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;qunatile =&quot;</span>, bounds), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">vjust =</span> -<span class="fl">0.5</span>) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Predicted number of strikes&quot;</span>, <span class="dt">title =</span> <span class="kw">paste0</span>(title.prefix, 
+        <span class="st">&quot;time series&quot;</span>)))</code></pre>
+<p><img src="gbm_lightning_coefficients_files/figure-html/plots_cru32-2.png" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">(g3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> d, <span class="kw">aes</span>(<span class="dt">x =</span> LightPred, <span class="dt">label =</span> Year)) +<span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> qtiles, 
+    <span class="dt">linetype =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">stat_ecdf</span>() +<span class="st"> </span><span class="kw">stat_ecdf</span>(<span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) +<span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ECDF, 
+    <span class="dt">colour =</span> Class), <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">vjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">show_guide =</span> F) +<span class="st"> </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, 
+    <span class="dt">x =</span> qtiles, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;qunatile =&quot;</span>, bounds), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">hjust =</span> -<span class="fl">0.1</span>) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Predicted number of strikes&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;CDF&quot;</span>, <span class="dt">title =</span> <span class="kw">paste0</span>(title.prefix, 
+        <span class="st">&quot;empirical CDF&quot;</span>)))</code></pre>
+<p><img src="gbm_lightning_coefficients_files/figure-html/plots_cru32-3.png" /></p>
+</div>
+</div>
+<div id="section-8" class="section level2">
+<h2></h2>
+</div>
+<div id="section-9" class="section level2">
+<h2></h2>
+<div id="rcp-6.0-cmip5-gcm-comparisons-with-cru-3.2" class="section level3">
+<h3>RCP 6.0 CMIP5 GCM comparisons with CRU 3.2</h3>
+<pre class="sourceCode r"><code class="sourceCode r">d2 &lt;-<span class="st"> </span>lightning.preds %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Scenario, Model) %&gt;%<span class="st"> </span><span class="kw">filter</span>(Model !=<span class="st"> &quot;CRU32&quot;</span>) %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">Rank =</span> <span class="kw">rank</span>(LightPred), <span class="dt">Class =</span> <span class="kw">get_classes1</span>(LightPred), <span class="dt">Coef =</span> <span class="kw">get_coefficients</span>(LightPred), 
+        <span class="dt">ECDF =</span> <span class="kw">ecdf</span>(LightPred)(LightPred)) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Class =</span> <span class="kw">get_classes2</span>(Class)) %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">setcolorder</span>(<span class="kw">names</span>(d))
+d.all &lt;-<span class="st"> </span>d %&gt;%<span class="st"> </span><span class="kw">rbind</span>(d2) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Model =</span> <span class="kw">factor</span>(Model, <span class="dt">levels =</span> <span class="kw">unique</span>(Model)))
+rcp.lab &lt;-<span class="st"> &quot;RCP 6.0&quot;</span>
+rcp &lt;-<span class="st"> </span><span class="kw">tolower</span>(<span class="kw">gsub</span>(<span class="st">&quot;[ .]&quot;</span>, <span class="st">&quot;&quot;</span>, rcp.lab))
+d.sub &lt;-<span class="st"> </span>d2 %&gt;%<span class="st"> </span><span class="kw">filter</span>(Scenario %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;historical&quot;</span>, rcp)) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Scenario =</span> rcp) %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">rbind</span>(d) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Model =</span> <span class="kw">factor</span>(Model, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;CRU32&quot;</span>, <span class="kw">unique</span>(Model)[<span class="dv">1</span>:<span class="dv">5</span>])))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">title.prefix &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;1950-2013 CRU 3.2 and 1950-2005/2006-2099 GCM&quot;</span>, rcp.lab, 
+    <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+(g4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> d.sub, <span class="kw">aes</span>(<span class="dt">x =</span> Rank, <span class="dt">y =</span> LightPred, <span class="dt">label =</span> Year)) +<span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> qtiles, 
+    <span class="dt">linetype =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Class), <span class="dt">hjust =</span> <span class="dv">0</span>, 
+    <span class="dt">vjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">show_guide =</span> F) +<span class="st"> </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> qtiles, 
+    <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;CRU qunatile =&quot;</span>, bounds), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">hjust =</span> <span class="fl">0.25</span>, <span class="dt">vjust =</span> -<span class="fl">0.25</span>) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Predicted rank&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Predicted number of strikes&quot;</span>, <span class="dt">title =</span> <span class="kw">paste0</span>(title.prefix, 
+        <span class="st">&quot;GBM-predicted summer lightning strikes: ranked and ordered&quot;</span>)) +<span class="st"> </span><span class="kw">facet_wrap</span>(~Model, 
+    <span class="dt">ncol =</span> <span class="dv">2</span>))</code></pre>
+<p><img src="gbm_lightning_coefficients_files/figure-html/plots_gcm-1.png" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">(g5 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> d.sub, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> LightPred, <span class="dt">label =</span> Rank)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> qtiles, <span class="dt">linetype =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Class), 
+    <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">vjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">show_guide =</span> F) +<span class="st"> </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="dv">1950</span>, 
+    <span class="dt">y =</span> qtiles, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;CRU qunatile =&quot;</span>, bounds), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">hjust =</span> <span class="fl">0.25</span>, 
+    <span class="dt">vjust =</span> -<span class="fl">0.25</span>) +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Predicted number of strikes&quot;</span>, <span class="dt">title =</span> <span class="kw">paste0</span>(title.prefix, 
+    <span class="st">&quot;GBM-predicted summer lightning strikes: time series&quot;</span>)) +<span class="st"> </span><span class="kw">facet_wrap</span>(~Model, 
+    <span class="dt">ncol =</span> <span class="dv">2</span>))</code></pre>
+<p><img src="gbm_lightning_coefficients_files/figure-html/plots_gcm-2.png" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">(g6 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">filter</span>(d.all, Scenario ==<span class="st"> &quot;historical&quot;</span>), <span class="kw">aes</span>(<span class="dt">x =</span> LightPred, 
+    <span class="dt">label =</span> Year)) +<span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> qtiles, <span class="dt">linetype =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">stat_ecdf</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">stat_ecdf</span>(<span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) +<span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ECDF, <span class="dt">colour =</span> Class), <span class="dt">hjust =</span> <span class="dv">0</span>, 
+    <span class="dt">vjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">show_guide =</span> F) +<span class="st"> </span><span class="kw">stat_ecdf</span>(<span class="dt">data =</span> <span class="kw">filter</span>(d.all, Scenario ==<span class="st"> </span>
+<span class="st">    &quot;rcp60&quot;</span>)) +<span class="st"> </span><span class="kw">stat_ecdf</span>(<span class="dt">data =</span> <span class="kw">filter</span>(d.all, Scenario ==<span class="st"> &quot;rcp60&quot;</span>), <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">data =</span> <span class="kw">filter</span>(d.all, Scenario ==<span class="st"> &quot;rcp60&quot;</span>), <span class="kw">aes</span>(<span class="dt">y =</span> ECDF, <span class="dt">colour =</span> Class), 
+        <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">vjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">show_guide =</span> F) +<span class="st"> </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> qtiles, 
+    <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;CRU qunatile =&quot;</span>, bounds), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">hjust =</span> -<span class="fl">0.1</span>, 
+    <span class="dt">vjust =</span> -<span class="fl">0.125</span>) +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Predicted number of strikes&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;CDF&quot;</span>, <span class="dt">title =</span> <span class="kw">paste0</span>(title.prefix, 
+    <span class="st">&quot;GBM-predicted summer lightning strikes: empirical CDF&quot;</span>)) +<span class="st"> </span><span class="kw">facet_wrap</span>(~Model, 
+    <span class="dt">ncol =</span> <span class="dv">2</span>))</code></pre>
+<p><img src="gbm_lightning_coefficients_files/figure-html/plots_gcm-3.png" /></p>
+</div>
+</div>
+<div id="section-10" class="section level2">
+<h2></h2>
+</div>
+<div id="section-11" class="section level2">
+<h2></h2>
+<div id="observed-and-modeled-lightning-strikes-as-a-function-of-climate" class="section level3">
+<h3>Observed and modeled lightning strikes as a function of climate</h3>
+<div id="cru-3.2--and-rcp-6.0-cmip5-gcm-based-lightning-trend-backcast-and-projection" class="section level4">
+<h4>CRU 3.2- and RCP 6.0 CMIP5 GCM-based lightning trend backcast and projection</h4>
+<ul>
+<li>Lightning: Response variable</li>
+<li>All positive-polarized lightning strikes, sample size n = 172,633 strikes.</li>
+<li>Annual strike frequency over the domain during the observational period ranges from 7,878 to 32,129 strikes per year.</li>
+<li>Annual average is 19,181 strikes.</li>
+<li>Estimated average annual strike frequency is 14,043 strikes during the 1950s and 33,903 strikes during the 2090s.</li>
+</ul>
+<div id="climate-predictor-variables-monthly-summer-temperature-and-precipitation." class="section level5">
+<h5>Climate: Predictor variables, monthly summer temperature and precipitation.</h5>
+</div>
+<div id="spatial-domain-statewide-alaska-forested-areas-spruce-and-deciduous." class="section level5">
+<h5>Spatial domain: statewide Alaska forested areas (spruce and deciduous).</h5>
+</div>
+<div id="temporal-domain-summer-june-july-august-total-strike-frequency-2003---2011." class="section level5">
+<h5>Temporal domain: Summer (June + July + August total strike frequency), 2003 - 2011.</h5>
+</div>
+<div id="notes" class="section level5">
+<h5>Notes:</h5>
+<ul>
+<li>Changes to the lightning detection network prior to 2003 and after 2011 limit the series of comparable samples.</li>
+<li>A GBM model estimates lightning strike frequency over the domain as a function of climate.</li>
+<li>Use of climate provides the opportunity to model annual lightning strike frequency backcasts and future projections over the domain using CRU 3.2 and CMIP5 GCM climate outputs.</li>
+<li>Given the lightning sample size, much information is aggregated into each total statewide summer lightning frequency.</li>
+<li>The model will likely be improved upon with additional data, climate scenarios, assessment of GBM model uncertainty (currently only GCM uncertainty is included), as well as deeper explorations of the nonlinear climate-lightning linkage itself.</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">cbpal &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>, <span class="st">&quot;#009E73&quot;</span>, <span class="st">&quot;#F0E442&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>, 
+    <span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;#CC79A7&quot;</span>)
+<span class="kw">acf</span>(<span class="kw">filter</span>(lightning.preds, Model ==<span class="st"> &quot;CRU32&quot;</span>)$LightPred)  <span class="co"># uncorrelated at lag 1</span></code></pre>
+<p><img src="gbm_lightning_coefficients_files/figure-html/setup_preds_uncertainty-1.png" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">genSim &lt;-<span class="st"> </span>function(i, data) {
+    d &lt;-<span class="st"> </span>data %&gt;%<span class="st"> </span><span class="kw">filter</span>(Model !=<span class="st"> &quot;CRU32&quot;</span>) %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Year) %&gt;%<span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">1</span>) %&gt;%<span class="st"> </span>
+<span class="st">        </span><span class="kw">select</span>(Scenario, Year, LightPred)
+    d[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Sim, i)]
+    d
+}
+
+d.new &lt;-<span class="st"> </span><span class="kw">select</span>(d, Scenario, Year, LightPred)
+d.new[, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(Sim, -<span class="dv">1</span>)]
+d.emp &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">Scenario =</span> <span class="st">&quot;Empirical&quot;</span>, <span class="dt">Year =</span> <span class="dv">2003</span>:<span class="dv">2011</span>, <span class="dt">LightPred =</span> lightning.obs, 
+    <span class="dt">Sim =</span> <span class="dv">0</span>)
+<span class="kw">set.seed</span>(<span class="dv">47</span>)
+d.sim &lt;-<span class="st"> </span><span class="kw">rbindlist</span>(<span class="kw">lapply</span>(<span class="dv">1</span>:<span class="dv">100</span>, genSim, <span class="dt">data =</span> d.sub))
+d.sim.all &lt;-<span class="st"> </span><span class="kw">rbind</span>(d.emp, d.new, d.sim)
+d.sim.all$Scenario =<span class="st"> </span><span class="kw">factor</span>(d.sim.all$Scenario, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;historical&quot;</span>, rcp, 
+    <span class="st">&quot;Empirical&quot;</span>))
+d.sim.cb &lt;-<span class="st"> </span>d.sim.all %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Scenario, Year) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(LightPred), 
+    <span class="dt">Lb =</span> <span class="kw">min</span>(LightPred), <span class="dt">Ub =</span> <span class="kw">max</span>(LightPred))
+
+<span class="kw">library</span>(scales)
+<span class="kw">library</span>(grid)
+cols &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">`</span><span class="dt">5-model uncertainty</span><span class="st">`</span> =<span class="st"> </span><span class="kw">alpha</span>(<span class="st">&quot;black&quot;</span>, <span class="fl">0.2</span>), <span class="st">`</span><span class="dt">5-model mean estimated strikes</span><span class="st">`</span> =<span class="st"> &quot;black&quot;</span>, 
+    <span class="st">`</span><span class="dt">CRU 3.2 historical estimated strikes</span><span class="st">`</span> =<span class="st"> </span>cbpal[<span class="dv">6</span>], <span class="st">`</span><span class="dt">Observed strikes</span><span class="st">`</span> =<span class="st"> </span>cbpal[<span class="dv">7</span>])</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(g7 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">subset</span>(d.sim.cb, Scenario ==<span class="st"> &quot;rcp60&quot;</span>), <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Mean)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> <span class="st">&quot;5-model mean estimated strikes&quot;</span>), <span class="dt">size =</span> <span class="dv">1</span>) +<span class="st"> </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> Lb, 
+    <span class="dt">ymax =</span> Ub, <span class="dt">fill =</span> <span class="st">&quot;5-model uncertainty&quot;</span>)) +<span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> <span class="kw">subset</span>(d.sim.cb, 
+    Scenario ==<span class="st"> &quot;historical&quot;</span>), <span class="kw">aes</span>(<span class="dt">colour =</span> <span class="st">&quot;CRU 3.2 historical estimated strikes&quot;</span>), 
+    <span class="dt">size =</span> <span class="dv">1</span>) +<span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> <span class="kw">subset</span>(d.sim.cb, Scenario ==<span class="st"> &quot;Empirical&quot;</span>), 
+    <span class="kw">aes</span>(<span class="dt">colour =</span> <span class="st">&quot;Observed strikes&quot;</span>), <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">subset</span>(d.sim.cb, 
+    Scenario ==<span class="st"> &quot;Empirical&quot;</span>), <span class="kw">aes</span>(<span class="dt">colour =</span> <span class="st">&quot;Observed strikes&quot;</span>), <span class="dt">size =</span> <span class="dv">3</span>) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> d.sim.all, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> LightPred), <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, 
+        <span class="dt">formula =</span> y ~<span class="st"> </span>x, <span class="dt">colour =</span> <span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">1</span>) +<span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> d.sim.all, 
+    <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> LightPred), <span class="dt">formula =</span> y ~<span class="st"> </span>x, <span class="dt">colour =</span> <span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">1</span>) +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Number of strikes&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;1950-2099 Observed and GBM-estimated summer lightning strikes&quot;</span>) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">name =</span> <span class="st">&quot;&quot;</span>, <span class="dt">values =</span> cols) +<span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;&quot;</span>, 
+    <span class="dt">values =</span> cols) +<span class="st"> </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">16</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, 
+    <span class="dt">legend.box =</span> <span class="st">&quot;horizontal&quot;</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">colour =</span> <span class="kw">guide_legend</span>(<span class="dt">reverse =</span> T, <span class="dt">order =</span> <span class="dv">1</span>), 
+    <span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">reverse =</span> T, <span class="dt">order =</span> <span class="dv">2</span>)) +<span class="st"> </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1950</span>, 
+    <span class="dv">2100</span>, <span class="dt">by =</span> <span class="dv">10</span>)))</code></pre>
+<p><img src="gbm_lightning_coefficients_files/figure-html/plots_preds_uncertainty-1.png" /></p>
+<ul>
+<li>Backcast 1950-2013 CRU 3.2-based lightning (blue) matches strongly in its overlap with empirical observations (orange) and is comparable in inter-annual variability to CMIP5-based estimates (gray) over the full 1950-2099 period.</li>
+<li>An upward linear trend in lightning frequency cannot be inferred from the narrow nine-year observational window.</li>
+<li>A linear trend is present during backcast years based on either CRU 3.2 or CMIP5 GCMs though occurring among relatively high inter-annual variability and uncertainty.</li>
+<li>The nonlinear climate-lightning linkage is strong and the upward trend in lightning frequency based on GCMs (black) becomes increasingly prominent as climate is projected to change. This is bounded by GCM-based uncertainty (gray).</li>
+<li>The model estimates lightning to increase by 17% per decade on average.</li>
+<li>The “flatlining” behavior of projected lightning in the latter decades of the century represent a restriction of the GBM model against making large extrapolations of the climate-lightning linkage when projected climate is more extreme than the range of historical climate values used to fit the model. To that degree the GBM model is conservative.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco/fsByVeg.R")
+```
+
+##
+##
+## fsByVeg.R
+
+The `fsByVeg.R` script carries out post-processing of ALFRESCO simulation outputs.
+It is assumed that `AlfrescoCalibration.R` has already executed. This and any other post-processing **R** script are always run secondary to the primary script.
+
+The script extracts fire sizes (FS) from ALFRESCO output fire scar geotiffs for each simulation replicate,
+conditional on vegetation class, and combines the modeled FS values with similarly extracted historical observations of vegetation-specific FS.
+The hardcoded vegetation classification includes separate tundra types (alpine, shrub, graminoid, and wetland)
+and an aggregate forest type (black spruce, white spruce, and deciduous trees).
+Hardcoded years are currently 1950 - 2009.
+
+An **R** workspace file containing a data frame of veg-specific FS is attached to an email which is sent from the Atlas cluster to intended recipients as part of the broader SLURM process.
+This script is called by the SLURM script, `CompileData.slurm` after the initial post-processing script, `AlfrescoCalibration.R` has run.
+
+## R code
+
+### Setup
+
+```{r setup}
+```
+
+### Functions: fseByVeg
+
+`fseByVeg` performs the basic operation of calculating FSEs by vegetation class and tabling the individual observations.
+
+```{r func_fseByVeg}
+```
+
+### Functions: fseByRep
+
+`fseByRep` is a parallel processing wrapper to `fseByVeg`, parallelized by simulation replicate.
+
+```{r func_fseByRep}
+```
+
+### Functions: fseByRepEmp
+
+`fseByRepEmp` is a basic wrapper to `fseByVeg` for empirical/historical observational FSE extraction.
+
+```{r func_fseByRepEmp}
+```
+
+# Empirical data setup
+
+```{r empirical_data_setup}
+```
+
+# Run and save results
+
+```{r run}
+```

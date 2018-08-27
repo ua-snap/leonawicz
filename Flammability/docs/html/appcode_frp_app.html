@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="app.r" class="section level2">
+<h2>app.R</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;reactives.R&quot;</span>, <span class="dt">local =</span> T)  <span class="co"># Source reactive expressions and other code</span>
+<span class="kw">source</span>(<span class="st">&quot;plotFunctions.R&quot;</span>, <span class="dt">local =</span> T)  <span class="co"># source plotting functions</span>
+
+rv &lt;-<span class="st"> </span><span class="kw">reactiveValues</span>()
+
+updateDataFun &lt;-<span class="st"> </span>function(file) {
+    if (!<span class="kw">is.null</span>(file)) {
+        vars &lt;-<span class="st"> </span><span class="kw">load</span>(<span class="dt">file =</span> file, <span class="dt">envir =</span> .GlobalEnv)
+        for (v in vars) rv[[v]] &lt;-<span class="st"> </span><span class="kw">get</span>(v, .GlobalEnv)
+    }
+}
+
+updateData &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    <span class="kw">updateDataFun</span>(<span class="dt">file =</span> input$workspace)
+})
+
+<span class="kw">observe</span>({
+    <span class="kw">updateData</span>()
+})
+
+<span class="co"># Primary plot outputs reactive expressions Plot RAB ~ time</span>
+doPlot_RABbyTime &lt;-<span class="st"> </span>function(...) {
+    if (!(<span class="kw">is.null</span>(<span class="kw">subjects</span>()) |<span class="st"> </span><span class="kw">is.null</span>(<span class="kw">groups</span>()) |<span class="st"> </span><span class="kw">is.null</span>(input$buffersize) |<span class="st"> </span>
+<span class="st">        </span><span class="kw">is.null</span>(input$facetcols))) {
+        <span class="kw">plotRABbyTime</span>(<span class="dt">data =</span> rv$rab.dat, <span class="dt">buffersize =</span> input$buffersize, <span class="dt">subject =</span> <span class="kw">subjects</span>(), 
+            <span class="dt">grp =</span> <span class="kw">groups</span>(), <span class="dt">colpal =</span> cbpalette, <span class="dt">fontsize =</span> <span class="dv">16</span>, <span class="dt">leg.pos =</span> <span class="st">&quot;top&quot;</span>, 
+            <span class="dt">facet.by =</span> <span class="kw">facetBy</span>(), <span class="dt">facet.cols =</span> input$facetcols, ...)
+    } else <span class="ot">NULL</span>
+}
+
+<span class="co"># Plot Regional TAB ~ time</span>
+doPlot_RegTABbyTime &lt;-<span class="st"> </span>function(...) {
+    if (!(<span class="kw">is.null</span>(<span class="kw">reg_subjects</span>()) |<span class="st"> </span><span class="kw">is.null</span>(<span class="kw">reg_groups</span>()) |<span class="st"> </span><span class="kw">is.null</span>(input$reg_vegetation) |<span class="st"> </span>
+<span class="st">        </span><span class="kw">is.null</span>(input$reg_aggveg) |<span class="st"> </span><span class="kw">is.null</span>(input$reg_facetcols))) {
+        <span class="kw">plotRegionalTABbyTime</span>(<span class="dt">data =</span> rv$d.fs, <span class="dt">vegetation =</span> input$reg_vegetation, 
+            <span class="dt">agg.veg =</span> input$reg_aggveg, <span class="dt">subject =</span> <span class="kw">reg_subjects</span>(), <span class="dt">grp =</span> <span class="kw">reg_groups</span>(), 
+            <span class="dt">colpal =</span> cbpalette, <span class="dt">fontsize =</span> <span class="dv">16</span>, <span class="dt">leg.pos =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">facet.by =</span> <span class="kw">reg_facetBy</span>(), 
+            <span class="dt">facet.cols =</span> input$reg_facetcols, ...)
+    } else <span class="ot">NULL</span>
+}
+
+<span class="co"># Plot FRP ~ buffer radius</span>
+doPlot_FRPbyBuffer &lt;-<span class="st"> </span>function() {
+    if (!(<span class="kw">is.null</span>(<span class="kw">subjects</span>()) |<span class="st"> </span><span class="kw">is.null</span>(<span class="kw">groups</span>()) |<span class="st"> </span><span class="kw">is.null</span>(input$minbuffersize) |<span class="st"> </span>
+<span class="st">        </span><span class="kw">is.null</span>(input$facetcols))) {
+        <span class="kw">plotFRPbyBuffer</span>(<span class="dt">data =</span> rv$frp.dat, <span class="dt">min.buffer =</span> input$minbuffersize, 
+            <span class="dt">subject =</span> <span class="kw">subjects</span>(), <span class="dt">grp =</span> <span class="kw">groups</span>(), <span class="dt">colpal =</span> cbpalette, <span class="dt">fontsize =</span> <span class="dv">16</span>, 
+            <span class="dt">leg.pos =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">maintitle =</span> main.frp, <span class="dt">xlb =</span> xlb.frp, <span class="dt">ylb =</span> ylb.frp, 
+            <span class="dt">facet.by =</span> <span class="kw">facetBy</span>(), <span class="dt">facet.cols =</span> input$facetcols)
+    } else <span class="ot">NULL</span>
+}
+
+<span class="co"># Plot FRI boxplots</span>
+doPlot_FRIboxplot &lt;-<span class="st"> </span>function() {
+    if (!(<span class="kw">is.null</span>(input$boxplot_X) |<span class="st"> </span><span class="kw">is.null</span>(input$boxplot_points) |<span class="st"> </span><span class="kw">is.null</span>(input$points_alpha) |<span class="st"> </span>
+<span class="st">        </span><span class="kw">is.null</span>(<span class="kw">Boxplot_groups</span>()) |<span class="st"> </span><span class="kw">is.null</span>(input$boxplot_log) |<span class="st"> </span><span class="kw">is.null</span>(input$boxplot_facetcols))) {
+        <span class="kw">plotFRIboxplot</span>(<span class="dt">d =</span> rv$fri.dat, <span class="dt">x =</span> input$boxplot_X, <span class="dt">y =</span> <span class="st">&quot;FRI&quot;</span>, <span class="dt">grp =</span> <span class="kw">Boxplot_groups</span>(), 
+            <span class="dt">colpal =</span> cbpalette, <span class="dt">Log =</span> input$boxplot_log, <span class="dt">show.points =</span> input$boxplot_points, 
+            <span class="dt">pts.alpha =</span> input$points_alpha, <span class="dt">fontsize =</span> <span class="dv">16</span>, <span class="dt">leg.pos =</span> <span class="st">&quot;top&quot;</span>, 
+            <span class="dt">facet.by =</span> <span class="kw">Boxplot_facetBy</span>(), <span class="dt">facet.cols =</span> input$boxplot_facetcols)
+    } else <span class="ot">NULL</span>
+}
+
+<span class="co"># Primary plot reactive outputs</span>
+output$RAB_tsplot &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({
+    <span class="kw">doPlot_RABbyTime</span>(<span class="dt">year.range =</span> input$yearsrab)
+}, <span class="dt">height =</span> <span class="dv">800</span>, <span class="dt">width =</span> <span class="dv">1000</span>)
+
+output$CRAB_tsplot &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({
+    <span class="kw">doPlot_RABbyTime</span>(<span class="dt">year.range =</span> input$yearscrab, <span class="dt">cumulative =</span> <span class="ot">TRUE</span>)
+}, <span class="dt">height =</span> <span class="dv">800</span>, <span class="dt">width =</span> <span class="dv">1000</span>)
+
+output$RegTAB_tsplot &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({
+    <span class="kw">doPlot_RegTABbyTime</span>(<span class="dt">year.range =</span> input$yearsrab)
+}, <span class="dt">height =</span> <span class="dv">800</span>, <span class="dt">width =</span> <span class="dv">1000</span>)
+
+output$RegCTAB_tsplot &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({
+    <span class="kw">doPlot_RegTABbyTime</span>(<span class="dt">year.range =</span> input$yearscrab, <span class="dt">cumulative =</span> <span class="ot">TRUE</span>)
+}, <span class="dt">height =</span> <span class="dv">800</span>, <span class="dt">width =</span> <span class="dv">1000</span>)
+
+output$FRP_bufferplot &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({
+    <span class="kw">doPlot_FRPbyBuffer</span>()
+}, <span class="dt">height =</span> <span class="dv">800</span>, <span class="dt">width =</span> <span class="dv">1000</span>)
+
+output$FRI_boxplot &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({
+    <span class="kw">doPlot_FRIboxplot</span>()
+}, <span class="dt">height =</span> <span class="dv">800</span>, <span class="dt">width =</span> <span class="dv">1000</span>)
+
+<span class="co"># PDF download buttons for each plot</span>
+output$dl_RAB_tsplotPDF &lt;-<span class="st"> </span><span class="kw">downloadHandler</span>(<span class="dt">filename =</span> <span class="st">&quot;RABvsTime.pdf&quot;</span>, <span class="dt">content =</span> function(file) {
+    <span class="kw">pdf</span>(<span class="dt">file =</span> file, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">pointsize =</span> <span class="dv">8</span>)
+    <span class="kw">doPlot_RABbyTime</span>(<span class="dt">year.range =</span> input$yearsrab)
+    <span class="kw">dev.off</span>()
+})
+
+output$dl_CRAB_tsplotPDF &lt;-<span class="st"> </span><span class="kw">downloadHandler</span>(<span class="dt">filename =</span> <span class="st">&quot;CRABvsTime.pdf&quot;</span>, <span class="dt">content =</span> function(file) {
+    <span class="kw">pdf</span>(<span class="dt">file =</span> file, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">pointsize =</span> <span class="dv">8</span>)
+    <span class="kw">doPlot_RABbyTime</span>(<span class="dt">year.range =</span> input$yearscrab, <span class="dt">cumulative =</span> <span class="ot">TRUE</span>)
+    <span class="kw">dev.off</span>()
+})
+
+output$dl_RegTAB_tsplotPDF &lt;-<span class="st"> </span><span class="kw">downloadHandler</span>(<span class="dt">filename =</span> <span class="st">&quot;RegionalTABvsTime.pdf&quot;</span>, 
+    <span class="dt">content =</span> function(file) {
+        <span class="kw">pdf</span>(<span class="dt">file =</span> file, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">pointsize =</span> <span class="dv">8</span>)
+        <span class="kw">doPlot_RegTABbyTime</span>(<span class="dt">year.range =</span> input$yearsrab)
+        <span class="kw">dev.off</span>()
+    })
+
+output$dl_RegCTAB_tsplotPDF &lt;-<span class="st"> </span><span class="kw">downloadHandler</span>(<span class="dt">filename =</span> <span class="st">&quot;RegionalCTABvsTime.pdf&quot;</span>, 
+    <span class="dt">content =</span> function(file) {
+        <span class="kw">pdf</span>(<span class="dt">file =</span> file, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">pointsize =</span> <span class="dv">8</span>)
+        <span class="kw">doPlot_RegTABbyTime</span>(<span class="dt">year.range =</span> input$yearscrab, <span class="dt">cumulative =</span> <span class="ot">TRUE</span>)
+        <span class="kw">dev.off</span>()
+    })
+
+output$dl_FRP_bufferplotPDF &lt;-<span class="st"> </span><span class="kw">downloadHandler</span>(<span class="dt">filename =</span> <span class="st">&quot;FRPvsBufferRadius.pdf&quot;</span>, 
+    <span class="dt">content =</span> function(file) {
+        <span class="kw">pdf</span>(<span class="dt">file =</span> file, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">pointsize =</span> <span class="dv">8</span>)
+        <span class="kw">doPlot_FRPbyBuffer</span>()
+        <span class="kw">dev.off</span>()
+    })
+
+output$dl_FRI_boxplotPDF &lt;-<span class="st"> </span><span class="kw">downloadHandler</span>(<span class="dt">filename =</span> <span class="st">&quot;FRIboxplots.pdf&quot;</span>, <span class="dt">content =</span> function(file) {
+    <span class="kw">pdf</span>(<span class="dt">file =</span> file, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">pointsize =</span> <span class="dv">8</span>)
+    <span class="kw">doPlot_FRIboxplot</span>()
+    <span class="kw">dev.off</span>()
+})</code></pre>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

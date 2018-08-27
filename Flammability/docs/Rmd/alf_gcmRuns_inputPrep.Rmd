@@ -1,0 +1,33 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco/alf_gcmRuns_inputPrep.R")
+```
+
+##
+##
+## alf_gcmRuns_inputPrep.R
+
+The `alf_gcmRuns_inputPrep.R` script prepares geotiff outputs from Noatak domain, CRU 3.2-based, historical calibration ALFRESCO runs for use as inputs to future GCM-based runs.
+Historical runs end with year 2013.
+2013 geotiffs for age, vegetation, and burn severity history are copied from the final calibrated outputs directory to a new location to be referenced by future ALFRESCO run JSON input files.
+
+In the process, the extents of these geotiffs are enlarged with NA-padding to match that of a template raster layer.
+The template is an input geotiff to the original historical calibration runs.
+This is necessary because the Noatak runs are set to trim inputs and run on a smaller domain as well as maintain trimming in the resultant output files.
+ALFRESCO will throw an exception is trimmed output geotiffs with a smaller spatial extent are then passed as inputs to a new run along with other fixed inputs of larger extent.
+
+## R code
+
+### Input file preparation
+
+```{r prep_files}
+```

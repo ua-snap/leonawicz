@@ -1,0 +1,20 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=FALSE, message=FALSE, warning=FALSE)
+read_chunk("../../code/appcode/appcode_alf_about.R")
+```
+
+##
+##
+## about.R
+
+```{r about}
+```

@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="fsmle.r" class="section level2">
+<h2>fsMLE.R</h2>
+<div id="statewide-forest-fire-size-distributions-1950---2009" class="section level3">
+<h3>Statewide forest fire size distributions 1950 - 2009</h3>
+<div id="full-period" class="section level4">
+<h4>Full period</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># statewide forest all years, all replicates</span>
+d.sub &lt;-<span class="st"> </span><span class="kw">subset</span>(d, Domain ==<span class="st"> &quot;Statewide&quot;</span> &amp;<span class="st"> </span>Vegetation ==<span class="st"> &quot;Forest&quot;</span>)
+d.sub.stats1 &lt;-<span class="st"> </span>d.sub %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Replicate) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(<span class="dt">x_bar =</span> <span class="kw">mean</span>(logFES), 
+    <span class="dt">s =</span> <span class="kw">sd</span>(logFES)) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Decade =</span> <span class="st">&quot;All&quot;</span>) %&gt;%<span class="st"> </span><span class="kw">select</span>(Decade, Replicate, 
+    x_bar, s)
+d.sub.stats2 &lt;-<span class="st"> </span>d.sub %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Decade, Replicate) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(<span class="dt">x_bar =</span> <span class="kw">mean</span>(logFES), 
+    <span class="dt">s =</span> <span class="kw">sd</span>(logFES))
+d.sub.stats &lt;-<span class="st"> </span><span class="kw">rbind</span>(d.sub.stats1, d.sub.stats2)
+
+pars &lt;-<span class="st"> </span><span class="kw">do_mle_fes</span>(d.sub, <span class="dt">parvec =</span> <span class="kw">c</span>(<span class="dt">sdlog =</span> <span class="dv">10</span>, <span class="dt">meanlog =</span> <span class="dv">10</span>), <span class="dt">dec =</span> dec, <span class="dt">by.decade =</span> <span class="ot">TRUE</span>)
+pars.df &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span>:<span class="kw">length</span>(pars), function(i, x, dec) {
+    x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">do.call</span>(rbind, <span class="dt">args =</span> x[[i]]))
+    x$Replicate &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rownames</span>(x), <span class="dt">levels =</span> <span class="kw">rownames</span>(x))
+    <span class="kw">names</span>(x)[<span class="dv">1</span>:<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mu_hat_mle&quot;</span>, <span class="st">&quot;sigma_hat_mle&quot;</span>)
+    x$Decade &lt;-<span class="st"> </span>dec[i]
+    <span class="kw">rownames</span>(x) &lt;-<span class="st"> </span><span class="ot">NULL</span>
+    x[, <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>)]
+}, <span class="dt">x =</span> pars, <span class="dt">dec =</span> <span class="kw">c</span>(<span class="st">&quot;All&quot;</span>, dec))
+pars.df &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, pars.df)
+
+<span class="kw">full_join</span>(d.sub.stats, pars.df)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Decade</th>
+<th align="left">Replicate</th>
+<th align="right">x_bar</th>
+<th align="right">s</th>
+<th align="right">mu_hat_mle</th>
+<th align="right">sigma_hat_mle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Observed</td>
+<td align="right">2.839774</td>
+<td align="right">1.984117</td>
+<td align="right">2.844931</td>
+<td align="right">2.834702</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 0</td>
+<td align="right">1.518480</td>
+<td align="right">1.815703</td>
+<td align="right">1.521980</td>
+<td align="right">1.515901</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 1</td>
+<td align="right">1.490247</td>
+<td align="right">1.802722</td>
+<td align="right">1.493386</td>
+<td align="right">1.488039</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 2</td>
+<td align="right">1.477471</td>
+<td align="right">1.797861</td>
+<td align="right">1.467744</td>
+<td align="right">1.487088</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 3</td>
+<td align="right">1.497242</td>
+<td align="right">1.782430</td>
+<td align="right">1.496343</td>
+<td align="right">1.497329</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 4</td>
+<td align="right">1.454071</td>
+<td align="right">1.823902</td>
+<td align="right">1.448055</td>
+<td align="right">1.460919</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 5</td>
+<td align="right">1.465886</td>
+<td align="right">1.812818</td>
+<td align="right">1.463407</td>
+<td align="right">1.468283</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 6</td>
+<td align="right">1.475613</td>
+<td align="right">1.786698</td>
+<td align="right">1.478885</td>
+<td align="right">1.473632</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 7</td>
+<td align="right">1.477484</td>
+<td align="right">1.822702</td>
+<td align="right">1.464642</td>
+<td align="right">1.491057</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 8</td>
+<td align="right">1.463652</td>
+<td align="right">1.790101</td>
+<td align="right">1.462065</td>
+<td align="right">1.462848</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 9</td>
+<td align="right">1.494481</td>
+<td align="right">1.833046</td>
+<td align="right">1.486650</td>
+<td align="right">1.503958</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 10</td>
+<td align="right">1.449233</td>
+<td align="right">1.795353</td>
+<td align="right">1.456606</td>
+<td align="right">1.442556</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 11</td>
+<td align="right">1.484916</td>
+<td align="right">1.798098</td>
+<td align="right">1.485053</td>
+<td align="right">1.484576</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 12</td>
+<td align="right">1.478240</td>
+<td align="right">1.837409</td>
+<td align="right">1.482350</td>
+<td align="right">1.472281</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 13</td>
+<td align="right">1.429984</td>
+<td align="right">1.791367</td>
+<td align="right">1.430389</td>
+<td align="right">1.431185</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 14</td>
+<td align="right">1.448687</td>
+<td align="right">1.819086</td>
+<td align="right">1.450807</td>
+<td align="right">1.445411</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 15</td>
+<td align="right">1.504463</td>
+<td align="right">1.857218</td>
+<td align="right">1.507888</td>
+<td align="right">1.499667</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 16</td>
+<td align="right">1.451028</td>
+<td align="right">1.812150</td>
+<td align="right">1.470414</td>
+<td align="right">1.432069</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 17</td>
+<td align="right">1.477256</td>
+<td align="right">1.836212</td>
+<td align="right">1.478131</td>
+<td align="right">1.476280</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 18</td>
+<td align="right">1.469480</td>
+<td align="right">1.847359</td>
+<td align="right">1.490417</td>
+<td align="right">1.449058</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 19</td>
+<td align="right">1.521743</td>
+<td align="right">1.838448</td>
+<td align="right">1.518992</td>
+<td align="right">1.523633</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 20</td>
+<td align="right">1.481222</td>
+<td align="right">1.819579</td>
+<td align="right">1.489736</td>
+<td align="right">1.472912</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 21</td>
+<td align="right">1.508181</td>
+<td align="right">1.854874</td>
+<td align="right">1.500594</td>
+<td align="right">1.514741</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 22</td>
+<td align="right">1.499818</td>
+<td align="right">1.832318</td>
+<td align="right">1.497238</td>
+<td align="right">1.503054</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 23</td>
+<td align="right">1.476759</td>
+<td align="right">1.830057</td>
+<td align="right">1.477974</td>
+<td align="right">1.474717</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 24</td>
+<td align="right">1.426990</td>
+<td align="right">1.823015</td>
+<td align="right">1.433878</td>
+<td align="right">1.420737</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 25</td>
+<td align="right">1.495970</td>
+<td align="right">1.826816</td>
+<td align="right">1.498635</td>
+<td align="right">1.494112</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 26</td>
+<td align="right">1.456325</td>
+<td align="right">1.832436</td>
+<td align="right">1.461468</td>
+<td align="right">1.453114</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 27</td>
+<td align="right">1.440139</td>
+<td align="right">1.810814</td>
+<td align="right">1.439029</td>
+<td align="right">1.441854</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 28</td>
+<td align="right">1.507172</td>
+<td align="right">1.814715</td>
+<td align="right">1.518898</td>
+<td align="right">1.496528</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 29</td>
+<td align="right">1.440933</td>
+<td align="right">1.806067</td>
+<td align="right">1.433957</td>
+<td align="right">1.448097</td>
+</tr>
+<tr class="even">
+<td align="left">All</td>
+<td align="left">Rep 30</td>
+<td align="right">1.485518</td>
+<td align="right">1.833047</td>
+<td align="right">1.490994</td>
+<td align="right">1.480663</td>
+</tr>
+<tr class="odd">
+<td align="left">All</td>
+<td align="left">Rep 31</td>
+<td align="right">1.454065</td>
+<td align="right">1.805179</td>
+<td align="right">1.454923</td>
+<td align="right">1.452381</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Observed</td>
+<td align="right">3.828328</td>
+<td align="right">1.610850</td>
+<td align="right">3.892165</td>
+<td align="right">3.765314</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 0</td>
+<td align="right">1.186540</td>
+<td align="right">1.868523</td>
+<td align="right">1.209497</td>
+<td align="right">1.163193</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 1</td>
+<td align="right">1.248615</td>
+<td align="right">1.935537</td>
+<td align="right">1.269285</td>
+<td align="right">1.228941</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 2</td>
+<td align="right">1.237306</td>
+<td align="right">1.888967</td>
+<td align="right">1.249067</td>
+<td align="right">1.224189</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 3</td>
+<td align="right">1.282357</td>
+<td align="right">1.890260</td>
+<td align="right">1.290116</td>
+<td align="right">1.273603</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 4</td>
+<td align="right">1.183985</td>
+<td align="right">1.861057</td>
+<td align="right">1.162138</td>
+<td align="right">1.206438</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 5</td>
+<td align="right">1.140389</td>
+<td align="right">1.863695</td>
+<td align="right">1.093537</td>
+<td align="right">1.189218</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 6</td>
+<td align="right">1.214762</td>
+<td align="right">1.948163</td>
+<td align="right">1.245093</td>
+<td align="right">1.182717</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 7</td>
+<td align="right">1.273508</td>
+<td align="right">1.873488</td>
+<td align="right">1.259866</td>
+<td align="right">1.287813</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 8</td>
+<td align="right">1.237469</td>
+<td align="right">1.809682</td>
+<td align="right">1.214126</td>
+<td align="right">1.259009</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 9</td>
+<td align="right">1.181437</td>
+<td align="right">1.874385</td>
+<td align="right">1.176554</td>
+<td align="right">1.187369</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 10</td>
+<td align="right">1.216382</td>
+<td align="right">1.898593</td>
+<td align="right">1.221761</td>
+<td align="right">1.210476</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 11</td>
+<td align="right">1.219978</td>
+<td align="right">1.838003</td>
+<td align="right">1.223220</td>
+<td align="right">1.216904</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 12</td>
+<td align="right">1.253852</td>
+<td align="right">1.941151</td>
+<td align="right">1.251463</td>
+<td align="right">1.257222</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 13</td>
+<td align="right">1.141425</td>
+<td align="right">1.870385</td>
+<td align="right">1.131296</td>
+<td align="right">1.153296</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 14</td>
+<td align="right">1.084510</td>
+<td align="right">1.918001</td>
+<td align="right">1.089568</td>
+<td align="right">1.077810</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 15</td>
+<td align="right">1.194868</td>
+<td align="right">1.911541</td>
+<td align="right">1.219366</td>
+<td align="right">1.169515</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 16</td>
+<td align="right">1.316989</td>
+<td align="right">1.907704</td>
+<td align="right">1.345577</td>
+<td align="right">1.288999</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 17</td>
+<td align="right">1.277351</td>
+<td align="right">1.962366</td>
+<td align="right">1.263579</td>
+<td align="right">1.288819</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 18</td>
+<td align="right">1.172076</td>
+<td align="right">2.021537</td>
+<td align="right">1.172226</td>
+<td align="right">1.171832</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 19</td>
+<td align="right">1.216240</td>
+<td align="right">1.847446</td>
+<td align="right">1.218909</td>
+<td align="right">1.214006</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 20</td>
+<td align="right">1.210587</td>
+<td align="right">1.911459</td>
+<td align="right">1.278547</td>
+<td align="right">1.141344</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 21</td>
+<td align="right">1.244976</td>
+<td align="right">1.962341</td>
+<td align="right">1.209932</td>
+<td align="right">1.280286</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 22</td>
+<td align="right">1.275738</td>
+<td align="right">1.909184</td>
+<td align="right">1.257050</td>
+<td align="right">1.292803</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 23</td>
+<td align="right">1.196884</td>
+<td align="right">1.943155</td>
+<td align="right">1.198130</td>
+<td align="right">1.196188</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 24</td>
+<td align="right">1.196642</td>
+<td align="right">1.880485</td>
+<td align="right">1.197118</td>
+<td align="right">1.192908</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 25</td>
+<td align="right">1.200953</td>
+<td align="right">1.946357</td>
+<td align="right">1.193990</td>
+<td align="right">1.208640</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 26</td>
+<td align="right">1.356675</td>
+<td align="right">2.101464</td>
+<td align="right">1.365155</td>
+<td align="right">1.349383</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 27</td>
+<td align="right">1.219043</td>
+<td align="right">1.878236</td>
+<td align="right">1.214570</td>
+<td align="right">1.223644</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 28</td>
+<td align="right">1.271392</td>
+<td align="right">1.917082</td>
+<td align="right">1.247877</td>
+<td align="right">1.293971</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 29</td>
+<td align="right">1.161830</td>
+<td align="right">1.855375</td>
+<td align="right">1.118588</td>
+<td align="right">1.206200</td>
+</tr>
+<tr class="odd">
+<td align="left">1950s</td>
+<td align="left">Rep 30</td>
+<td align="right">1.379106</td>
+<td align="right">2.010843</td>
+<td align="right">1.388875</td>
+<td align="right">1.369190</td>
+</tr>
+<tr class="even">
+<td align="left">1950s</td>
+<td align="left">Rep 31</td>
+<td align="right">1.213150</td>
+<td align="right">1.938325</td>
+<td align="right">1.213181</td>
+<td align="right">1.213036</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Observed</td>
+<td align="right">3.533566</td>
+<td align="right">1.639598</td>
+<td align="right">3.566732</td>
+<td align="right">3.499300</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 0</td>
+<td align="right">1.543806</td>
+<td align="right">1.932734</td>
+<td align="right">1.541969</td>
+<td align="right">1.545874</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 1</td>
+<td align="right">1.519327</td>
+<td align="right">1.985726</td>
+<td align="right">1.522785</td>
+<td align="right">1.515194</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 2</td>
+<td align="right">1.518447</td>
+<td align="right">2.104338</td>
+<td align="right">1.579886</td>
+<td align="right">1.457826</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 3</td>
+<td align="right">1.518544</td>
+<td align="right">2.004017</td>
+<td align="right">1.512340</td>
+<td align="right">1.525036</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 4</td>
+<td align="right">1.500006</td>
+<td align="right">2.034501</td>
+<td align="right">1.491805</td>
+<td align="right">1.509650</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 5</td>
+<td align="right">1.657408</td>
+<td align="right">2.045119</td>
+<td align="right">1.642401</td>
+<td align="right">1.675062</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 6</td>
+<td align="right">1.537718</td>
+<td align="right">2.008601</td>
+<td align="right">1.567043</td>
+<td align="right">1.509443</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 7</td>
+<td align="right">1.476891</td>
+<td align="right">2.114580</td>
+<td align="right">1.401662</td>
+<td align="right">1.551186</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 8</td>
+<td align="right">1.597508</td>
+<td align="right">2.044654</td>
+<td align="right">1.613145</td>
+<td align="right">1.582923</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 9</td>
+<td align="right">1.530131</td>
+<td align="right">1.996308</td>
+<td align="right">1.556800</td>
+<td align="right">1.503379</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 10</td>
+<td align="right">1.425436</td>
+<td align="right">1.949456</td>
+<td align="right">1.435224</td>
+<td align="right">1.415182</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 11</td>
+<td align="right">1.461078</td>
+<td align="right">1.986913</td>
+<td align="right">1.432140</td>
+<td align="right">1.490945</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 12</td>
+<td align="right">1.397473</td>
+<td align="right">2.005601</td>
+<td align="right">1.340457</td>
+<td align="right">1.455697</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 13</td>
+<td align="right">1.507850</td>
+<td align="right">2.020890</td>
+<td align="right">1.488200</td>
+<td align="right">1.528109</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 14</td>
+<td align="right">1.531589</td>
+<td align="right">2.011983</td>
+<td align="right">1.552482</td>
+<td align="right">1.510392</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 15</td>
+<td align="right">1.591035</td>
+<td align="right">2.106282</td>
+<td align="right">1.582895</td>
+<td align="right">1.599611</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 16</td>
+<td align="right">1.292625</td>
+<td align="right">2.034140</td>
+<td align="right">1.292935</td>
+<td align="right">1.292041</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 17</td>
+<td align="right">1.462696</td>
+<td align="right">2.079588</td>
+<td align="right">1.428572</td>
+<td align="right">1.498213</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 18</td>
+<td align="right">1.593695</td>
+<td align="right">1.993336</td>
+<td align="right">1.572764</td>
+<td align="right">1.614861</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 19</td>
+<td align="right">1.463484</td>
+<td align="right">2.091572</td>
+<td align="right">1.461293</td>
+<td align="right">1.465822</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 20</td>
+<td align="right">1.588341</td>
+<td align="right">2.058858</td>
+<td align="right">1.628605</td>
+<td align="right">1.544529</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 21</td>
+<td align="right">1.516555</td>
+<td align="right">2.019363</td>
+<td align="right">1.532342</td>
+<td align="right">1.500102</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 22</td>
+<td align="right">1.480959</td>
+<td align="right">2.066007</td>
+<td align="right">1.459189</td>
+<td align="right">1.501694</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 23</td>
+<td align="right">1.525432</td>
+<td align="right">1.920532</td>
+<td align="right">1.492994</td>
+<td align="right">1.555794</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 24</td>
+<td align="right">1.442993</td>
+<td align="right">2.079943</td>
+<td align="right">1.505640</td>
+<td align="right">1.378895</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 25</td>
+<td align="right">1.531868</td>
+<td align="right">2.045998</td>
+<td align="right">1.529541</td>
+<td align="right">1.534965</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 26</td>
+<td align="right">1.419714</td>
+<td align="right">1.905198</td>
+<td align="right">1.407886</td>
+<td align="right">1.431543</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 27</td>
+<td align="right">1.605120</td>
+<td align="right">2.018703</td>
+<td align="right">1.561961</td>
+<td align="right">1.647541</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 28</td>
+<td align="right">1.613414</td>
+<td align="right">2.002248</td>
+<td align="right">1.641719</td>
+<td align="right">1.586541</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 29</td>
+<td align="right">1.490061</td>
+<td align="right">2.068145</td>
+<td align="right">1.531402</td>
+<td align="right">1.448003</td>
+</tr>
+<tr class="even">
+<td align="left">1960s</td>
+<td align="left">Rep 30</td>
+<td align="right">1.473377</td>
+<td align="right">1.982745</td>
+<td align="right">1.499194</td>
+<td align="right">1.447986</td>
+</tr>
+<tr class="odd">
+<td align="left">1960s</td>
+<td align="left">Rep 31</td>
+<td align="right">1.588254</td>
+<td align="right">1.925927</td>
+<td align="right">1.587388</td>
+<td align="right">1.590952</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Observed</td>
+<td align="right">2.770147</td>
+<td align="right">1.707199</td>
+<td align="right">2.676415</td>
+<td align="right">2.863443</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 0</td>
+<td align="right">1.615478</td>
+<td align="right">1.957132</td>
+<td align="right">1.611877</td>
+<td align="right">1.620237</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 1</td>
+<td align="right">1.569586</td>
+<td align="right">1.838665</td>
+<td align="right">1.576512</td>
+<td align="right">1.564291</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 2</td>
+<td align="right">1.560502</td>
+<td align="right">1.844464</td>
+<td align="right">1.592740</td>
+<td align="right">1.527621</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 3</td>
+<td align="right">1.648598</td>
+<td align="right">1.833292</td>
+<td align="right">1.640029</td>
+<td align="right">1.654727</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 4</td>
+<td align="right">1.453919</td>
+<td align="right">1.839429</td>
+<td align="right">1.447286</td>
+<td align="right">1.459090</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 5</td>
+<td align="right">1.479808</td>
+<td align="right">1.856203</td>
+<td align="right">1.480921</td>
+<td align="right">1.478012</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 6</td>
+<td align="right">1.534676</td>
+<td align="right">1.819812</td>
+<td align="right">1.536436</td>
+<td align="right">1.528025</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 7</td>
+<td align="right">1.576100</td>
+<td align="right">1.891145</td>
+<td align="right">1.566173</td>
+<td align="right">1.586952</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 8</td>
+<td align="right">1.552531</td>
+<td align="right">1.885716</td>
+<td align="right">1.559795</td>
+<td align="right">1.546639</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 9</td>
+<td align="right">1.569147</td>
+<td align="right">1.919379</td>
+<td align="right">1.556103</td>
+<td align="right">1.582353</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 10</td>
+<td align="right">1.461541</td>
+<td align="right">1.886414</td>
+<td align="right">1.473744</td>
+<td align="right">1.450466</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 11</td>
+<td align="right">1.546998</td>
+<td align="right">1.860482</td>
+<td align="right">1.545039</td>
+<td align="right">1.548287</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 12</td>
+<td align="right">1.593714</td>
+<td align="right">1.887797</td>
+<td align="right">1.593921</td>
+<td align="right">1.594123</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 13</td>
+<td align="right">1.463106</td>
+<td align="right">1.835048</td>
+<td align="right">1.452861</td>
+<td align="right">1.474890</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 14</td>
+<td align="right">1.542212</td>
+<td align="right">1.920291</td>
+<td align="right">1.542421</td>
+<td align="right">1.542188</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 15</td>
+<td align="right">1.563791</td>
+<td align="right">1.904893</td>
+<td align="right">1.609064</td>
+<td align="right">1.516465</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 16</td>
+<td align="right">1.531339</td>
+<td align="right">1.858096</td>
+<td align="right">1.508854</td>
+<td align="right">1.552949</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 17</td>
+<td align="right">1.569619</td>
+<td align="right">1.851792</td>
+<td align="right">1.564397</td>
+<td align="right">1.572319</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 18</td>
+<td align="right">1.540971</td>
+<td align="right">1.947352</td>
+<td align="right">1.511896</td>
+<td align="right">1.570899</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 19</td>
+<td align="right">1.558398</td>
+<td align="right">1.879048</td>
+<td align="right">1.560809</td>
+<td align="right">1.554822</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 20</td>
+<td align="right">1.626045</td>
+<td align="right">1.893820</td>
+<td align="right">1.631903</td>
+<td align="right">1.617421</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 21</td>
+<td align="right">1.673542</td>
+<td align="right">1.962540</td>
+<td align="right">1.683377</td>
+<td align="right">1.662276</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 22</td>
+<td align="right">1.577082</td>
+<td align="right">1.909777</td>
+<td align="right">1.583868</td>
+<td align="right">1.571325</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 23</td>
+<td align="right">1.580780</td>
+<td align="right">1.930323</td>
+<td align="right">1.594115</td>
+<td align="right">1.567063</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 24</td>
+<td align="right">1.387974</td>
+<td align="right">1.867996</td>
+<td align="right">1.391432</td>
+<td align="right">1.384989</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 25</td>
+<td align="right">1.601883</td>
+<td align="right">1.950036</td>
+<td align="right">1.579249</td>
+<td align="right">1.624210</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 26</td>
+<td align="right">1.457911</td>
+<td align="right">1.918672</td>
+<td align="right">1.479196</td>
+<td align="right">1.437441</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 27</td>
+<td align="right">1.514175</td>
+<td align="right">1.912186</td>
+<td align="right">1.500490</td>
+<td align="right">1.524954</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 28</td>
+<td align="right">1.543718</td>
+<td align="right">1.882829</td>
+<td align="right">1.530945</td>
+<td align="right">1.557589</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 29</td>
+<td align="right">1.536939</td>
+<td align="right">1.871677</td>
+<td align="right">1.515118</td>
+<td align="right">1.561738</td>
+</tr>
+<tr class="odd">
+<td align="left">1970s</td>
+<td align="left">Rep 30</td>
+<td align="right">1.599168</td>
+<td align="right">1.900000</td>
+<td align="right">1.593266</td>
+<td align="right">1.604998</td>
+</tr>
+<tr class="even">
+<td align="left">1970s</td>
+<td align="left">Rep 31</td>
+<td align="right">1.542826</td>
+<td align="right">1.962016</td>
+<td align="right">1.533195</td>
+<td align="right">1.553019</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Observed</td>
+<td align="right">2.964850</td>
+<td align="right">1.595766</td>
+<td align="right">2.980956</td>
+<td align="right">2.947516</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 0</td>
+<td align="right">1.514355</td>
+<td align="right">1.684669</td>
+<td align="right">1.512258</td>
+<td align="right">1.517587</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 1</td>
+<td align="right">1.380879</td>
+<td align="right">1.702904</td>
+<td align="right">1.360152</td>
+<td align="right">1.402473</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 2</td>
+<td align="right">1.445681</td>
+<td align="right">1.661768</td>
+<td align="right">1.444684</td>
+<td align="right">1.444198</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 3</td>
+<td align="right">1.481150</td>
+<td align="right">1.706369</td>
+<td align="right">1.469245</td>
+<td align="right">1.494196</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 4</td>
+<td align="right">1.297080</td>
+<td align="right">1.740967</td>
+<td align="right">1.315845</td>
+<td align="right">1.278834</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 5</td>
+<td align="right">1.452781</td>
+<td align="right">1.760657</td>
+<td align="right">1.432289</td>
+<td align="right">1.472181</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 6</td>
+<td align="right">1.490308</td>
+<td align="right">1.656412</td>
+<td align="right">1.503869</td>
+<td align="right">1.475339</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 7</td>
+<td align="right">1.409097</td>
+<td align="right">1.677744</td>
+<td align="right">1.418657</td>
+<td align="right">1.400840</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 8</td>
+<td align="right">1.438496</td>
+<td align="right">1.694575</td>
+<td align="right">1.445522</td>
+<td align="right">1.431585</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 9</td>
+<td align="right">1.473941</td>
+<td align="right">1.701069</td>
+<td align="right">1.454692</td>
+<td align="right">1.490378</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 10</td>
+<td align="right">1.413610</td>
+<td align="right">1.663326</td>
+<td align="right">1.391046</td>
+<td align="right">1.435898</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 11</td>
+<td align="right">1.556476</td>
+<td align="right">1.648042</td>
+<td align="right">1.551397</td>
+<td align="right">1.560248</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 12</td>
+<td align="right">1.389202</td>
+<td align="right">1.652389</td>
+<td align="right">1.385247</td>
+<td align="right">1.391994</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 13</td>
+<td align="right">1.523186</td>
+<td align="right">1.689276</td>
+<td align="right">1.529035</td>
+<td align="right">1.516124</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 14</td>
+<td align="right">1.482410</td>
+<td align="right">1.630508</td>
+<td align="right">1.467796</td>
+<td align="right">1.496477</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 15</td>
+<td align="right">1.471007</td>
+<td align="right">1.722385</td>
+<td align="right">1.513209</td>
+<td align="right">1.430195</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 16</td>
+<td align="right">1.378065</td>
+<td align="right">1.711267</td>
+<td align="right">1.385777</td>
+<td align="right">1.371040</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 17</td>
+<td align="right">1.265459</td>
+<td align="right">1.712540</td>
+<td align="right">1.260286</td>
+<td align="right">1.270159</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 18</td>
+<td align="right">1.433162</td>
+<td align="right">1.656826</td>
+<td align="right">1.420869</td>
+<td align="right">1.447274</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 19</td>
+<td align="right">1.554673</td>
+<td align="right">1.768328</td>
+<td align="right">1.523944</td>
+<td align="right">1.584702</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 20</td>
+<td align="right">1.491299</td>
+<td align="right">1.690784</td>
+<td align="right">1.508030</td>
+<td align="right">1.475079</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 21</td>
+<td align="right">1.439412</td>
+<td align="right">1.631430</td>
+<td align="right">1.470977</td>
+<td align="right">1.408685</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 22</td>
+<td align="right">1.467417</td>
+<td align="right">1.673290</td>
+<td align="right">1.476716</td>
+<td align="right">1.457069</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 23</td>
+<td align="right">1.457720</td>
+<td align="right">1.645457</td>
+<td align="right">1.455519</td>
+<td align="right">1.460770</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 24</td>
+<td align="right">1.385736</td>
+<td align="right">1.668755</td>
+<td align="right">1.389206</td>
+<td align="right">1.383094</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 25</td>
+<td align="right">1.487361</td>
+<td align="right">1.607613</td>
+<td align="right">1.514051</td>
+<td align="right">1.460958</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 26</td>
+<td align="right">1.482493</td>
+<td align="right">1.732656</td>
+<td align="right">1.452418</td>
+<td align="right">1.513257</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 27</td>
+<td align="right">1.330076</td>
+<td align="right">1.647551</td>
+<td align="right">1.319549</td>
+<td align="right">1.341490</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 28</td>
+<td align="right">1.408410</td>
+<td align="right">1.600521</td>
+<td align="right">1.436811</td>
+<td align="right">1.379581</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 29</td>
+<td align="right">1.461581</td>
+<td align="right">1.686179</td>
+<td align="right">1.448841</td>
+<td align="right">1.474597</td>
+</tr>
+<tr class="even">
+<td align="left">1980s</td>
+<td align="left">Rep 30</td>
+<td align="right">1.335161</td>
+<td align="right">1.737574</td>
+<td align="right">1.338130</td>
+<td align="right">1.331203</td>
+</tr>
+<tr class="odd">
+<td align="left">1980s</td>
+<td align="left">Rep 31</td>
+<td align="right">1.466128</td>
+<td align="right">1.655491</td>
+<td align="right">1.454603</td>
+<td align="right">1.476615</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Observed</td>
+<td align="right">2.345416</td>
+<td align="right">1.889730</td>
+<td align="right">2.328396</td>
+<td align="right">2.363358</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 0</td>
+<td align="right">1.555522</td>
+<td align="right">1.594792</td>
+<td align="right">1.567810</td>
+<td align="right">1.541865</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 1</td>
+<td align="right">1.504672</td>
+<td align="right">1.604693</td>
+<td align="right">1.504238</td>
+<td align="right">1.504474</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 2</td>
+<td align="right">1.550905</td>
+<td align="right">1.590745</td>
+<td align="right">1.541138</td>
+<td align="right">1.559604</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 3</td>
+<td align="right">1.509357</td>
+<td align="right">1.571538</td>
+<td align="right">1.499980</td>
+<td align="right">1.517730</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 4</td>
+<td align="right">1.554820</td>
+<td align="right">1.631477</td>
+<td align="right">1.562310</td>
+<td align="right">1.547176</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 5</td>
+<td align="right">1.534838</td>
+<td align="right">1.600620</td>
+<td align="right">1.520197</td>
+<td align="right">1.549420</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 6</td>
+<td align="right">1.509782</td>
+<td align="right">1.600937</td>
+<td align="right">1.494955</td>
+<td align="right">1.524261</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 7</td>
+<td align="right">1.509052</td>
+<td align="right">1.610276</td>
+<td align="right">1.504838</td>
+<td align="right">1.511752</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 8</td>
+<td align="right">1.483294</td>
+<td align="right">1.575898</td>
+<td align="right">1.468142</td>
+<td align="right">1.497129</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 9</td>
+<td align="right">1.558597</td>
+<td align="right">1.691076</td>
+<td align="right">1.565674</td>
+<td align="right">1.550416</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 10</td>
+<td align="right">1.506976</td>
+<td align="right">1.576709</td>
+<td align="right">1.487937</td>
+<td align="right">1.527051</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 11</td>
+<td align="right">1.489925</td>
+<td align="right">1.641455</td>
+<td align="right">1.481281</td>
+<td align="right">1.498125</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 12</td>
+<td align="right">1.534954</td>
+<td align="right">1.625860</td>
+<td align="right">1.524564</td>
+<td align="right">1.544653</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 13</td>
+<td align="right">1.461352</td>
+<td align="right">1.554343</td>
+<td align="right">1.456045</td>
+<td align="right">1.466237</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 14</td>
+<td align="right">1.517653</td>
+<td align="right">1.646765</td>
+<td align="right">1.516726</td>
+<td align="right">1.517006</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 15</td>
+<td align="right">1.546461</td>
+<td align="right">1.660351</td>
+<td align="right">1.527859</td>
+<td align="right">1.566043</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 16</td>
+<td align="right">1.620449</td>
+<td align="right">1.620861</td>
+<td align="right">1.647715</td>
+<td align="right">1.591439</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 17</td>
+<td align="right">1.612921</td>
+<td align="right">1.615812</td>
+<td align="right">1.612651</td>
+<td align="right">1.613636</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 18</td>
+<td align="right">1.508945</td>
+<td align="right">1.631627</td>
+<td align="right">1.488938</td>
+<td align="right">1.525911</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 19</td>
+<td align="right">1.563635</td>
+<td align="right">1.653340</td>
+<td align="right">1.564441</td>
+<td align="right">1.560994</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 20</td>
+<td align="right">1.455484</td>
+<td align="right">1.639436</td>
+<td align="right">1.459359</td>
+<td align="right">1.451656</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 21</td>
+<td align="right">1.505828</td>
+<td align="right">1.684870</td>
+<td align="right">1.513333</td>
+<td align="right">1.497532</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 22</td>
+<td align="right">1.538735</td>
+<td align="right">1.651070</td>
+<td align="right">1.549953</td>
+<td align="right">1.528338</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 23</td>
+<td align="right">1.528602</td>
+<td align="right">1.681405</td>
+<td align="right">1.543686</td>
+<td align="right">1.512424</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 24</td>
+<td align="right">1.533138</td>
+<td align="right">1.666599</td>
+<td align="right">1.534857</td>
+<td align="right">1.533187</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 25</td>
+<td align="right">1.583212</td>
+<td align="right">1.618557</td>
+<td align="right">1.570814</td>
+<td align="right">1.595994</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 26</td>
+<td align="right">1.551624</td>
+<td align="right">1.607613</td>
+<td align="right">1.548405</td>
+<td align="right">1.552756</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 27</td>
+<td align="right">1.429868</td>
+<td align="right">1.593974</td>
+<td align="right">1.402478</td>
+<td align="right">1.457148</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 28</td>
+<td align="right">1.549343</td>
+<td align="right">1.649552</td>
+<td align="right">1.578677</td>
+<td align="right">1.519043</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 29</td>
+<td align="right">1.463418</td>
+<td align="right">1.591867</td>
+<td align="right">1.460265</td>
+<td align="right">1.465021</td>
+</tr>
+<tr class="odd">
+<td align="left">1990s</td>
+<td align="left">Rep 30</td>
+<td align="right">1.591133</td>
+<td align="right">1.665594</td>
+<td align="right">1.563254</td>
+<td align="right">1.619846</td>
+</tr>
+<tr class="even">
+<td align="left">1990s</td>
+<td align="left">Rep 31</td>
+<td align="right">1.461177</td>
+<td align="right">1.613016</td>
+<td align="right">1.433116</td>
+<td align="right">1.489023</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Observed</td>
+<td align="right">2.871703</td>
+<td align="right">2.284608</td>
+<td align="right">2.892399</td>
+<td align="right">2.849707</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 0</td>
+<td align="right">1.655241</td>
+<td align="right">1.865748</td>
+<td align="right">1.636434</td>
+<td align="right">1.675237</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 1</td>
+<td align="right">1.666363</td>
+<td align="right">1.825739</td>
+<td align="right">1.650724</td>
+<td align="right">1.683508</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 2</td>
+<td align="right">1.471485</td>
+<td align="right">1.765522</td>
+<td align="right">1.478268</td>
+<td align="right">1.463573</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 3</td>
+<td align="right">1.493737</td>
+<td align="right">1.746867</td>
+<td align="right">1.477854</td>
+<td align="right">1.508067</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 4</td>
+<td align="right">1.713947</td>
+<td align="right">1.882452</td>
+<td align="right">1.707619</td>
+<td align="right">1.719570</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 5</td>
+<td align="right">1.533732</td>
+<td align="right">1.801696</td>
+<td align="right">1.555967</td>
+<td align="right">1.511906</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 6</td>
+<td align="right">1.557199</td>
+<td align="right">1.732334</td>
+<td align="right">1.555717</td>
+<td align="right">1.557217</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 7</td>
+<td align="right">1.555191</td>
+<td align="right">1.844506</td>
+<td align="right">1.556698</td>
+<td align="right">1.552823</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 8</td>
+<td align="right">1.449070</td>
+<td align="right">1.758400</td>
+<td align="right">1.450182</td>
+<td align="right">1.447476</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 9</td>
+<td align="right">1.599035</td>
+<td align="right">1.805480</td>
+<td align="right">1.617480</td>
+<td align="right">1.581004</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 10</td>
+<td align="right">1.644692</td>
+<td align="right">1.834534</td>
+<td align="right">1.654878</td>
+<td align="right">1.635750</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 11</td>
+<td align="right">1.622932</td>
+<td align="right">1.843449</td>
+<td align="right">1.617807</td>
+<td align="right">1.628534</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 12</td>
+<td align="right">1.628014</td>
+<td align="right">1.963418</td>
+<td align="right">1.623357</td>
+<td align="right">1.630864</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 13</td>
+<td align="right">1.492500</td>
+<td align="right">1.838716</td>
+<td align="right">1.515085</td>
+<td align="right">1.468537</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 14</td>
+<td align="right">1.499920</td>
+<td align="right">1.785216</td>
+<td align="right">1.516543</td>
+<td align="right">1.484140</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 15</td>
+<td align="right">1.625890</td>
+<td align="right">1.879051</td>
+<td align="right">1.601374</td>
+<td align="right">1.649049</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 16</td>
+<td align="right">1.434430</td>
+<td align="right">1.792218</td>
+<td align="right">1.410834</td>
+<td align="right">1.459099</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 17</td>
+<td align="right">1.579989</td>
+<td align="right">1.853098</td>
+<td align="right">1.561156</td>
+<td align="right">1.599833</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 18</td>
+<td align="right">1.552733</td>
+<td align="right">1.847088</td>
+<td align="right">1.593651</td>
+<td align="right">1.513387</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 19</td>
+<td align="right">1.748854</td>
+<td align="right">1.819643</td>
+<td align="right">1.787983</td>
+<td align="right">1.710555</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 20</td>
+<td align="right">1.457324</td>
+<td align="right">1.741108</td>
+<td align="right">1.467692</td>
+<td align="right">1.444713</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 21</td>
+<td align="right">1.602469</td>
+<td align="right">1.853325</td>
+<td align="right">1.577419</td>
+<td align="right">1.625742</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 22</td>
+<td align="right">1.612108</td>
+<td align="right">1.838015</td>
+<td align="right">1.619942</td>
+<td align="right">1.607680</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 23</td>
+<td align="right">1.504717</td>
+<td align="right">1.870545</td>
+<td align="right">1.516080</td>
+<td align="right">1.494128</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 24</td>
+<td align="right">1.600252</td>
+<td align="right">1.824172</td>
+<td align="right">1.592720</td>
+<td align="right">1.608616</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 25</td>
+<td align="right">1.494970</td>
+<td align="right">1.756561</td>
+<td align="right">1.488649</td>
+<td align="right">1.499806</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 26</td>
+<td align="right">1.422948</td>
+<td align="right">1.722882</td>
+<td align="right">1.395897</td>
+<td align="right">1.449486</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 27</td>
+<td align="right">1.558700</td>
+<td align="right">1.839586</td>
+<td align="right">1.547410</td>
+<td align="right">1.568997</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 28</td>
+<td align="right">1.650757</td>
+<td align="right">1.866335</td>
+<td align="right">1.608895</td>
+<td align="right">1.692406</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 29</td>
+<td align="right">1.513359</td>
+<td align="right">1.847585</td>
+<td align="right">1.485806</td>
+<td align="right">1.541240</td>
+</tr>
+<tr class="even">
+<td align="left">2000s</td>
+<td align="left">Rep 30</td>
+<td align="right">1.430250</td>
+<td align="right">1.730788</td>
+<td align="right">1.422622</td>
+<td align="right">1.436183</td>
+</tr>
+<tr class="odd">
+<td align="left">2000s</td>
+<td align="left">Rep 31</td>
+<td align="right">1.423763</td>
+<td align="right">1.721226</td>
+<td align="right">1.396130</td>
+<td align="right">1.450425</td>
+</tr>
+</tbody>
+</table>
+<pre class="sourceCode r"><code class="sourceCode r">(p05a &lt;-<span class="st"> </span><span class="kw">plot_mle_fes</span>(d.sub, pars[<span class="dv">1</span>]))</code></pre>
+<p><img src="fs_mle3_files/figure-html/mle_sw_forest_all-1.png" /></p>
+</div>
+<div id="by-decade" class="section level4">
+<h4>By decade</h4>
+<pre class="sourceCode r"><code class="sourceCode r">for (i in <span class="dv">1</span>:<span class="kw">length</span>(dec)) <span class="kw">print</span>(<span class="kw">assign</span>(<span class="kw">paste0</span>(<span class="st">&quot;p05&quot;</span>, letters[i +<span class="st"> </span><span class="dv">1</span>]), <span class="kw">plot_mle_fes</span>(<span class="kw">subset</span>(d.sub, 
+    Decade ==<span class="st"> </span>dec[i]), pars[i +<span class="st"> </span><span class="dv">1</span>])))</code></pre>
+<p><img src="fs_mle3_files/figure-html/mle_sw_forest_dec-1.png" /> <img src="fs_mle3_files/figure-html/mle_sw_forest_dec-2.png" /> <img src="fs_mle3_files/figure-html/mle_sw_forest_dec-3.png" /> <img src="fs_mle3_files/figure-html/mle_sw_forest_dec-4.png" /> <img src="fs_mle3_files/figure-html/mle_sw_forest_dec-5.png" /> <img src="fs_mle3_files/figure-html/mle_sw_forest_dec-6.png" /></p>
+</div>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

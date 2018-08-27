@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="gbm_flam_maps.r" class="section level2">
+<h2>gbm_flam_maps.R</h2>
+<p>The <code>gbm_flam_maps.R</code> script creates gradient boosting machine (GBM) model-based, or boosted regresion model-based, vegetation flammability matrices. It loads a given <strong>R</strong> workspace file created by <code>gbm_flam_prep.R</code>. Other inputs include GBM models built on vegetation-specific, aggregate regional climate data. The matrices are used to fill in spatially explicit flammability maps in a subsequent script, <code>gbm_flam_maps2.R</code>. These annual maps are used as inputs to ALFRESCO in lieu of basic monthly temperature and precipitation maps.</p>
+</div>
+<div id="r-code" class="section level2">
+<h2>R code</h2>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<pre class="sourceCode r"><code class="sourceCode r">comargs &lt;-<span class="st"> </span>(<span class="kw">commandArgs</span>(<span class="ot">TRUE</span>))
+if (!<span class="kw">length</span>(comargs)) <span class="kw">q</span>(<span class="st">&quot;no&quot;</span>) else for (z in <span class="dv">1</span>:<span class="kw">length</span>(comargs)) <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> comargs[[z]]))
+
+if (!<span class="kw">exists</span>(<span class="st">&quot;period&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;Argument &#39;period&#39; not passed at command line.&quot;</span>)
+if (!<span class="kw">exists</span>(<span class="st">&quot;model&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;Argument &#39;model&#39; not passed at command line.&quot;</span>)
+if (!(period %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;historical&quot;</span>, <span class="st">&quot;rcp45&quot;</span>, <span class="st">&quot;rcp60&quot;</span>, <span class="st">&quot;rcp85&quot;</span>))) <span class="kw">stop</span>(<span class="st">&quot;Invalid period specified.&quot;</span>)
+if (!(model %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CRU32&quot;</span>, <span class="st">&quot;CCSM4&quot;</span>, <span class="st">&quot;GFDL-CM3&quot;</span>, <span class="st">&quot;GISS-E2-R&quot;</span>, <span class="st">&quot;IPSL-CM5A-LR&quot;</span>, 
+    <span class="st">&quot;MRI-CGCM3&quot;</span>))) <span class="kw">stop</span>(<span class="st">&quot;Invalid data set specified.&quot;</span>)
+if (!<span class="kw">exists</span>(<span class="st">&quot;allcavm&quot;</span>)) allcavm &lt;-<span class="st"> </span><span class="ot">FALSE</span>
+if (!<span class="kw">exists</span>(<span class="st">&quot;samples&quot;</span>)) samples &lt;-<span class="st"> </span><span class="ot">FALSE</span>
+if (!<span class="kw">is.logical</span>(allcavm)) <span class="kw">stop</span>(<span class="st">&quot;Argument &#39;allcavm&#39; must be logical.&quot;</span>)
+if (!<span class="kw">is.logical</span>(samples)) <span class="kw">stop</span>(<span class="st">&quot;Argument &#39;samples&#39; must be logical.&quot;</span>)
+if (samples &amp;<span class="st"> </span>!<span class="kw">exists</span>(<span class="st">&quot;n&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;Must provide n if samples=TRUE&quot;</span>)
+
+<span class="kw">library</span>(gbm)
+<span class="kw">library</span>(rgdal)
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(rasterVis)
+<span class="kw">library</span>(parallel)
+<span class="kw">library</span>(data.table)
+<span class="kw">rasterOptions</span>(<span class="dt">chunksize =</span> <span class="fl">1e+11</span>, <span class="dt">maxmemory =</span> <span class="fl">1e+12</span>)
+ncores &lt;-<span class="st"> </span><span class="dv">32</span>
+
+verDir &lt;-<span class="st"> </span>if (samples) <span class="st">&quot;samples_based&quot;</span> else <span class="st">&quot;means_based&quot;</span>
+<span class="kw">setwd</span>(<span class="st">&quot;/workspace/UA/mfleonawicz/leonawicz/projects/Flammability/workspaces&quot;</span>)
+<span class="kw">load</span>(<span class="kw">paste0</span>(<span class="st">&quot;gbmFlammability/&quot;</span>, model, <span class="st">&quot;_&quot;</span>, period, <span class="st">&quot;_Jun-AugTP.RData&quot;</span>))
+<span class="co"># load(paste0(&#39;gbmFlammability/&#39;, model, &#39;_&#39;, period, &#39;_Jan-SepTP.RData&#39;))</span>
+suffix &lt;-<span class="st"> </span>if (samples) <span class="kw">paste0</span>(n, <span class="st">&quot;n&quot;</span>) else <span class="st">&quot;Mean&quot;</span>
+
+<span class="co"># Load gbm models</span>
+if (samples) {
+    <span class="kw">load</span>(<span class="st">&quot;gbm_monthly_all_100samples.RData&quot;</span>)
+    tree.numbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5000</span>, <span class="dv">5000</span>, <span class="dv">5000</span>, <span class="dv">5000</span>, <span class="dv">5000</span>, <span class="dv">5000</span>)  <span class="co"># order: forest, alpine tundra, shrub, graminoid, wetland, cavm</span>
+} else <span class="kw">stop</span>(<span class="st">&quot;Currently must use samples=TRUE. Also, only month-based GBMs available. No seasonal GBMs.&quot;</span>)  <span class="co">#{</span>
+<span class="co"># load(&#39;gbm_seasonal_all.RData&#39;) tree.numbers &lt;- c(3355, 32, 2200, 152,</span>
+<span class="co"># 2478, 1554) # order: forest, alpine tundra, shrub, graminoid, wetland,</span>
+<span class="co"># cavm }</span>
+gbm.names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;gbm.forest&quot;</span>, <span class="st">&quot;gbm.alp.tundra&quot;</span>, <span class="st">&quot;gbm.shrub&quot;</span>, <span class="st">&quot;gbm.gram&quot;</span>, <span class="st">&quot;gbm.wetland&quot;</span>)
+
+if (allcavm) {
+    out &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;3m&quot;</span>, suffix)
+    gbm.gram &lt;-<span class="st"> </span>gbm.shrub &lt;-<span class="st"> </span>gbm.wetland &lt;-<span class="st"> </span>gbm.cavm
+    tree.numbers &lt;-<span class="st"> </span>tree.numbers[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">6</span>)]  <span class="co"># order: forest, alpine tundra, shrub, graminoid, wetland</span>
+} else {
+    out &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;5m&quot;</span>, suffix)
+}</code></pre>
+</div>
+<div id="prep-function" class="section level3">
+<h3>Prep function</h3>
+<pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span>function(p, <span class="dt">yrs =</span> <span class="ot">NULL</span>, <span class="dt">bins =</span> <span class="dv">1</span>, <span class="dt">standardize =</span> <span class="ot">FALSE</span>) {
+    d.names &lt;-<span class="st"> </span><span class="kw">rownames</span>(<span class="kw">summary</span>(<span class="kw">get</span>(gbm.names[p])))
+    tmp &lt;-<span class="st"> </span><span class="kw">c</span>()
+    if (<span class="kw">any</span>(<span class="kw">grep</span>(<span class="st">&quot;Summer&quot;</span>, d.names))) {
+        obj.names.list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;^m</span><span class="ch">\\</span><span class="st">..*.P$&quot;</span>, <span class="dt">envir =</span> .GlobalEnv), 
+            <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;^m</span><span class="ch">\\</span><span class="st">..*.T$&quot;</span>, <span class="dt">envir =</span> .GlobalEnv))  <span class="co"># alphabetical</span>
+        ord &lt;-<span class="st"> </span><span class="kw">order</span>(d.names)
+        for (i in ord) {
+            obj.names &lt;-<span class="st"> </span>obj.names.list[[i]]
+            n &lt;-<span class="st"> </span><span class="kw">length</span>(obj.names)
+            tmp2 &lt;-<span class="st"> </span><span class="dv">0</span>
+            for (j in <span class="dv">1</span>:n) tmp2 &lt;-<span class="st"> </span>tmp2 +<span class="st"> </span><span class="kw">get</span>(obj.names[j])
+            is.temp &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">grep</span>(<span class="st">&quot;T$&quot;</span>, obj.names)) &gt;<span class="st"> </span><span class="dv">0</span>
+            if (is.temp) 
+                tmp2 &lt;-<span class="st"> </span>tmp2/n
+            tmp2 &lt;-<span class="st"> </span>tmp2[<span class="kw">get</span>(ind.names[p]), ]
+            dims &lt;-<span class="st"> </span><span class="kw">dim</span>(tmp2)
+            tmp2 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(tmp2)
+            if (standardize) 
+                tmp2 &lt;-<span class="st"> </span>(tmp2 -<span class="st"> </span><span class="kw">mean</span>(tmp2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))/<span class="kw">sd</span>(tmp2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+            tmp &lt;-<span class="st"> </span><span class="kw">cbind</span>(tmp, tmp2)
+            <span class="kw">rm</span>(tmp2)
+            <span class="kw">gc</span>()
+        }
+    } else {
+        for (i in <span class="dv">1</span>:<span class="kw">nrow</span>(<span class="kw">summary</span>(<span class="kw">get</span>(gbm.names[p])))) {
+            tmp2 &lt;-<span class="st"> </span><span class="kw">get</span>(<span class="kw">paste0</span>(<span class="st">&quot;m.&quot;</span>, d.names[i]))[<span class="kw">get</span>(ind.names[p]), ]
+            dims &lt;-<span class="st"> </span><span class="kw">dim</span>(tmp2)
+            tmp2 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(tmp2)
+            if (standardize) 
+                tmp2 &lt;-<span class="st"> </span>(tmp2 -<span class="st"> </span><span class="kw">mean</span>(tmp2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))/<span class="kw">sd</span>(tmp2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+            tmp &lt;-<span class="st"> </span><span class="kw">cbind</span>(tmp, tmp2)
+        }
+    }
+    <span class="kw">colnames</span>(tmp) &lt;-<span class="st"> </span>d.names
+    <span class="kw">rownames</span>(tmp) &lt;-<span class="st"> </span><span class="ot">NULL</span>
+    tmp &lt;-<span class="st"> </span><span class="kw">data.frame</span>(tmp)
+    if (<span class="kw">length</span>(yrs) ==<span class="st"> </span>dims[<span class="dv">2</span>]) 
+        ids &lt;-<span class="st"> </span>yrs else ids &lt;-<span class="st"> </span><span class="dv">1</span>:dims[<span class="dv">2</span>]
+    tmp$ID &lt;-<span class="st"> </span><span class="kw">rep</span>(ids, <span class="dt">each =</span> dims[<span class="dv">1</span>])
+    <span class="kw">assign</span>(<span class="st">&quot;tmp.names&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;tmp_&quot;</span>, <span class="kw">c</span>(<span class="kw">paste0</span>(<span class="dv">0</span>, <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">9</span>)), <span class="dv">10</span>:bins)[<span class="dv">1</span>:bins]), 
+        <span class="dt">envir =</span> .GlobalEnv)  <span class="co"># global assignment side effects</span>
+    brks &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(tmp), <span class="dt">length.out =</span> bins +<span class="st"> </span><span class="dv">1</span>))
+    for (i in <span class="dv">1</span>:bins) {
+        if (i ==<span class="st"> </span>bins) 
+            rows &lt;-<span class="st"> </span>brks[i]:(brks[i +<span class="st"> </span><span class="dv">1</span>]) else rows &lt;-<span class="st"> </span>brks[i]:(brks[i +<span class="st"> </span><span class="dv">1</span>] -<span class="st"> </span><span class="dv">1</span>)
+        <span class="kw">assign</span>(tmp.names[i], tmp[rows, ], <span class="dt">envir =</span> .GlobalEnv)  <span class="co"># global assignment side effects</span>
+    }
+    <span class="kw">rm</span>(tmp)
+    <span class="kw">gc</span>()
+    <span class="kw">return</span>(p)
+}</code></pre>
+</div>
+<div id="prediction-function" class="section level3">
+<h3>Prediction function</h3>
+<pre class="sourceCode r"><code class="sourceCode r">getGBMpreds &lt;-<span class="st"> </span>function(a, b, nam1, nam2) {
+    x0 &lt;-<span class="st"> </span><span class="kw">get</span>(nam1[b])
+    x1 &lt;-<span class="st"> </span><span class="kw">get</span>(nam2[a])
+    y &lt;-<span class="st"> </span><span class="kw">predict.gbm</span>(x0, x1, <span class="dt">n.trees =</span> tree.numbers[b])
+    <span class="kw">data.frame</span>(<span class="dt">Predicted =</span> y, <span class="dt">ID =</span> x1$ID)
+}</code></pre>
+</div>
+<div id="run-predictions-and-save-flammability-matrix-workspaces" class="section level3">
+<h3>Run predictions and save flammability matrix workspaces</h3>
+<pre class="sourceCode r"><code class="sourceCode r">preds &lt;-<span class="st"> </span><span class="kw">list</span>()
+for (zzz in <span class="dv">1</span>:<span class="dv">5</span>) {
+    model.index &lt;-<span class="st"> </span><span class="kw">f</span>(zzz, <span class="dt">bins =</span> ncores)  <span class="co"># Prep data</span>
+    tmp.preds &lt;-<span class="st"> </span><span class="kw">mclapply</span>(<span class="dv">1</span>:ncores, getGBMpreds, <span class="dt">b =</span> model.index, <span class="dt">nam1 =</span> gbm.names, 
+        <span class="dt">nam2 =</span> tmp.names, <span class="dt">mc.cores =</span> ncores)  <span class="co"># GBM predictions</span>
+    tmp.preds &lt;-<span class="st"> </span><span class="kw">rbindlist</span>(tmp.preds)
+    preds[[model.index]] &lt;-<span class="st"> </span><span class="kw">matrix</span>(tmp.preds$Predicted, <span class="dt">ncol =</span> <span class="kw">length</span>(yrs))
+    <span class="kw">print</span>(zzz)
+}
+
+<span class="co"># Organize results</span>
+flam &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">length</span>(veg), <span class="dt">ncol =</span> <span class="kw">length</span>(yrs))
+for (i in <span class="dv">1</span>:<span class="dv">5</span>) flam[<span class="kw">which</span>(<span class="kw">get</span>(ind.names[i])), ] &lt;-<span class="st"> </span>preds[[i]]
+flam.range &lt;-<span class="st"> </span><span class="kw">range</span>(flam, <span class="dt">na.rm =</span> T)
+<span class="kw">save</span>(flam, flam.range, yrs, r.veg, <span class="dt">file =</span> <span class="kw">paste0</span>(<span class="st">&quot;gbmFlammability/rawFlamPreds_&quot;</span>, 
+    out, <span class="st">&quot;_&quot;</span>, model, <span class="st">&quot;_&quot;</span>, period, <span class="st">&quot;.RData&quot;</span>))</code></pre>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

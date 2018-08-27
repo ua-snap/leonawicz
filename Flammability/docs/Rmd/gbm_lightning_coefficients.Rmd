@@ -1,0 +1,111 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=TRUE, tidy=TRUE, message=FALSE, warning=FALSE, dpi=300, fig.height=6, fig.width=12)
+read_chunk("../../code/flammability_maps/gbm_lightning_coefficients.R")
+```
+
+##
+##
+## gbm_lightning_coefficients.R
+
+The `gbm_lightning_coefficients.R` script assembles GBM lightning strike point model historical fitted values and backcast and forecast predictions.
+Historical and future values are loaded via workspace file.
+
+The script also provides exploratory graphs of the assembled data.
+It presents the discrete classification of annual lightning intensity with several visualizations
+including time series, ranked and ordered values, and empirical CDF.
+
+Plots are made of exclusively CRU 3.2-based fitted values and backcast predictions.
+Similar multi-panel plots are then made comparing each of five CMIP5 GCMs' predicted values with CRU 3.2 as a comparative baseline.
+
+The finalized compiled data table including discrete classified annual lightning intensity coefficients is saved to a new workspace to be sourced by other scripts.
+For example, it is sourced by `FlammabilityMapMultipliers.R` for applying a scalar multiplier to GBM vegetation flammability maps used in ALFRESCO simulations.
+
+## R code
+
+### Setup
+
+```{r setup}
+```
+
+##
+##
+### Support functions
+
+```{r support_functions}
+```
+
+##
+##
+### Quantiles and classification
+
+```{r quantiles}
+```
+
+##
+##
+### CRU 3.2 plots
+
+```{r plots_cru32}
+```
+
+##
+##
+### RCP 6.0 CMIP5 GCM comparisons with CRU 3.2
+
+```{r plots_gcm_prep, results="hide"}
+```
+
+```{r plots_gcm}
+```
+
+##
+##
+### Observed and modeled lightning strikes as a function of climate
+
+#### CRU 3.2- and RCP 6.0 CMIP5 GCM-based lightning trend backcast and projection
+
+*    Lightning: Response variable
+*    All positive-polarized lightning strikes, sample size n = 172,633 strikes.
+*    Annual strike frequency over the domain during the observational period ranges from 7,878 to 32,129 strikes per year.
+*    Annual average is 19,181 strikes.
+*    Estimated average annual strike frequency is 14,043 strikes during the 1950s and 33,903 strikes during the 2090s.
+
+##### Climate: Predictor variables, monthly summer temperature and precipitation.
+
+##### Spatial domain: statewide Alaska forested areas (spruce and deciduous).
+
+##### Temporal domain: Summer (June + July + August total strike frequency), 2003 - 2011.
+
+##### Notes:
+
+*    Changes to the lightning detection network prior to 2003 and after 2011 limit the series of comparable samples.
+*    A GBM model estimates lightning strike frequency over the domain as a function of climate.
+*    Use of climate provides the opportunity to model annual lightning strike frequency backcasts and future projections over the domain using CRU 3.2 and CMIP5 GCM climate outputs.
+*    Given the lightning sample size, much information is aggregated into each total statewide summer lightning frequency.
+*    The model will likely be improved upon with additional data, climate scenarios, assessment of GBM model uncertainty (currently only GCM uncertainty is included), as well as deeper explorations of the nonlinear climate-lightning linkage itself.
+
+
+```{r setup_preds_uncertainty, results="hide"}
+```
+
+```{r plots_preds_uncertainty}
+```
+
+*    Backcast 1950-2013 CRU 3.2-based lightning (blue) matches strongly in its overlap with empirical observations (orange) and is comparable in inter-annual variability to CMIP5-based estimates (gray) over the full 1950-2099 period.
+*    An upward linear trend in lightning frequency cannot be inferred from the narrow nine-year observational window.
+*    A linear trend is present during backcast years based on either CRU 3.2 or CMIP5 GCMs though occurring among relatively high inter-annual variability and uncertainty.
+*    The nonlinear climate-lightning linkage is strong and the upward trend in lightning frequency based on GCMs (black) becomes increasingly prominent as climate is projected to change.
+This is bounded by GCM-based uncertainty (gray).
+*    The model estimates lightning to increase by 17% per decade on average.
+*    The "flatlining" behavior of projected lightning in the latter decades of the century represent a restriction of the GBM model
+against making large extrapolations of the climate-lightning linkage when projected climate is more extreme than the range of historical climate values used to fit the model.
+To that degree the GBM model is conservative.

@@ -1,0 +1,63 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=TRUE, tidy=TRUE, message=FALSE, warning=FALSE, dpi=300, fig.height=6, fig.width=12)
+read_chunk("../../code/flammability_maps/gbm_modeling_lightning.R")
+```
+
+##
+##
+## gbm_modeling_lightning.R
+
+The `gbm_modeling_lightning.R` script models backcast and forecast lightning strike frequency over Alaska from 1950 projected through 2099.
+A lightning model is fitted using stochastic gradient boosting (GBM: generalized boosted regression models, or gradient boosting machine).
+The script assembles data for modeling, performs the modeling, and saves results to a workspace file to be read and utilized by other scripts, e.g., `gbm_lightning_coefficients.R`.
+
+The observed period is small (n = 9 years), due to limitations in comparable observations resulting from changes in the lightning detection network prior to 2003 and after 2011.
+The sample size for the strike data over this time period is large. Some details can be found below.
+
+## Lightning as a function of climate
+
+*    Lightning: Response variable
+*    All positive-polarized lightning strikes, sample size n = 172,633 strikes.
+*    Annual strike frequency over the domain during the observational period ranges from 7,878 to 32,129 strikes per year.
+*    Annual average is 19,181 strikes.
+*    Estimated average annual strike frequency is 14,043 strikes during the 1950s and 33,903 strikes during the 2090s.
+
+##### Climate: Predictor variables, monthly summer temperature and precipitation.
+
+##### Spatial domain: statewide Alaska forested areas (spruce and deciduous).
+
+##### Temporal domain: Summer (June + July + August total strike frequency), 2003 - 2011.
+
+##### Notes:
+
+*    Changes to the lightning detection network prior to 2003 and after 2011 limit the series of comparable samples.
+
+*    A GBM model estimates lightning strike frequency over the domain as a function of climate.
+*    Use of climate provides the opportunity to model annual lightning strike frequency backcasts and future projections over the domain using CRU 3.2 and CMIP5 GCM climate outputs.
+*    Given the lightning sample size, much information is aggregated into each total statewide summer lightning frequency.
+*    The model will likely be improved upon with additional data, climate scenarios, assessment of GBM model uncertainty (currently only GCM uncertainty is included), as well as deeper explorations of the nonlinear climate-lightning linkage itself.
+
+##
+##
+## R code
+
+### Setup
+
+```{r setup}
+```
+
+##
+##
+### GBM
+
+```{r gbm}
+```

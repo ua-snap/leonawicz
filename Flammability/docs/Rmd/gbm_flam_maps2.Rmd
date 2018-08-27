@@ -1,0 +1,42 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/flammability_maps/gbm_flam_maps2.R")
+```
+
+##
+##
+## gbm_flam_maps2.R
+
+The `gbm_flam_maps2.R` script creates gradient boosting machine (GBM) model-based, or boosted regresion model-based, vegetation flammability maps.
+It loads a given **R** flammability matrix workspace file created by the preceding script, `gbm_flam_maps.R`.
+The matrix has rows and columns referring to spatially explicit map grid cells and years, respectively.
+These annual maps are used as inputs to ALFRESCO in lieu of basic monthly temperature and precipitation maps.
+
+## R code
+
+### Setup
+
+```{r setup}
+```
+
+### Write function
+```{r func_write}
+```
+
+### Run predictions and save flammability maps
+
+```{r run}
+```
+
+### Save PNG plots of flammability maps
+```{r plot}
+```

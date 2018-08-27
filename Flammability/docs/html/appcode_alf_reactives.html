@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="reactives.r" class="section level2">
+<h2>reactives.R</h2>
+<pre class="sourceCode r"><code class="sourceCode r">fif_mtime &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    <span class="co"># testing</span>
+    x &lt;-<span class="st"> </span><span class="ot">NULL</span>
+    input$goButton_fif
+    if (!<span class="kw">is.null</span>(input$fif_files)) 
+        x &lt;-<span class="st"> </span><span class="kw">file.info</span>(input$fif_files)$mtime
+    x
+})
+
+JSON_mtime &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    x &lt;-<span class="st"> </span><span class="ot">NULL</span>
+    input$goButton_JSON
+    if (!<span class="kw">is.null</span>(input$json_files)) 
+        x &lt;-<span class="st"> </span><span class="kw">file.info</span>(input$json_files)$mtime
+    x
+})
+
+fif_current &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    <span class="kw">fif_mtime</span>()
+    input$fif_files
+})
+
+JSON_current &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    <span class="kw">JSON_mtime</span>()
+    input$json_files
+})
+
+fif_lines &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    <span class="kw">fif_mtime</span>()
+    x &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="kw">fif_current</span>())
+    x &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">s+;.*.&quot;</span>, <span class="st">&quot;;&quot;</span>, x)
+    x.title.lines &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">substr</span>(x, <span class="dv">1</span>, <span class="dv">1</span>) ==<span class="st"> &quot;;&quot;</span>)
+    x[-x.title.lines] &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;;.*.&quot;</span>, <span class="st">&quot;;&quot;</span>, x[-x.title.lines])
+    x
+})
+
+output$JSON_lines &lt;-<span class="st"> </span><span class="kw">renderText</span>({
+    if (<span class="kw">is.null</span>(<span class="kw">JSON_mtime</span>()) |<span class="st"> </span><span class="kw">is.null</span>(<span class="kw">JSON_current</span>())) 
+        <span class="kw">return</span>(<span class="st">&quot;No JSON file loaded yet.&quot;</span>)
+    <span class="kw">readLines</span>(<span class="kw">JSON_current</span>())
+})
+
+user_email_address &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    e &lt;-<span class="st"> </span>input$useremail
+    if (<span class="kw">is.null</span>(e) ||<span class="st"> </span>!<span class="kw">length</span>(e)) 
+        <span class="kw">return</span>(<span class="st">&quot;&quot;</span>)
+    if (<span class="kw">length</span>(e)) {
+        e &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">strsplit</span>(e, <span class="st">&quot;,&quot;</span>)[[<span class="dv">1</span>]])  <span class="co"># split email string on comma, remove any spaces</span>
+        keep &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">is_email_address</span>(e))
+        if (<span class="kw">length</span>(keep)) 
+            e &lt;-<span class="st"> </span>e[keep[<span class="dv">1</span>]] else e &lt;-<span class="st"> &quot;&quot;</span>  <span class="co"># only accept the first [1] email address to identify user if multiple given</span>
+    } else {
+        e &lt;-<span class="st"> &quot;&quot;</span>
+    }
+    e
+})
+
+add_emails &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    e &lt;-<span class="st"> </span>input$addemail
+    if (<span class="kw">is.null</span>(e) ||<span class="st"> </span>!<span class="kw">length</span>(e)) 
+        <span class="kw">return</span>(<span class="st">&quot;&quot;</span>)
+    if (<span class="kw">length</span>(e)) {
+        e &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">strsplit</span>(e, <span class="st">&quot;,&quot;</span>)[[<span class="dv">1</span>]])  <span class="co"># split email string on comma, remove any spaces</span>
+        keep &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">is_email_address</span>(e))
+        if (<span class="kw">length</span>(keep)) 
+            e &lt;-<span class="st"> </span>e[keep] else e &lt;-<span class="st"> &quot;&quot;</span>
+    } else {
+        e &lt;-<span class="st"> &quot;&quot;</span>
+    }
+    e
+})
+
+all_email_addresses &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    e &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">user_email_address</span>(), <span class="kw">add_emails</span>()))
+    if (<span class="kw">is.null</span>(e) ||<span class="st"> </span>!<span class="kw">length</span>(e)) 
+        <span class="kw">return</span>(<span class="st">&quot;&quot;</span>)
+    if (<span class="kw">length</span>(e)) {
+        keep &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">is_email_address</span>(e))
+        if (<span class="kw">length</span>(keep)) 
+            e &lt;-<span class="st"> </span>e[keep] else e &lt;-<span class="st"> &quot;&quot;</span>
+    } else {
+        e &lt;-<span class="st"> &quot;&quot;</span>
+    }
+    e
+})
+
+Obs_updateFiles &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    x &lt;-<span class="st"> &quot;No Alfresco job started yet&quot;</span>
+    if (<span class="kw">is.null</span>(input$goButton_JSON) ||<span class="st"> </span>input$goButton_JSON ==<span class="st"> </span><span class="dv">0</span>) 
+        <span class="kw">return</span>(<span class="ot">NULL</span>)
+    <span class="kw">isolate</span>(if (!(<span class="kw">is.null</span>(<span class="kw">user_email_address</span>()) ||<span class="st"> </span><span class="kw">is.null</span>(<span class="kw">all_email_addresses</span>()) ||<span class="st"> </span>
+<span class="st">        </span><span class="kw">user_email_address</span>() ==<span class="st"> &quot;&quot;</span> ||<span class="st"> </span><span class="kw">all_email_addresses</span>() ==<span class="st"> &quot;&quot;</span> ||<span class="st"> </span>!<span class="kw">length</span>(input$frp_pts) ||<span class="st"> </span>
+<span class="st">        </span><span class="kw">is.null</span>(input$FireSensitivity) ||<span class="st"> </span><span class="kw">is.null</span>(input$IgnitionFactor) ||<span class="st"> </span><span class="kw">is.na</span>(<span class="kw">as.numeric</span>(input$n_sims)))) {
+        
+        rand_seed &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(input$randseed)
+        alf_fs &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(input$FireSensitivity)
+        alf_ig &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(input$IgnitionFactor)
+        alf_yr1 &lt;-<span class="st"> </span><span class="kw">as.integer</span>(input$year_start)
+        alf_yr2 &lt;-<span class="st"> </span><span class="kw">as.integer</span>(input$year_end)
+        n.sims &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">as.numeric</span>(input$n_sims))
+        c0 &lt;-<span class="st"> </span><span class="kw">is.na</span>(rand_seed)
+        c1 &lt;-<span class="st"> </span><span class="kw">is.na</span>(alf_fs)
+        c2 &lt;-<span class="st"> </span><span class="kw">is.na</span>(alf_ig)
+        c3 &lt;-<span class="st"> </span><span class="kw">is.na</span>(alf_yr1)
+        c4 &lt;-<span class="st"> </span><span class="kw">is.na</span>(alf_yr2)
+        c5 &lt;-<span class="st"> </span><span class="kw">is.na</span>(<span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(input$frp_buffers, <span class="st">&quot;,&quot;</span>))))
+        c6 &lt;-<span class="st"> </span>!(input$climMod %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CRU32&quot;</span>, <span class="st">&quot;CCSM4&quot;</span>, <span class="st">&quot;GFDL-CM3&quot;</span>, <span class="st">&quot;GISS-E2-R&quot;</span>, 
+            <span class="st">&quot;IPSL-CM5A-LR&quot;</span>, <span class="st">&quot;MRI-CGCM3&quot;</span>) &amp;<span class="st"> </span>input$climPeriod %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;historical&quot;</span>, 
+            <span class="st">&quot;RCP 4.5&quot;</span>, <span class="st">&quot;RCP 6.0&quot;</span>, <span class="st">&quot;RCP 8.5&quot;</span>) &amp;<span class="st"> </span>input$mapset %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;3m trunc + Lcoef&quot;</span>, 
+            <span class="st">&quot;3m trunc + Lmap&quot;</span>, <span class="st">&quot;5m trunc + Lcoef&quot;</span>, <span class="st">&quot;5m trunc + Lmap&quot;</span>))
+        c7 &lt;-<span class="st"> </span><span class="kw">is.na</span>(n.sims) ||<span class="st"> </span>n.sims &lt;<span class="st"> </span><span class="dv">32</span> ||<span class="st"> </span>n.sims &gt;<span class="st"> </span><span class="dv">192</span>
+        if (!(<span class="kw">any</span>(<span class="kw">c</span>(c1, c2, c3, c4, c5, c6, c7)))) {
+            
+            period &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;[ .]&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">tolower</span>(input$climPeriod))
+            if (period ==<span class="st"> &quot;historical&quot;</span>) 
+                map_yr1 &lt;-<span class="st"> </span><span class="dv">1950</span> else map_yr1 &lt;-<span class="st"> </span>alf_yr1
+            if (period ==<span class="st"> &quot;historical&quot;</span>) 
+                map_yr2 &lt;-<span class="st"> </span>alf_yr2 else map_yr2 &lt;-<span class="st"> </span>alf_yr1
+            mapset &lt;-<span class="st"> </span>switch(input$mapset, <span class="st">`</span><span class="dt">3m trunc + Lcoef</span><span class="st">`</span> =<span class="st"> &quot;3m100n_cavmDistTrunc_loop_L&quot;</span>, 
+                <span class="st">`</span><span class="dt">3m trunc + Lmap</span><span class="st">`</span> =<span class="st"> &quot;3m100n_cavmDistTrunc_loop_Lmap&quot;</span>, <span class="st">`</span><span class="dt">5m trunc + Lcoef</span><span class="st">`</span> =<span class="st"> &quot;5m100n_cavmDistTrunc_loop_L&quot;</span>, 
+                <span class="st">`</span><span class="dt">5m trunc + Lmap</span><span class="st">`</span> =<span class="st"> &quot;5m100n_cavmDistTrunc_loop_Lmap&quot;</span>)
+            if (period !=<span class="st"> &quot;historical&quot;</span>) 
+                mapset &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;_loop&quot;</span>, <span class="st">&quot;&quot;</span>, mapset)
+            flamFile &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;/big_scratch/mfleonawicz/Alf_Files_20121129/gbmFlamMaps&quot;</span>, 
+                period, input$climMod, mapset, <span class="st">&quot;gbm.flamm.tif&quot;</span>)
+            
+            for (i in <span class="kw">JSON_current</span>()) {
+                alfJSON &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(i, <span class="dt">simplify =</span> F)
+                alfJSON$Simulation$MaxReps &lt;-<span class="st"> </span>n.sims
+                alfJSON$Simulation$RandSeed &lt;-<span class="st"> </span>rand_seed
+                alfJSON$Simulation$FirstYear &lt;-<span class="st"> </span>alf_yr1
+                alfJSON$Simulation$LastYear &lt;-<span class="st"> </span>alf_yr2
+                alfJSON$Fire$Sensitivity[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>alf_fs
+                alfJSON$Fire$IgnitionFactor[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>alf_ig
+                
+                alfJSON$Fire$TypeTransitionYears[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>alf_yr1
+                alfJSON$Climate$TransitionYears[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>alf_yr1
+                alfJSON$MapOutput$MapYearStart[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>map_yr2
+                alfJSON$MapOutput$MapYearStart[[<span class="dv">3</span>]] &lt;-<span class="st"> </span>map_yr1
+                alfJSON$MapOutput$MapYearStart[[<span class="dv">5</span>]] &lt;-<span class="st"> </span>map_yr1
+                alfJSON$MapOutput$MapYearStart[[<span class="dv">6</span>]] &lt;-<span class="st"> </span>alf_yr1
+                
+                alfJSON$Climate$Values$Flammability.File &lt;-<span class="st"> </span>flamFile
+                
+                alfJSON &lt;-<span class="st"> </span><span class="kw">toJSON</span>(alfJSON, <span class="dt">pretty =</span> T)
+                <span class="kw">cat</span>(alfJSON, <span class="dt">file =</span> i, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+            }
+            if (input$update_json_defaults) {
+                for (i in defaults_file) {
+                  y &lt;-<span class="st"> </span><span class="kw">readLines</span>(i)
+                  y &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;^default_Fire</span><span class="ch">\\</span><span class="st">.Sensitivity=</span><span class="ch">\\</span><span class="st">d*</span><span class="ch">\\</span><span class="st">.?</span><span class="ch">\\</span><span class="st">d*&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;default_Fire.Sensitivity=&quot;</span>, 
+                    alf_fs), y)
+                  y &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;^default_Fire</span><span class="ch">\\</span><span class="st">.IgnitionFactor=</span><span class="ch">\\</span><span class="st">d*</span><span class="ch">\\</span><span class="st">.?</span><span class="ch">\\</span><span class="st">d*&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;default_Fire.IgnitionFactor=&quot;</span>, 
+                    alf_ig), y)
+                  <span class="kw">cat</span>(y, <span class="dt">file =</span> i, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+                }
+            }
+            
+            alf.domain &lt;-<span class="st"> </span><span class="kw">substr</span>(input$json_files, <span class="dv">4</span>, <span class="dv">5</span>)
+            if (alf.domain ==<span class="st"> &quot;No&quot;</span>) 
+                alf.domain &lt;-<span class="st"> &quot;Noatak&quot;</span> else if (alf.domain ==<span class="st"> &quot;SW&quot;</span>) 
+                alf.domain &lt;-<span class="st"> &quot;Statewide&quot;</span> else <span class="kw">stop</span>(<span class="st">&quot;Unknown spatial domain.&quot;</span>)
+            domainDir &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;Runs_&quot;</span>, alf.domain)
+            userDir &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;@&quot;</span>, <span class="st">&quot;_at_&quot;</span>, <span class="kw">user_email_address</span>())
+            <span class="co"># outDir &lt;- paste0(mainDir,&#39;/&#39;,domainDir,&#39;/&#39;,userDir,&#39;/&#39;,format(Sys.time(),</span>
+            <span class="co"># &#39;%Y-%m-%d-%H-%M-%S&#39;))</span>
+            outDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(mainDir, domainDir, userDir, <span class="kw">gsub</span>(<span class="st">&quot;[ -]&quot;</span>, <span class="st">&quot;&quot;</span>, 
+                input$run_name, period, input$climMod))
+            relDir &lt;-<span class="st"> </span>outDir  <span class="co"># Still need this?</span>
+            
+            for (i in <span class="kw">JSON_current</span>()) {
+                alfJSON &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(i, <span class="dt">simplify =</span> F)
+                alfJSON$Fire$Spatial.IgnitionFactor[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">file.path</span>(outDir, 
+                  <span class="st">&quot;ignition.tif&quot;</span>)
+                alfJSON$Fire$Spatial.Sensitivity[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">file.path</span>(outDir, <span class="st">&quot;sensitivity.tif&quot;</span>)
+                alfJSON &lt;-<span class="st"> </span><span class="kw">toJSON</span>(alfJSON, <span class="dt">pretty =</span> T)
+                <span class="kw">cat</span>(alfJSON, <span class="dt">file =</span> i, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+            }
+            
+            <span class="co"># system calls begin here Create Alfresco run-specific output directories</span>
+            <span class="co"># and give shiny group write permissions</span>
+            if (!input$skipAlf) {
+                <span class="kw">system</span>(<span class="kw">paste</span>(<span class="st">&quot;ssh&quot;</span>, server, <span class="st">&quot;rm -rf&quot;</span>, outDir))
+                <span class="kw">system</span>(<span class="kw">paste</span>(<span class="st">&quot;ssh&quot;</span>, server, <span class="st">&quot;mkdir -p&quot;</span>, outDir))
+                <span class="kw">system</span>(<span class="kw">paste</span>(<span class="st">&quot;ssh&quot;</span>, server, <span class="st">&quot;chmod 2775&quot;</span>, outDir))
+                <span class="kw">system</span>(<span class="kw">paste</span>(<span class="st">&quot;ssh&quot;</span>, server, <span class="st">&quot;Rscript&quot;</span>, <span class="st">&quot;/big_scratch/mfleonawicz/Alf_Files_20121129/make_sensitivity_ignition_maps.R&quot;</span>, 
+                  alf_ig, alf_fs, outDir, alf.domain))
+            }
+            <span class="kw">system</span>(<span class="kw">paste</span>(<span class="st">&quot;ssh&quot;</span>, server, <span class="st">&quot;cp&quot;</span>, <span class="kw">file.path</span>(mainDir, <span class="st">&quot;RunAlfresco.slurm&quot;</span>), 
+                <span class="kw">file.path</span>(outDir, <span class="st">&quot;RunAlfresco.slurm&quot;</span>)))
+            <span class="kw">system</span>(<span class="kw">paste</span>(<span class="st">&quot;ssh&quot;</span>, server, <span class="st">&quot;cp&quot;</span>, <span class="kw">file.path</span>(mainDir, <span class="st">&quot;CompileData.slurm&quot;</span>), 
+                <span class="kw">file.path</span>(outDir, <span class="st">&quot;CompileData.slurm&quot;</span>)))
+            <span class="co"># system(paste(&#39;ssh&#39;, server, &#39;cp&#39;, file.path(mainDir,&#39;mailPNGs.sh&#39;),</span>
+            <span class="co"># file.path(outDir,&#39;mailPNGs.sh&#39;)))</span>
+            if (!input$skipAlf) {
+                <span class="kw">system</span>(<span class="kw">paste0</span>(<span class="st">&quot;scp &quot;</span>, input$json_files, <span class="st">&quot; &quot;</span>, server, <span class="st">&quot;:&quot;</span>, <span class="kw">file.path</span>(outDir, 
+                  input$json_files)))
+                <span class="kw">system</span>(<span class="kw">paste0</span>(<span class="st">&quot;scp &quot;</span>, <span class="kw">file.path</span>(<span class="st">&quot;pts&quot;</span>, input$frp_pts), <span class="st">&quot; &quot;</span>, 
+                  server, <span class="st">&quot;:&quot;</span>, <span class="kw">file.path</span>(outDir, input$frp_pts)))
+            }
+            
+            slurm_arguments &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;-D&quot;</span>, outDir)
+            buffers &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="dv">1000</span> *<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(input$frp_buffers, 
+                <span class="st">&quot;,&quot;</span>))), <span class="dt">collapse =</span> <span class="st">&quot;,&quot;</span>)
+            buffers &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;c</span><span class="ch">\\</span><span class="st">(&quot;</span>, buffers, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">)&quot;</span>, <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>)
+            if (input$group_runs &amp;<span class="st"> </span>input$group_name !=<span class="st"> &quot;&quot;</span> &amp;<span class="st"> </span>input$run_name !=<span class="st"> </span>
+<span class="st">                &quot;&quot;</span>) {
+                group.name &lt;-<span class="st"> </span>input$group_name
+                run.name &lt;-<span class="st"> </span>input$run_name
+            } else {
+                group.name &lt;-<span class="st"> &quot;none&quot;</span>
+                run.name &lt;-<span class="st"> &quot;run1&quot;</span>
+            }
+            frp_arguments &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;pts=&quot;</span>, input$frp_pts, <span class="st">&quot; &quot;</span>, <span class="st">&quot;&#39;buffers=&quot;</span>, 
+                buffers, <span class="st">&quot;&#39; group.name=&quot;</span>, group.name, <span class="st">&quot; run.name=&quot;</span>, run.name, 
+                <span class="st">&quot; emp.fire.cause=&quot;</span>, input$fire_cause, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)
+            if (input$skipAlf) 
+                postprocOnly &lt;-<span class="st"> </span><span class="dv">0</span> else postprocOnly &lt;-<span class="st"> </span><span class="dv">1</span>
+            if (input$include_fseByVeg) 
+                includeFSE &lt;-<span class="st"> </span><span class="dv">1</span> else includeFSE &lt;-<span class="st"> </span><span class="dv">0</span>
+            if (input$include_frp) 
+                includeFRP &lt;-<span class="st"> </span><span class="dv">1</span> else includeFRP &lt;-<span class="st"> </span><span class="dv">0</span>
+            arguments &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(mainDir, outDir, relDir, <span class="kw">paste</span>(<span class="kw">all_email_addresses</span>(), 
+                <span class="dt">collapse =</span> <span class="st">&quot;,&quot;</span>), alf.domain, input$json_files, postprocOnly, 
+                includeFSE, includeFRP, frp_arguments, alf_yr1, alf_yr2, n.sims, 
+                period), <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)
+            sbatch_string &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;ssh&quot;</span>, server, exec, slurm_arguments, <span class="kw">file.path</span>(outDir, 
+                slurmfile), arguments)
+            <span class="kw">system</span>(sbatch_string)
+            x &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;Alfresco job started on Atlas:</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; </span><span class="ch">\n</span><span class="st">&quot;</span>, 
+                sbatch_string))
+        }
+        if (<span class="kw">substr</span>(x, <span class="dv">1</span>, <span class="dv">8</span>) !=<span class="st"> &quot;Alfresco&quot;</span>) 
+            x &lt;-<span class="st"> &quot;Alfresco job did not launch&quot;</span>
+        
+    })
+    <span class="kw">return</span>(x)
+})
+
+output$sbatch_call &lt;-<span class="st"> </span><span class="kw">renderText</span>({
+    if (<span class="kw">is.null</span>(<span class="kw">Obs_updateFiles</span>())) 
+        <span class="kw">return</span>(<span class="st">&quot;Choose settings and run Alfresco simulations.&quot;</span>)
+    <span class="kw">Obs_updateFiles</span>()
+})</code></pre>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco_prelim_plots/fireSizePlot.R")
+```
+
+##
+##
+## fireSizePlot.R
+
+`fireSizePlot.R` stores the function `fireSizePlot`, which plots the distribution of maximum fire size events over the burnable ALFRESCO conditional on a fixed period of time.
+The plot includes lines representing the historically observed maximum fire size and mean and 95% confidence interval among simulation replicates.
+
+This plot is called in `AlfrescoCalibration.R` and currently is hardcoded to plot curves based on 1950 - 2011.
+
+## R code
+
+```{r fireSizePlot}
+```

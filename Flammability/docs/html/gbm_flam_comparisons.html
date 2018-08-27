@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>gbm_flam_comparisons.R</title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Flammability</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="data-prep" class="dropdown-toggle" data-toggle="dropdown">Data Prep <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="clim_prep.html">Climate data prep</a></li>
+              <li><a href="clim_resample_2km_1km.html">clim_resample_2km_1km.R</a></li>
+              <li><a href="clim_1km_clip2ak.html">clim_1km_clip2ak.R</a></li>
+              <li><a href="tpByVeg_CRU32.html">tpByVeg_CRU32.R</a></li>
+              <li><a href="tpByVeg_CMIP5.html">tpByVeg_CMIP5.R</a></li>
+              <li><a href="tpByVeg_plots.html">tpByVeg_plots.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="gbm-flammability" class="dropdown-toggle" data-toggle="dropdown">GBM Flammability <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">GBM Modeling</li>
+              <li><a href="baByVeg_historical.html">baByVeg_historical.R</a></li>
+              <li><a href="gbm_modeling_flammability.html">gbm_modeling_flammability.R</a></li>
+              <li><a href="gbm_modeling_lightning.html">gbm_modeling_lightning.R</a></li>
+              <li><a href="gbm_lightning_coefficients.html">gbm_lightning_coefficients.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Flammability maps</li>
+              <li><a href="gbm_flam_prep.html">gbm_flam_prep.R</a></li>
+              <li><a href="gbm_flam_maps.html">gbm_flam_maps.R</a></li>
+              <li><a href="gbm_flam_maps2.html">gbm_flam_maps2.R</a></li>
+              <li><a href="gbm_flam_comparisons.html">gbm_flam_comparisons.R</a></li>
+              <li><a href="flam_dist.html">flam_dist.R</a></li>
+              <li><a href="flam_trunc.html">flam_trunc.R</a></li>
+              <li><a href="FlammabilityMapMultipliers.html">FlammabilityMapMultipliers.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">ALFRESCO prep</li>
+              <li><a href="duplicate_flam_maps.html">duplicate_flam_maps.R</a></li>
+              <li><a href="alf_gcmRuns_inputPrep.html">alf_gcmRuns_inputPrep.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="alfresco" class="dropdown-toggle" data-toggle="dropdown">ALFRESCO <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main scripts</li>
+              <li><a href="AlfrescoCalibration.html">AlfrescoCalibration.R</a></li>
+              <li><a href="AlfrescoFRP.html">AlfrescoFRP.R</a></li>
+              <li><a href="fsByVeg.html">fsByVeg.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Supporting scripts</li>
+              <li><a href="obs_fire_setup.html">obs_fire_setup.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="histPrep.html">histPrep.R</a></li>
+              <li><a href="fireSizePlot.html">fireSizePlot.R</a></li>
+              <li><a href="AByearPlot.html">AByearPlot.R</a></li>
+              <li><a href="CABvsFSPlot.html">CABvsFSPlot.R</a></li>
+              <li><a href="CABvsTimePlot.html">CABvsTimePlot.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="statistics" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Fire size distributions</li>
+              <li><a href="fs_eda1.html">EDA: fire samples</a></li>
+              <li><a href="fs_eda2.html">EDA: Noatak shrub fire</a></li>
+              <li><a href="fs_eda3.html">EDA: statewide forest fire</a></li>
+              <li class="divider"></li>
+              <li><a href="fs_mle1.html">MLE: setup</a></li>
+              <li><a href="fs_mle2.html">MLE: Noatak shrub fire</a></li>
+              <li><a href="fs_mle3.html">MLE: statewide forest fire</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="apps" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">ALFRESCO launcher</li>
+              <li><a href="appcode_alf_global.html">global.R</a></li>
+              <li><a href="appcode_alf_ui.html">ui.R</a></li>
+              <li><a href="appcode_alf_server.html">server.R</a></li>
+              <li><a href="appcode_alf_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_alf_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_alf_about.html">about.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Results app</li>
+              <li><a href="appcode_frp_ui.html">ui.R</a></li>
+              <li><a href="appcode_frp_server.html">server.R</a></li>
+              <li><a href="appcode_frp_sidebar.html">sidebar.R</a></li>
+              <li><a href="appcode_frp_app.html">app.R</a></li>
+              <li><a href="appcode_frp_reactives.html">reactives.R</a></li>
+              <li><a href="appcode_frp_plotFunctions.html">plotFunctions.R</a></li>
+              <li><a href="appcode_frp_about.html">about.R</a></li>
+            </ul>
+
+          <li><a href="https://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Flammability">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+<div id="header">
+<h1 class="title">gbm_flam_comparisons.R</h1>
+</div>
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="gbm_flam_comparisons.r" class="section level2">
+<h2>gbm_flam_comparisons.R</h2>
+<p>The <code>gbm_flam_comparisons.R</code> script makes select comparisons of flammability maps with respect to GBM models used, integration of lightning probability, and ad hoc functions applied to input maps.</p>
+</div>
+<div id="r-code" class="section level2">
+<h2>R code</h2>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># GBM flammability map comparisons</span>
+<span class="kw">setwd</span>(<span class="st">&quot;/workspace/UA/mfleonawicz/leonawicz/projects/Flammability/data/gbmFlammability/samples_based/historical/CRU32&quot;</span>)
+<span class="kw">dir.create</span>(plotDir &lt;-<span class="st"> &quot;/workspace/UA/mfleonawicz/leonawicz/projects/Flammability/plots/gbmFlammability/map_comparisons&quot;</span>, 
+    <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">library</span>(rasterVis)
+(dirs &lt;-<span class="st"> </span><span class="kw">list.files</span>())
+dirs3 &lt;-<span class="st"> </span>dirs[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)]
+dirs5 &lt;-<span class="st"> </span>dirs[<span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">8</span>)]
+
+noa.shp &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="st">&quot;/big_scratch/mfleonawicz/Alf_Files_20121129/noa_basin2/Noa_basin2&quot;</span>)
+
+yrs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1954</span>, <span class="dv">1957</span>, <span class="dv">1968</span>, <span class="dv">1969</span>, <span class="dv">1977</span>, <span class="dv">2004</span>, <span class="dv">2005</span>, <span class="dv">2007</span>)
+
+at.vals &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>, <span class="fl">0.499</span>, <span class="fl">0.75</span>, <span class="dv">1</span>)
+colkey &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">at =</span> at.vals, <span class="dt">labels =</span> <span class="kw">list</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Low&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;High&quot;</span>, 
+    <span class="st">&quot;Severe&quot;</span>), <span class="dt">at =</span> at.vals +<span class="st"> </span><span class="fl">0.125</span>))
+
+<span class="co"># Theme settings</span>
+revRasterTheme &lt;-<span class="st"> </span>function(<span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">cex =</span> <span class="fl">0.7</span>, <span class="dt">region =</span> <span class="kw">colorRampPalette</span>(<span class="kw">brewer.pal</span>(<span class="dv">9</span>, 
+    <span class="st">&quot;YlOrRd&quot;</span>)[-<span class="dv">1</span>])(<span class="dv">30</span>), ...) {
+    theme &lt;-<span class="st"> </span><span class="kw">custom.theme.2</span>(<span class="dt">pch =</span> pch, <span class="dt">cex =</span> cex, <span class="dt">region =</span> region, ...)
+    theme$strip.background$col &lt;-<span class="st"> </span>theme$strip.shingle$col &lt;-<span class="st"> </span>theme$strip.border$col &lt;-<span class="st"> &quot;transparent&quot;</span>
+    theme$add.line$lwd =<span class="st"> </span><span class="fl">0.4</span>
+    theme
+}</code></pre>
+</div>
+<div id="plots" class="section level3">
+<h3>Plots</h3>
+<pre class="sourceCode r"><code class="sourceCode r">for (yr in yrs) {
+    
+    files3 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(dirs3, function(x, year) <span class="kw">list.files</span>(x, <span class="dt">pattern =</span> <span class="kw">paste0</span>(<span class="st">&quot;_&quot;</span>, 
+        year, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.tif$&quot;</span>), <span class="dt">full =</span> <span class="ot">TRUE</span>), <span class="dt">year =</span> yr))
+    files5 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(dirs5, function(x, year) <span class="kw">list.files</span>(x, <span class="dt">pattern =</span> <span class="kw">paste0</span>(<span class="st">&quot;_&quot;</span>, 
+        year, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.tif$&quot;</span>), <span class="dt">full =</span> <span class="ot">TRUE</span>), <span class="dt">year =</span> yr))
+    s &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="kw">c</span>(files3, files5))
+    <span class="kw">names</span>(s) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;GBM3&quot;</span>, <span class="st">&quot;GBM5&quot;</span>), <span class="dt">each =</span> <span class="kw">length</span>(dirs3)), <span class="kw">paste0</span>(<span class="st">&quot;_Flammability&quot;</span>, 
+        <span class="kw">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;_TL&quot;</span>)))
+    s &lt;-<span class="st"> </span><span class="kw">brick</span>(s)
+    
+    <span class="co"># Check for difference between GBM 3-model and GBM 5-model versions in CAVM</span>
+    <span class="co"># region</span>
+    pat &lt;-<span class="st"> </span><span class="kw">paste0</span>(yr, <span class="st">&quot;.tif&quot;</span>)
+    r1 &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">list.files</span>(dirs[<span class="dv">4</span>], <span class="dt">pattern =</span> pat, <span class="dt">full =</span> T))
+    r2 &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">list.files</span>(dirs[<span class="dv">8</span>], <span class="dt">pattern =</span> pat, <span class="dt">full =</span> T))
+    r1b &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">list.files</span>(dirs[<span class="dv">1</span>], <span class="dt">pattern =</span> pat, <span class="dt">full =</span> T))
+    r2b &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">list.files</span>(dirs[<span class="dv">5</span>], <span class="dt">pattern =</span> pat, <span class="dt">full =</span> T))
+    s2 &lt;-<span class="st"> </span><span class="kw">stack</span>(r1b, r2b, r1b -<span class="st"> </span>r2b)
+    <span class="kw">names</span>(s2) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;GBM3&quot;</span>, <span class="st">&quot;GBM5&quot;</span>, <span class="st">&quot;Difference&quot;</span>)
+    
+    s.noa &lt;-<span class="st"> </span><span class="kw">mask</span>(<span class="kw">crop</span>(s, noa.shp), noa.shp)
+    s2.noa &lt;-<span class="st"> </span><span class="kw">mask</span>(<span class="kw">crop</span>(s2, noa.shp), noa.shp)
+    
+    <span class="co"># Write PNGs Statewide</span>
+    w &lt;-<span class="st"> </span>h &lt;-<span class="st"> </span><span class="dv">1600</span>
+    <span class="kw">png</span>(<span class="kw">paste0</span>(plotDir, <span class="st">&quot;/gbm.flamm_&quot;</span>, yr, <span class="st">&quot;_comparisons_Statewide.png&quot;</span>), <span class="dt">height =</span> h, 
+        <span class="dt">width =</span> w, <span class="dt">res =</span> <span class="dv">200</span>)
+    p &lt;-<span class="st"> </span><span class="kw">levelplot</span>(s, <span class="dt">maxpixels =</span> <span class="kw">ncell</span>(s)/<span class="dv">10</span>, <span class="dt">main =</span> <span class="kw">paste</span>(yr, <span class="st">&quot;flammability map comparisons&quot;</span>), 
+        <span class="dt">par.settings =</span> revRasterTheme, <span class="dt">contour =</span> T, <span class="dt">margin =</span> F)  <span class="co">#, at=at.vals, colorkey=colkey)</span>
+    <span class="kw">print</span>(p)
+    <span class="kw">dev.off</span>()
+    
+    <span class="kw">png</span>(<span class="kw">paste0</span>(plotDir, <span class="st">&quot;/GBM3vsGBM5_&quot;</span>, yr, <span class="st">&quot;_Statewide.png&quot;</span>), <span class="dt">height =</span> h, <span class="dt">width =</span> w *<span class="st"> </span>
+<span class="st">        </span><span class="fl">1.5</span>, <span class="dt">res =</span> <span class="dv">200</span>)
+    p &lt;-<span class="st"> </span><span class="kw">levelplot</span>(s2, <span class="dt">maxpixels =</span> <span class="kw">ncell</span>(s)/<span class="dv">10</span>, <span class="dt">main =</span> <span class="kw">paste</span>(yr, <span class="st">&quot;3- vs. 5-GBM flammability maps&quot;</span>), 
+        <span class="dt">par.settings =</span> revRasterTheme, <span class="dt">contour =</span> T, <span class="dt">margin =</span> F)  <span class="co">#, at=at.vals, colorkey=colkey)</span>
+    <span class="kw">print</span>(p)
+    <span class="kw">dev.off</span>()
+    
+    <span class="co"># Noatak</span>
+    <span class="kw">png</span>(<span class="kw">paste0</span>(plotDir, <span class="st">&quot;/gbm.flamm_&quot;</span>, yr, <span class="st">&quot;_comparisons_Noatak.png&quot;</span>), <span class="dt">height =</span> h, 
+        <span class="dt">width =</span> w *<span class="st"> </span><span class="fl">1.5</span>, <span class="dt">res =</span> <span class="dv">200</span>)
+    p &lt;-<span class="st"> </span><span class="kw">levelplot</span>(s.noa, <span class="dt">maxpixels =</span> <span class="kw">ncell</span>(s.noa), <span class="dt">main =</span> <span class="kw">paste</span>(yr, <span class="st">&quot;flammability map comparisons&quot;</span>), 
+        <span class="dt">par.settings =</span> revRasterTheme, <span class="dt">contour =</span> T, <span class="dt">margin =</span> F)  <span class="co">#, at=at.vals, colorkey=colkey)</span>
+    <span class="kw">print</span>(p)
+    <span class="kw">dev.off</span>()
+    
+    <span class="kw">png</span>(<span class="kw">paste0</span>(plotDir, <span class="st">&quot;/GBM3vsGBM5_&quot;</span>, yr, <span class="st">&quot;_Noatak.png&quot;</span>), <span class="dt">height =</span> h *<span class="st"> </span><span class="fl">1.5</span>, 
+        <span class="dt">width =</span> w, <span class="dt">res =</span> <span class="dv">200</span>)
+    p &lt;-<span class="st"> </span><span class="kw">levelplot</span>(s2.noa, <span class="dt">maxpixels =</span> <span class="kw">ncell</span>(s2.noa), <span class="dt">main =</span> <span class="kw">paste</span>(yr, <span class="st">&quot;3- vs. 5-GBM flammability maps&quot;</span>), 
+        <span class="dt">par.settings =</span> revRasterTheme, <span class="dt">contour =</span> T, <span class="dt">margin =</span> F)  <span class="co">#, at=at.vals, colorkey=colkey)</span>
+    <span class="kw">print</span>(p)
+    <span class="kw">dev.off</span>()
+    
+    <span class="kw">print</span>(yr)
+}  <span class="co"># end yrs loop</span></code></pre>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

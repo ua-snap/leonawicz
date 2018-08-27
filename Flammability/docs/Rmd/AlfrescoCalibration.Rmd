@@ -1,0 +1,37 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/alfresco/AlfrescoCalibration.R")
+```
+
+##
+##
+## AlfrescoCalibration.R
+
+The `AlfrescoCalibration.R` script carries out the first and most basic round of post-processing of ALFRESCO simulation outputs.
+The key features of the script include the creation of basic ALFRESCO model calibration plots:
+
+*    Cumulative burn area vs. fire size
+*    Cumulative burn area vs. time
+*    Burn area vs. time
+*    Distribution of maximum fire size
+
+The script also saves key **R** workspace files.
+
+Most files of interest are attached to an email which is sent from the Atlas cluster to intended recipients as part of the broader SLURM process.
+This script is called by the SLURM script, `CompileData.slurm`, which is in turn first called by `RunAlfresco.slurm`.
+First calling `RunAlfresco.slurm` to launch ALFRESCO is done via web GUI interface, using an **R** Shiny web application, `run_alfresco`, where various parameters of an ALFRESCO run are set by the user.
+This script also sources `obs_fire_setup.R` during runtime.
+
+## R code
+
+```{r alf_calib}
+```

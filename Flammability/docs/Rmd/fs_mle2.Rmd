@@ -1,0 +1,43 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=TRUE, tidy=TRUE, message=FALSE, warning=FALSE, dpi=300, fig.height=7, fig.width=10.5)
+read_chunk("../../code/alfresco/fsMLE.R")
+```
+
+##
+##
+## fsMLE.R
+
+```{r setup, echo=FALSE, results="hide"}
+```
+
+```{r mle_functions1, echo=FALSE, results="hide"}
+```
+
+```{r mle_functions2, echo=FALSE, results="hide"}
+```
+
+```{r mle_logdata, echo=FALSE, results="hide"}
+```
+
+### Noatak shrub fire size distributions 1950 - 2009
+
+Note that historically observed fire is near zero during the 1950s and 1960s for this region.
+
+#### Full period
+
+```{r mle_noa_shrub_all}
+```
+
+#### By decade
+
+```{r mle_noa_shrub_dec}
+```

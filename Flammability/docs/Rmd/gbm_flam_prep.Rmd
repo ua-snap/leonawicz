@@ -1,0 +1,37 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: flatly
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/flammability_maps/gbm_flam_prep.R")
+```
+
+##
+##
+## gbm_flam_prep.R
+
+The `gbm_flam_prep.R` script prepares **R** workspace files for CRU and each GCM.
+These workspaces are loaded as inputs in the subsequent `gbm_flam_maps.R` script.
+
+## R code
+
+### Setup
+
+```{r setup}
+```
+
+### Ecoregions and vegetation
+
+```{r eco_veg}
+```
+
+### Prepare and save
+
+```{r prep_save}
+```
