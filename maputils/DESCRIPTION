@@ -1,0 +1,34 @@
+Package: maputils
+Version: 0.2.0
+Title: SNAP-Specific Leaflet Utilities and Maps Collection for Shiny Apps
+Description: Common utility functions and polygon maps used across multiple Shiny apps
+    specific to a SNAP context, like the snaputils package but separate and also specific to Leaflet maps. 
+    This package inherents from the apputils package and is a satellite member of the SNAPverse collection of R packages.
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+Depends: R (>= 3.4.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+URL: https://github.com/leonawicz/maputils
+BugReports: https://github.com/leonawicz/maputils/issues
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    covr
+VignetteBuilder: knitr
+Imports: 
+    sp,
+    shiny,
+    leaflet,
+    magrittr,
+    dplyr,
+    purrr,
+    tibble,
+    apputils
+Remotes:
+    leonawicz/apputils
+RoxygenNote: 6.0.1

@@ -1,0 +1,80 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", fig.path = "man/figures/README-",
+  message = FALSE, warning = FALSE, error = FALSE, tidy = TRUE
+)
+```
+# maputils
+
+[![Travis-CI Build Status](https://travis-ci.org/leonawicz/maputils.svg?branch=master)](https://travis-ci.org/leonawicz/maputils)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/leonawicz/maputils?branch=master&svg=true)](https://ci.appveyor.com/project/leonawicz/maputils)
+[![Coverage Status](https://img.shields.io/codecov/c/github/leonawicz/maputils/master.svg)](https://codecov.io/github/leonawicz/maputils?branch=master)
+
+## SNAPverse R package ecosystem development frozen.
+
+*Development of the SNAPverse R package ecosystem has been frozen indefinitely. While this project was never directly funded, and I only worked on it here and there out of a personal interest in both enhancing some of my own workflows at SNAP and making SNAP datasets and their analysis more accessible to other researchers in academia in a more frictionless way, I no longer work for SNAP so what you see in this and related R package web pages is where I left off. It will remain archived here for historical reference, but won't see further development unless I somehow become incredibly wealthy and quite bored and the project finds its way into my completionist crosshairs.*
+
+`maputils` contains Leaflet-related utilities for Shiny app development in a SNAP context. The package inherits from [`apputils`](https://leonawicz.github.io/apputils/), which contains common utility functions, settings and references for use across multiple Shiny apps. It is also imported by [`snaputils`](https://leonawicz.github.io/snaputils/), which contains more general utility functions and support for Shiny apps specific to a SNAP context. All three packages are satellite members of the [SNAPverse](https://leonawicz.github.io/snapverse/) collection of R packages.
+
+`maputils` contains `SpatialPolygonsDataFrame` data sets useful in SNAP Shiny apps for visual representation of geographic regions via Leaflet maps. These data sets are simplified derivations of the maps offered by the [`snappoly`](https://leonawicz.github.io/snappoly/) package, containing fewer vertices. This allows them to be used for efficient map display in apps without slowing apps down due to unnecessarily high map resolution. Use the maps in `maputils` only for Leaflet widgets in apps. For data analysis, e.g., extracting data by polygon, use the higher resolution source maps in `snappoly`.
+
+Each map is in WGS84 lon/lat rather than NAD83 Alaska Albers like the source maps in `snappoly`.
+There are slight differences in derived maps from the `snappoly` source maps as noted below.
+
+There are ten available maps:
+
+* `akcan`: The full SNAP PRISM domain, a single union polygon of the State of Alaska and the five SNAP-relevant western Canadian provinces: Alberta, British Columbia, Manitoba, Saskatchewan and Yukon Territory. 
+* `akcan2`: The same as `akcan`, but retaining the six distinct encompassing state/province polygons. See `snappoly::canada` for all provinces.
+* `ecoreg1`: Alaska level 1 ecological regions (ecoregions). Ecoregion maps are flattened, one map for each level, compared to `snappoly::ecoreg`.
+* `ecoreg2`: Alaska level 2 ecoregions.
+* `ecoreg3`: Alaska level 3 ecoregions.
+* `aklcc`: Alaska Landscape Conservation Cooperative.
+* `lcc`: Alaska and Canada Landscape Conservation Cooperative.
+* `cavm`: Circumpolar Arctic Vegetation (Alaska).
+* `fmz`: Alaska Fire Service fire management zones.
+* `tpa`: Terrestrial protected areas.
+
+```{r is_md, echo = FALSE}
+is_md <- knitr::opts_knit$get("rmarkdown.pandoc.to") == "markdown_github-ascii_identifiers"
+```
+
+```{r md_doc1, echo = FALSE, results = "asis", eval = is_md}
+cat('<p style="text-align:center;"><img src="man/figures/sv_satellites_utils_map.png" width=350></p><br>')
+```
+
+```{r html_doc1, echo = FALSE, results = "asis", eval = !is_md}
+cat('<p style="text-align:center;"><img src="man/figures/sv_satellites_utils_map.svg"></p>')
+```
+
+
+## Installation
+
+You can install maputils from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("leonawicz/maputils")
+```
+
+## Reference
+
+The complete set of satellite packages is shown below.
+
+```{r md_doc2, echo = FALSE, results = "asis", eval = is_md}
+cat('<p style="text-align:center;"><img src="man/figures/sv_satellites_all.png" width=350></p><br>')
+```
+
+```{r html_doc2, echo = FALSE, results = "asis", eval = !is_md}
+cat('<p style="text-align:center;"><img src="man/figures/sv_satellites_all.svg"></p>')
+```
+
+```{r md_pkg_ref, echo = FALSE, results = "asis", eval = is_md}
+cat('[Complete package reference and function documentation](https://leonawicz.github.io/maputils/)')
+```
+
