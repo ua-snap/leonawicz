@@ -1,0 +1,46 @@
+Package: snapapps
+Version: 0.2.6
+Title: Shiny Apps Collection
+Description: The snapapps package contains a collection of open source Shiny apps by Matthew Leonawicz at the 
+    Scenarios Network for Alaska and Arctic Planning, University of Alaska Fairbanks. It is a member package in the apps and docs sector 
+    of the SNAPverse collection of R packages. Many of the apps in this package originate from \url{https://github.com/ua-snap/shiny-apps}. 
+    Additional apps can be found in other SNAPverse apps and docs sector packages.
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+URL: https://github.com/leonawicz/snapapps
+BugReports: https://github.com/leonawicz/snapapps/issues
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    covr
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
+Imports: 
+    shiny,
+    tibble,
+    ggplot2,
+    reshape2,
+    dplyr,
+    shinythemes,
+    VGAM,
+    rgdal,
+    raster,
+    rasterVis,
+    maps,
+    mapproj,
+    maptools,
+    grid,
+    apputils,
+    maputils,
+    snaputils
+Remotes:
+    leonawicz/apputils,
+	  leonawicz/maputils,
+    leonawicz/snaputils,
+    tidyverse/ggplot2

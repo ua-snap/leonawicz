@@ -1,0 +1,3 @@
+This Shiny app shows time series bar charts of extreme events in coastal wind and air temperature at various thresholds. The plots can be conditioned on different variables such as location, climate model, emissions scenario and event threshold value.
+
+*This project is funded by the Alaska Ocean Observing System through its cooperative agreement ##NA11NOS0120020 with the National Oceanic and Atmospheric Administration (NOAA). Work was performed by the Alaska Center for Climate Assessment and Policy(ACCAP) at the University of Alaska Fairbanks (UAF) in partnership with the Scenarios Network for Alaska and Arctic Planning (SNAP, UAF).*

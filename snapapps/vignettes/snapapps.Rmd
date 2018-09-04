@@ -1,0 +1,36 @@
+---
+title: "SNAPverse apps and docs: snapapps"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SNAPverse apps and docs: snapapps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", fig.path = "man/figures/README-",
+  message = FALSE, warning = FALSE, error = FALSE, tidy = TRUE
+)
+```
+
+For the basics of `snapapps`, see the package [README](https://leonawicz.github.io/snapapps/).
+
+# Package metadata
+
+Here is a bit more detail on the available metadata regarding apps included in `snapapps`. This can also be found in the `snapps` help documentation.
+
+`snapps` returns a data frame with basic meta data for all Shiny apps in `snapapps`. This includes the following information:
+
+* the app ID used for launching an app via `snapp`.
+* the app name.
+* a short description.
+* date originally published.
+* date most recently revised.
+* app complexity rating: `beginner`, `intermediate`, `advanced` or `developer`.
+* a status indicator of whether the app is `complete` or `partial` with respect to the canonical hosted app. For example, did the local app require available data sets to be reduced or removed the minimize its size in `snapapps`?
+* an indicator of whether the app relies on publicly accessible data stored on Amazon Web Services in order to minimize package size. When possible, AWS is used to ensure a packaged app can be offered as `complete`.
+* the canonical remote url.
+* the redirect url.
+
+More content will be added to this vignette as needed.
