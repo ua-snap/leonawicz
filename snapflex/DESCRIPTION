@@ -1,0 +1,41 @@
+Package: snapflex
+Version: 0.2.0
+Title: Flexdashboards for SNAP Data Sets
+Description: Provides functions and templates for generating local flexdashboards showcasing and summarizing SNAP data sets as well as functions 
+    for accessing existing popular SNAP flexdashboards hosted online. 'snapflex' is a member package in the SNAPverse collection of R packages.
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+URL: https://github.com/leonawicz/snapflex
+BugReports: https://github.com/leonawicz/snapflex/issues
+Suggests: 
+    testthat,
+    covr
+VignetteBuilder: knitr
+Imports: 
+    knitr,
+    rmarkdown,
+    magrittr,
+    flexdashboard,
+    Cairo,
+    ggplot2,
+    dplyr,
+    tidyr,
+    tibble,
+    leaflet,
+    ggpubr,
+    showtext,
+    snaplocs,
+    snapclim,
+    snapplot,
+    snapstat
+Remotes:
+    leonawicz/snaplocs,
+    leonawicz/snapclim,
+    leonawicz/snapplot,
+    leonawicz/snapstat
+RoxygenNote: 6.0.1

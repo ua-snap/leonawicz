@@ -1,0 +1,60 @@
+---
+title: "Projected seasonal climate trends"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    css: flex.css
+params:
+  location: NA
+  storyboard: NA
+  snaptheme: NA
+  gfont: NA
+  regular: NA
+  bold: NA
+---
+
+```{r knitr_setup, include=FALSE}
+library(flexdashboard)
+knitr::opts_chunk$set(cache=FALSE, tidy=TRUE, message=FALSE, warning=FALSE, fig.showtext=TRUE, dev="CairoPNG")
+knitr::read_chunk("flex-clim-1.R")
+storyboard <- params$storyboard
+loc <- params$location
+```
+
+```{r setup}
+```
+
+Column {.sidebar data-width=600 data-padding=10}
+-------------------------------------
+
+```{r sb_title, results="asis"}
+```
+
+```{r sb_map, results="asis"}
+```
+
+Row {data-height=650 .tabset .tabset-fade}
+-------------------------------------
+    
+### Projected seasonal temperature deltas
+    
+```{r plot1a, fig.width=12, fig.height=5}
+```
+
+### Projected seasonal precipitation deltas
+    
+```{r plot1b, fig.width=12, fig.height=5}
+```
+
+Row {data-height=350}
+-------------------------------------
+
+### Mean temperature change from baseline
+
+```{r plot2a, fig.width=ifelse(storyboard, 12, 6), fig.height=ifelse(storyboard, 5, 3)}
+```
+
+### Mean precipitation change from baseline
+    
+```{r plot2b, fig.width=ifelse(storyboard, 12, 6), fig.height=ifelse(storyboard, 5, 3)}
+```
