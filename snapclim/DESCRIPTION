@@ -1,0 +1,36 @@
+Package: snapclim
+Version: 0.2.2
+Title: API to SNAP Climate Data Collections
+Description: Provides access to curated collections of public climate data sets
+    offered by Scenarios Network for Alaska and Arctic Planning (SNAP) at the University of Alaska Fairbanks.
+    'snapclim' interfaces with SNAP's Amazon Web Services cloud storage to retrieve specific climate data.
+    Available data includes historical climate observations as well as historical and projected climate model outputs.
+    Available climate variables include total precipitation and minimum, mean and maximum temperature.
+    Spatial coverage includes politically and ecologically defined aerial units as well as communities and other 
+    point locations of interest across Alaska and western Canada.
+    Depending on the specific climate data set, temporal resolution ranges from daily to decadal.
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+Depends: R (>= 3.4.1)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+URL: https://github.com/leonawicz/snapclim
+BugReports: https://github.com/leonawicz/snapclim/issues
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    formatR,
+    covr
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
+Imports: 
+    magrittr,
+    dplyr,
+    tibble,
+    snaplocs
+Remotes:
+    leonawicz/snaplocs
