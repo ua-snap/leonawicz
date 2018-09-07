@@ -1,0 +1,31 @@
+Package: snapsite
+Version: 0.1.0
+Title: Develop, Maintain And Refine SNAPverse Documentation
+Description: This package provides a collection of utility functions for the development, maintenance and refinement of documentation
+    for SNAPverse packages. The core of the documentation for a SNAPverse package is based around pkgdown, which builds documentation
+    for each package individually. The snapsite package assists with thematic tweaks and cohesive, standardized integration across
+    multiple packages in the verse, helping to bring the SNAPverse together. snapsite is a satellite package in the verse. 
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+Url: https://github.com/leonawicz/snapsite
+BugReports: https://github.com/leonawicz/snapsite/issues
+Imports: 
+    DiagrammeR,
+    magrittr,
+    dplyr,
+    purrr,
+    snapmeta
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    covr
+Remotes:
+    leonawicz/snapmeta
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1

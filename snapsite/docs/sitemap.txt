@@ -1,0 +1,4 @@
+https://leonawicz.github.io//reference/chart_satellites.html
+https://leonawicz.github.io//reference/chart_verse.html
+https://leonawicz.github.io//reference/make_pkg_icons.html
+https://leonawicz.github.io//articles/snapsite.html

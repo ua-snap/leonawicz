@@ -1,0 +1,8 @@
+---
+title: "SNAPverse satellite package: snapsite"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SNAPverse satellite package: snapsite}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
