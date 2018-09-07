@@ -1,0 +1,24 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+cache: packages
+addons:
+  apt:
+    packages:
+      - libgdal-dev
+      - libproj-dev
+
+r_github_packages:
+ - gaborcsardi/crayon
+ - leonawicz/snapmeta
+ - leonawicz/snaplocs
+ - leonawicz/snapprep
+ - leonawicz/alfresco
+ - leonawicz/snapclim
+ - leonawicz/snappoly
+ - leonawicz/snapgrid
+ - leonawicz/snapapps
+
+after_success:
+  - Rscript -e 'covr::codecov()'

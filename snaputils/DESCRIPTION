@@ -1,0 +1,38 @@
+Package: snaputils
+Version: 0.2.6
+Title: SNAP-Specific Utilities for Shiny Apps
+Description: Common utility functions, settings and references used across multiple Shiny apps
+    specific to a SNAP context. This package inherents from the apputils package and is a 
+    satellite member of the SNAPverse collection of R packages.
+Author: Matthew Leonawicz [aut, cre]
+Maintainer: Matthew Leonawicz <mfleonawicz@alaska.edu>
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+Depends: R (>= 3.4.1)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+Url: https://github.com/leonawicz/snaputils
+BugReports: https://github.com/leonawicz/snaputils/issues
+Imports: 
+    apputils,
+	  maputils,
+    magrittr,
+    dplyr,
+    purrr,
+    shiny,
+    shinyBS,
+    rvtable
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    covr
+Remotes:
+    leonawicz/rvtable,
+	  leonawicz/apputils,
+    leonawicz/maputils
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1

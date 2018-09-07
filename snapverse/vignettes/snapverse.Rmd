@@ -1,0 +1,8 @@
+---
+title: "The SNAPverse"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The SNAPverse}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
