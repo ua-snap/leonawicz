@@ -1,0 +1,7 @@
+urls:
+  reference: https://leonawicz.github.io//reference
+  article: https://leonawicz.github.io//articles
+articles:
+  aws: aws.html
+  snapprep: snapprep.html
+
