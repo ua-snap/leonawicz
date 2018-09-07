@@ -1,0 +1,105 @@
+---
+title: "SNAPverse data package: snappoly"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{"SNAPverse data package: snappoly"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", message = FALSE, warning = FALSE, error = FALSE, tidy = TRUE
+)
+```
+
+## Available maps
+
+While `snappoly` is a data package, it does contain one helper function that prints out a simply summary of all the available data sets in the package along with some basic metadata. If you are new to the package or just need a quick reminder of what data you were using previously, this is a convenient way to get started.
+
+```{r metadata}
+library(snappoly)
+snappolys()
+```
+
+## Print summary
+
+Load the `raster` package, which provides a compact print function for the `SpatialPolygonsDataFrame` objects in `snappoly`.
+Here is the Alaska LCC domain map.
+
+```{r print}
+library(raster)
+aklcc
+```
+
+To access documentation on this data set, use `help(aklcc)`  or the alias `?aklcc`.
+
+## Plot
+
+TO create a basic plot, coloring in different polygons, it is not necessary to explicitly load any additional packages.
+
+```{r plot, eval=FALSE}
+clrs <- c("#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F")
+plot(aklcc, col = clrs, border = NA)
+```
+
+```{r plot_run, echo=FALSE, results="hide"}
+clrs <- c("#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F")
+dev.off()
+png("README-example-1b.png", width = 600, height = 500)
+par(mar = c(0, 0, 0, 0), xaxs = "i", xpd = FALSE, yaxs = "i")
+plot(aklcc, col = clrs, border = NA)
+dev.off()
+```
+
+<p style="text-align:center;"><img src="README-example-1b.png"></p>
+
+## Additional information
+
+While the raster package is loaded, use some other functions on the Alaska LCC data set.
+
+```{r info, echo=FALSE, results="hide"}
+extent(aklcc)
+projection(aklcc)
+```
+
+In addition to `extent`, the functions `xmin`, `xmax`, `ymin` and `ymax` are available for individual boundary values. The Alaska Albers equal area conic projection is shared across all data sets in `snappoly`. This is also consistent with data sets in the `snapgrid` package.
+
+## Rasterize polygons
+
+If you want to rasterize polygons from `snappoly` it can be as simple as rasterizing a map using its own extent.
+
+```{r rasterize, echo=FALSE, results="hide", cache=TRUE}
+e <- extent(aklcc)
+r <- rasterize(aklcc, raster(ext = e))
+r
+```
+
+You will likely want to provide additional arguments to `raster` than just the extent, such as `nrows` and `ncols`, or `resolution`. Otherwise the resulting raster will default to 180 rows by 360 columns with interpolated x and y cell resolutions.
+Another option is to rasterize polygons from `snappoly` based on a raster layer from the `snapgrid` package if you want to work with them together in the same format. For example, rasterize the AK LCC polygons using the Alaska ALFRESCO spatial flammability domain, as utilized by the JFSP project and others. Then mask to this domain.
+
+```{r rasterize_pkg, echo=FALSE}
+library(snapgrid)
+```
+
+```{r rasterize_mask, echo=FALSE, cache=TRUE}
+r <- mask(rasterize(aklcc, swflam), swflam)
+```
+
+```{r plot_rasterize_run, echo=FALSE, results="hide"}
+dev.off()
+png("README-plot_rasterize-1.png", width = 600, height = 500)
+#par(mar = c(0, 0, 0, 0), xaxs = "i", xpd = FALSE, yaxs = "i")
+plot(r, col = clrs)
+dev.off()
+```
+
+```{r plot_rasterize, eval=FALSE}
+library(snapgrid)
+r <- mask(rasterize(aklcc, swflam), swflam)
+plot(r, col = clrs)
+```
+
+<p style="text-align:center;"><img src="README-plot_rasterize-1.png"></p>
+
+The `snapgrid` package is also recommended. Data sets included there are not duplicated in vectorized form here. These two packages compliment one another and each offers data sets that are most commonly utilized at SNAP in the respective vector or raster format. For a similar introduction to `snapgrid`, see the corresponding [vignette](http://leonawicz.github.io/snapgrid/docs/articles/snapgrid.html) to get started.

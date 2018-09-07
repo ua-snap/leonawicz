@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+data-raw/shapefiles
+inst/doc
+revdep/checks
+revdep/library
+docs/articles/*_cache
