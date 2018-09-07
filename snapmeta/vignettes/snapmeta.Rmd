@@ -1,0 +1,85 @@
+---
+title: "Introduction to snapmeta"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to snapmeta}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", fig.path = "man/figures/README-", eval = TRUE,
+  message = FALSE, warning = FALSE, error = FALSE, tidy = TRUE
+)
+```
+
+`snapmeta` contains a collection of utility functions for the development of other SNAPverse packages.
+`snapmeta` is a satellite package of the SNAPverse collection of R packages.
+
+## Package setup
+
+The biggest convenience of `snapmeta` is the streamlined, semi-automated SNAPverse package creation setup process.
+First, take a look at the helpful reminders in the console output from `reminders`.
+It will be somewhat specific to your account and project if you pass arguments.
+For example, using my defaults:
+
+```{r load, echo=FALSE}
+library(snapmeta)
+```
+
+```{r reminders, eval=FALSE}
+library(snapmeta)
+reminders()
+```
+
+This should all be familiar if you develop R packages, but it can be easy to occasionally neglect a step.
+The recommendations are not completely universal, however, and cater specifically to SNAPverse package development.
+
+If it meets all needs, run:
+
+```{r use_these, eval=FALSE}
+use_these()
+```
+
+If something different is needed, ignore the above wrapper function.
+Instead, make individual calls to whichever package setup functions are required.
+
+## Getting info from the verse
+
+A table of all SNAPverse packages can be obtained by:
+
+```{r sv_pkgs}
+sv_pkgs()
+```
+
+The table includes columns giving the section of the verse a package belongs to and whether or not a local git repository/R source package
+exists sharing the same parent directory as the current package (current working directory).
+A short list of the latter existing local packages can be obtained by:
+
+```{r sv_local_pkgs}
+sv_local_pkgs()
+```
+
+## Shiny apps support
+
+`snapmeta` is also used to assist the `snapapps` package with integrating new Shiny apps into its collection. `snapapps` is an R package in the apps and docs sector of the SNAPverse that essentially serves as a repository of SNAP Shiny app examples in package form.
+
+While in the process of developing or updating `snapapps` an new Shiny app can be conveniently added to the package.
+As the name suggests, id may be vectorized so that you can add multiple apps at once.
+
+```{r use_apps, eval=FALSE}
+use_apps(id = c("my_new_app1", "my_new_app2"))
+```
+
+By default this will also add a template `DESCRIPTION` file and template `Readme.md` file to the package now inside `snapapps`.
+It is assumed the app does not already have these. If it does, set `description` and `readme` to `FALSE`.
+These files can also be added later on using `use_appdesc` and `use_appreadme`.
+This also gives more control over the content output by `use_appdesc`.
+
+```{r use_templates, eval=FALSE}
+use_appdesc("path/to/my_new_app1", title = "My first app", author = "Me", url = "example.com", tags = c("data analysis", "graphing"))
+use_appreadme()
+```
+
+These functions are intended for using during `snapapps` development and maintenence but can just as easily be used for including Shiny app examples in any R package.

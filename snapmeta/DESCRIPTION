@@ -1,0 +1,34 @@
+Package: snapmeta
+Version: 0.1.8
+Title: Utilities For SNAPverse Development
+Description: This package contains a collection of utility functions for the development of other SNAPverse packages.
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+Depends: R (>= 3.4.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+Url: https://github.com/leonawicz/snapmeta
+BugReports: https://github.com/leonawicz/snapmeta/issues
+Imports: 
+    pkgdown,
+    usethis,
+    devtools,
+    crayon,
+    tibble,
+    rstudioapi,
+    git2r,
+    dplyr,
+    magrittr,
+    rlang,
+    purrr
+Suggests: 
+    testthat,
+    covr,
+    knitr,
+    rmarkdown,
+    lintr
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
