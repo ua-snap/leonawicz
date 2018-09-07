@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+inst/doc
+revdep/checks
+revdep/library
+data-raw/cc4lite_launch_cities_meta.RData

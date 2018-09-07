@@ -1,0 +1,31 @@
+Package: snaplocs
+Version: 0.2.3
+Title: SNAP Point Location Functions And Data
+Description: This package provides functions for working with point location data used in various applications and projects by the
+    Scenarios Network for Alaska and Arctic Planning at the University of Alaska Fairbanks.
+    Point location data is included. Locations include major and minor cities, towns, villages, and some other locations such as mines.
+    This package is part of the SNAPverse collection of R packages.
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+Depends: R (>= 3.4.1)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+URL: https://github.com/leonawicz/snaplocs
+BugReports: https://github.com/leonawicz/snaplocs/issues
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    covr,
+VignetteBuilder: knitr
+Imports: 
+    dplyr,
+    purrr,
+    magrittr,
+    sp,
+    rgdal,
+    tibble
+RoxygenNote: 6.0.1

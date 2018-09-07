@@ -1,0 +1,91 @@
+---
+title: "Introduction to snaplocs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to snaplocs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", fig.path = "man/figures/README-",
+  message = FALSE, warning = FALSE, error = FALSE, tidy = TRUE
+)
+```
+
+`snaplocs` is as package in the functional sector of the SNAPverse. Like most packages, it contains some form of data. However, it is not a data sector package. Data packages are those that contain a large enough amount of data to warrant a standalone package so that functional packages remain small.
+This is not one of those packages. Unlike `snappoly` and `snapgrid` it does not contain any maps. `snaplocs` contains point location data in a single data frame. There are 3,914 locations in all, spread across Alaska and western Canada. Compared to SNAPverse data packages, this is quite small.
+
+While `snaplocs` is nevertheless still typically treated as a data package for basic access to the `locs` data set, the package does provide a collection of functions for working with the data. This vignette provides example usage of several functions.
+
+## Point location data
+
+Print a summary of the data.
+
+```{r tibble, echo=FALSE}
+library(tibble)
+```
+
+```{r print}
+library(snaplocs)
+locs
+```
+
+## Metadata helpers
+
+There are some basic helper functions that grab metadata associated with point locations of interest.
+
+```{r helpers}
+x <- "Fairbanks"
+get_state(x)
+get_country(x)
+get_coords(x)
+```
+
+These calls also take vectors and `get_coords` with `keep_cols = TRUE` retains all columns of `locs`.
+
+```{r helpers2}
+x <- c("Fairbanks", "Calgary")
+get_state(x)
+get_country(x)
+get_coords(x)
+get_coords(x, keep_cols = TRUE)
+```
+
+Typically a user is interested in all communities, or all those in a particular province.
+Less commonly, a user may have a specific location name and query the table as demonstrated above.
+Not only must the name be exact, but the results returned may not be unique.
+These helper functions that take specific locations as input are only intended to provide rough convenience.
+For example, Galena is not unique.
+
+```{r helpers3}
+x <- c("Galena")
+get_state(x)
+get_country(x)
+get_coords(x)
+get_coords(x, keep_cols = TRUE)
+```
+
+An additional `group` argument can be passed to any of these functions to protect against this possibility.
+`group` may be a vector.
+
+```{r helpers4}
+grp <- "Alaska"
+get_state(x, group = grp)
+get_country(x, grp)
+get_coords(x, grp)
+get_coords(x, grp, keep_cols = TRUE)
+```
+
+## Spatial reprojection
+
+Alaska- and western Canada-centric projects at SNAP often use data in a NAD83 Alaska Albers equal area conic projection.
+To quickly convert a 2-column matrix or data frame of WGS84 lon/lat coordinates to a 2-column matrix in this projection, do the following:
+
+```{r albers}
+wgs2ak(get_coords(x))
+head(wgs2ak(locs[3:4]))
+```
+
+More functions will be added in the next package revision.
