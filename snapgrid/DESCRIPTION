@@ -1,0 +1,28 @@
+Package: snapgrid
+Version: 0.3.2
+Title: Common SNAP Geographic Raster Layers
+Description: The snapgrid package is a data package in the SNAPverse collection of R packages.
+    It provides several geographic raster layer objects.
+    These maps focus on Alaska and Canada, being commonly used by the Scenarios Network for Alaska
+    and Arctic Planning at the University of Alaska Fairbanks.
+Authors@R: c(person("Matthew", "Leonawicz", email = "mfleonawicz@alaska.edu", role = c("aut", "cre")),
+    person("Scenarios Network for Alaska and Arctic Planning", role = c("cph", "fnd"))
+    )
+Depends: R (>= 3.4.1)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+Url: https://github.com/leonawicz/snapgrid
+BugReports: https://github.com/leonawicz/snapgrid/issues
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    covr
+VignetteBuilder: knitr
+Imports: 
+    raster,
+    purrr,
+    tibble
+RoxygenNote: 6.0.1

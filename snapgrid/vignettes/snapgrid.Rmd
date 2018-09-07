@@ -1,0 +1,115 @@
+---
+title: "SNAPverse data package: snapgrid"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SNAPverse data package: snapgrid}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", message = FALSE, warning = FALSE, error = FALSE, tidy = TRUE
+)
+```
+
+## Available maps
+
+While `snapgrid` is a data package, it does contain one helper function that prints out a simply summary of all the available data sets in the package along with some basic metadata. If you are new to the package or just need a quick reminder of what data you were using previously, this is a convenient way to get started.
+
+```{r metadata}
+library(snapgrid)
+snapgrids()
+```
+
+## Print summary
+
+Here is a print summary of the Alaska classic "statewide" ALFRESCO spatial domain vegetation map layer.
+
+```{r print}
+swveg
+```
+
+To access documentation on this data set, use `help(swveg)`  or the alias `?swveg`.
+This will provide more information such as the vegetation key for the integer IDs in the layer.
+
+## Plot
+
+Here is a basic plot of the vegetation layer using the `raster` package.
+
+```{r library, echo=FALSE}
+library(raster)
+```
+
+```{r plot, eval=FALSE}
+library(raster)
+plot(swveg)
+```
+
+```{r plot_run, echo = FALSE, results = "hide"}
+png("README-example-1b.png", width = 600, height = 500)
+plot(swveg)
+dev.off()
+```
+
+<p style="text-align:center;"><img src="README-example-1b.png"></p>
+
+## Additional information
+
+Try some other `raster` functions on the vegetation layer.
+
+```{r info}
+extent(swveg)
+projection(swveg)
+```
+
+In addition to `extent`, the functions `xmin`, `xmax`, `ymin` and `ymax` are available for individual boundary values. The Alaska Albers equal area conic projection is shared across all data sets in `snapgrid`. This is also consistent with data sets in the `snappoly` package.
+
+## Stacks and bricks
+
+Making stacks or bricks is as simple as:
+
+```{r stack}
+s <- stack(ak1km, swveg)
+b <- brick(s)
+b
+```
+
+## Crop and mask
+
+Cropping and masking is also easy to do. Below the `akcan1km` raster layer is cropped and masked to the `ak1km` layer.
+This is not a useful operation for these two particular data sets, but illustrates the process.
+
+```{r crop}
+mask(crop(akcan1km, ak1km), ak1km)
+```
+
+## Reprojecting and resampling
+
+In this case we will resample the 2-km Alaska/western Canada map layer to the 1-km Alaska ALFRESCO layer.
+The difference in resolution requires a different approach. `crop` will work, but will retain the 2-km resolution.
+`mask` cannot be subsequently applied because the extent of the cropped 2-km layer will not exactly match that of the 1-km layer.
+Instead, `resample`, since the two layers share a common spatial projection.
+If the two maps were in different projections, `projectRaster` could be used instead of `resample`.
+In either case, the result can be used in the subsequent call to `mask`.
+
+```{r resample}
+mask(resample(akcan1km, ak1km), ak1km)
+```
+
+Other related functions include `aggregate` and `disaggregate`.
+
+## Statistics
+
+Without coercing raster layers to another type of object, many other common operations can be performed on them.
+For example, arithmetic operators, `+, -, *, /, %%`, can be applied to multiple rasters, as can logic operators, `>, <, ==, !=`, and more.
+Many other functions can also be applied directly. Here are a couple functions applied to a single raster layer.
+
+```{r stats}
+cellStats(swratios, mean)
+freq(swveg)
+```
+
+This introduction is only intended to expose you to some data sets in `snapgrid`, not to introduce the `raster` package. The latter is large and there is simply far to much to include here anyway. However, the `raster` package is highly applicable since `snapgrid` contains purely raster data. To learn more about how to efficiently and effectively work with this type of data in R, see the documentation associated with the `raster` package.
+
+The `snappoly` package is also recommended. Data sets included there are not duplicated in rasterized form here. These two packages compliment one another and each offers data sets that are most commonly utilized at SNAP in the respective vector or raster format. For a similar introduction to `snappoly`, see the corresponding [vignette](http://leonawicz.github.io/snappoly/docs/articles/snappoly.html) to get started.
